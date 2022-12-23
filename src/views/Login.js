@@ -1,3 +1,23 @@
+ 
+
+import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
+import "primereact/resources/primereact.min.css";                  //core css
+import "primeicons/primeicons.css";                                //icons
+ 
+
+import React, { useState } from 'react';
+import { TabMenu } from 'primereact/tabmenu';
+import { Button } from 'primereact/button';
+import { Menubar } from 'primereact/menubar';
+
+
 export const Login = () => {
-  return <h1>This is the login page</h1>;
+
+  return(
+
+<Button label="Click" icon="pi pi-check" iconPos="right" class="right-100"/>
+ 
+  );
+
+
 };
