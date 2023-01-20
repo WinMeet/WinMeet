@@ -3,21 +3,29 @@
 import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
 import "primereact/resources/primereact.min.css";                  //core css
 import "primeicons/primeicons.css";                                //icons
- 
-
-import React, { useState } from 'react';
-import { TabMenu } from 'primereact/tabmenu';
+import { Navigate, useNavigate} from 'react-router-dom';
 import { Button } from 'primereact/button';
-import { Menubar } from 'primereact/menubar';
-
+import { TabMenu } from 'primereact/tabmenu';
+ 
 
 export const Login = () => {
+  const items = [
+    {label: 'WinMeet'},
+    {label: 'Log-In', icon: 'pi pi-fw pi-sign-in'},
+    {label: 'Register', icon: 'pi pi-fw pi-pencil'}
+   
+  ];
 
-  return(
+    const navigate = useNavigate();
+   
+  return (
+<div>
 
-<Button label="Click" icon="pi pi-check" iconPos="right" class="right-100"/>
- 
+                <div className="card">
+                    <TabMenu model={items} />
+                </div>
+            </div>
+
   );
-
 
 };
