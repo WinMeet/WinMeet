@@ -17,8 +17,8 @@ export const Login = () => {
   return (
     <div>
       <div className="card">
-        <TabMenu model={items} />
-      </div>
+        <TabMenu model={items} />{" "}
+      </div>{" "}
     </div>
   );
 };
