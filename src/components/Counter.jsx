@@ -20,11 +20,11 @@ let Counter = () => {
                 window.location.href = "../Login";
               }}
               label="Log in"
-              className="border-round m-2 hover:bg-yellow-500"
+              className="border-round m-2 hover:bg-blue-500 hover:text-white bg-white text-blue-800 border-white"
             ></Button>
             <Button
               label="Sign up"
-              className="bg-blue-500 ml-2 border-round m-2 hover:bg-yellow-500"
+              className="bg-blue-500 ml-2 border-round m-2 hover:bg-blue-600"
             />
           </div>
         </div>
@@ -47,7 +47,7 @@ let Counter = () => {
               <InputText placeholder="E-mail" />
               <Button
                 label="Sign up"
-                className="bg-blue-500 ml-2 hover:bg-yellow-500"
+                className="bg-blue-500 ml-2 hover:bg-blue-600"
               />
             </div>
           </Card>
