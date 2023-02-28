@@ -32,7 +32,7 @@ let Counter = () => {
       </div>
       {/*info card*/}
       <div className="grid ">
-        <div className="col-5 flex flex-row flex-wrap card-container blue-container ">
+        <div className="col-5 flex flex-row flex-wrap card-container  ">
           <Card className="ml-6 mt-3 shadow-5">
             <h3 className="text-7xl text-left text-blue-800 m-0">Easy</h3>
             <h3 className="text-7xl text-left text-blue-800 m-0">scheduling</h3>
