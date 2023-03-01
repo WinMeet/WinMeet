@@ -22,6 +22,8 @@ let Entrance = () => {
             className="text-5xl bg-white border-white text-blue-800 ml-2"
           />
         </div>
+        <div style={{ flex: 1, height: "1px", backgroundColor: "lightgrey" }} />
+
         <div class="card">
           <div class="flex card-container indigo-container ">
             <div class="flex-1  text-white font-bold text-center border-round ">
@@ -45,7 +47,7 @@ let Entrance = () => {
 
                   <Password
                     className="pl-2"
-                    label="Password"
+                    placeholder="Password"
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                   />
@@ -57,7 +59,7 @@ let Entrance = () => {
                 </div>
                 <p className="text-xl">
                   Don’t have an account?{" "}
-                  <a className="text-blue-500 text-xl" href="">
+                  <a className="text-blue-500 text-xl" href="../SignUp">
                     {/*Sign up page connected*/}
                     Sign Up
                   </a>

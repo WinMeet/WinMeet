@@ -11,7 +11,7 @@ let Counter = () => {
         <div className="p-inputgroup m-0">
           <Button
             label="WinMeet"
-            className="text-5xl bg-white border-white text-blue-800 ml-2"
+            className="outline-none text-5xl bg-white border-white text-blue-800 ml-2"
           />
           <div className="absolute right-0 mr-5">
             <Button
@@ -23,6 +23,10 @@ let Counter = () => {
               className="border-round m-2 hover:bg-blue-500 hover:text-white bg-white text-blue-800 border-white"
             ></Button>
             <Button
+              onClick={(e) => {
+                e.preventDefault();
+                window.location.href = "../SignUp";
+              }}
               label="Sign up"
               className="bg-blue-500 ml-2 border-round m-2 hover:bg-blue-600"
             />
@@ -46,6 +50,10 @@ let Counter = () => {
             <div className="p-inputgroup mt-5">
               <InputText placeholder="E-mail" />
               <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.location.href = "../SignUp";
+                }}
                 label="Sign up"
                 className="bg-blue-500 ml-2 hover:bg-blue-600"
               />
