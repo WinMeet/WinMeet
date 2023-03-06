@@ -39,7 +39,7 @@ let Dash = () => {
                   e.preventDefault();
                   window.location.href = "";
                   {
-                    /**Help asjhda*/
+                    /**Help*/
                   }
                 }}
                 label="Help"
