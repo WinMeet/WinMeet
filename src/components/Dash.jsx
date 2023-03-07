@@ -1,4 +1,9 @@
 import React from "react";
+import ReactDOM from "react-dom/client";
+import "primereact/resources/themes/lara-light-indigo/theme.css"; // theme
+import "primereact/resources/primereact.css"; // core css
+import "primeicons/primeicons.css"; // icons
+import "primeflex/primeflex.css"; // css utility
 import { useRef } from "react";
 import { Toast } from "primereact/toast";
 import { useState } from "react";
@@ -11,9 +16,52 @@ import { Avatar } from "primereact/avatar";
 import { Password } from "primereact/password";
 import { TabView, TabPanel } from "primereact/tabview";
 import { Divider } from "primereact/divider";
+import { Calendar } from "primereact/calendar";
+import { useFormik } from "formik";
+import { Chips } from "primereact/chips";
+import { classNames } from "primereact/utils";
 
 let Dash = () => {
   const [value, setValue] = useState("");
+  const show = (data) => {
+    Toast.current.show({
+      severity: "success",
+      summary: "Form Submitted",
+      detail: `${data.chipArray}`,
+    });
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      chipArray: [],
+    },
+    validate: (data) => {
+      let errors = {};
+
+      if (!data.chipArray.length > 0) {
+        errors.chipArray = "At least one chip is required.";
+      }
+
+      return errors;
+    },
+    onSubmit: (data) => {
+      data.chipArray.length > 0 && show(data);
+      formik.resetForm();
+    },
+  });
+
+  const isFormFieldInvalid = (name) =>
+    !!(formik.touched[name] && formik.errors[name]);
+
+  const getFormErrorMessage = (name) => {
+    return isFormFieldInvalid(name) ? (
+      <small className="p-error">{formik.errors[name]}</small>
+    ) : (
+      <small className="p-error">&nbsp;</small>
+    );
+  };
+  const [date, setDate] = useState(null);
+  const [time, setTime] = useState(null);
   const showSuccess = () => {
     Toast.current.show({
       severity: "success",
@@ -131,17 +179,21 @@ let Dash = () => {
                   </TabPanel>
                   <TabPanel header="Creat New Event" leftIcon="pi pi-plus mr-2">
                     {/**Inputs Start*/}
-                    <div className="p-3">
-                      <p className="card flex justify-content-start">
-                        Event Name
-                      </p>
-                      <div className="card flex justify-content-start">
-                        <InputText onChange={(e) => setValue(e.target.value)} />
+                    <Card>
+                      <div className="flex justify-content-left text-5xl pb-3 text-blue-800">
+                        Event Details
                       </div>
-                    </div>
-                    {/**Inputs Ends*/}
-                    {/**Inputs Start*/}
-                    <div className="p-3">
+                      <div className="">
+                        <p className="card flex justify-content-start">
+                          Event Name
+                        </p>
+                        <div className="card flex justify-content-start">
+                          <InputText
+                            onChange={(e) => setValue(e.target.value)}
+                          />
+                        </div>
+                      </div>
+                      {/**Inputs Ends*/}
                       <p className="card flex justify-content-start">
                         Event Description
                       </p>
@@ -153,14 +205,91 @@ let Dash = () => {
                           cols={30}
                         />
                       </div>
+                    </Card>
+
+                    {/**Inputs Start*/}
+                    <div className="">
                       <Divider className="w-full" />
+                      <Card>
+                        <div className="flex justify-content-left text-5xl pb-3 text-blue-800">
+                          Event Date & Time
+                        </div>
+                        <div className="card flex justify-content-start pt-3">
+                          <div>
+                            <label
+                              htmlFor="calendar-date"
+                              className="m-2 justify-content-start"
+                            >
+                              Event Date
+                            </label>
+                          </div>
+                          <Calendar
+                            value={date}
+                            onChange={(e) => setDate(e.value)}
+                            showIcon
+                          />
+                        </div>
+                        <div className="flex pt-4">
+                          <label
+                            htmlFor="calendar-time"
+                            className="m-2 justify-content-start"
+                          >
+                            Event Time
+                          </label>
+                          <div className="flex justify-content-start">
+                            <Calendar
+                              id="calendar-timeonly"
+                              value={time}
+                              onChange={(e) => setTime(e.value)}
+                              timeOnly
+                            />
+                          </div>
+                        </div>
+                      </Card>
+                      <Divider className="w-full" />
+                      <Card>
+                        <div className="flex justify-content-left text-5xl pb-3 text-blue-800">
+                          Participents
+                        </div>
+                        <div className="grid">
+                          <div className="col-4">
+                            <div className="flex justify-content-left pb-3">
+                              Event Participent's E-mails:
+                            </div>
+                            <div className="card p-fluid justify-content-center">
+                              <form
+                                onSubmit={formik.handleSubmit}
+                                className="flex flex-column gap-2"
+                              >
+                                <Toast ref={Toast} />
+                                <Chips
+                                  inputId="c_chipArray"
+                                  name="chipArray"
+                                  value={formik.values.chipArray}
+                                  className={classNames({
+                                    "p-invalid":
+                                      isFormFieldInvalid("chipArray"),
+                                  })}
+                                  onChange={(e) => {
+                                    formik.setFieldValue("chipArray", e.value);
+                                  }}
+                                />
+                                {getFormErrorMessage("chipArray")}
+                              </form>
+                            </div>
+                          </div>
+                          <div className="col-8"></div>
+                        </div>
+                      </Card>
                     </div>
+
+                    <Divider className="w-full" />
                     {/**Inputs Ends*/}
                     <div className="card flex justify-content-center">
                       <Toast ref={Toast} position="bottom-right" />
                       <div className="flex flex-wrap gap-2">
                         <Button
-                          label="Submit"
+                          label="Creat Event"
                           className="border-round m-2 hover:bg-white hover:text-blue-800 bg-blue-800 text-white border-blue-800"
                           onClick={showSuccess}
                         />
@@ -171,6 +300,7 @@ let Dash = () => {
               </div>
             </div>
           </div>
+
           {/**right col */}
           <div className="col-2 "></div>
         </div>
