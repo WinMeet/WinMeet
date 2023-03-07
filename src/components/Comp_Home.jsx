@@ -3,7 +3,8 @@ import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import meeting from "../assets/meetingtable.jpg";
-let Counter = () => {
+
+const CompHome = () => {
   return (
     <>
       <div>
@@ -83,4 +84,4 @@ let Counter = () => {
     </>
   );
 };
-export default Counter;
+export default CompHome;

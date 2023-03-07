@@ -3,10 +3,9 @@ import { useState } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-
 import { Password } from "primereact/password";
 
-let Up = () => {
+const CompSignUp = () => {
   const [value, setValue] = useState("");
   return (
     <>
@@ -103,4 +102,4 @@ let Up = () => {
     </>
   );
 };
-export default Up;
+export default CompSignUp;

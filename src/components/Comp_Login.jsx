@@ -3,10 +3,10 @@ import { useState } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import chrome from "../assets/chrome.png";
 import { Password } from "primereact/password";
+import chrome from "../assets/chrome.png";
 
-let Entrance = () => {
+const CompLogin = () => {
   const [value, setValue] = useState("");
   return (
     <>
@@ -100,4 +100,4 @@ let Entrance = () => {
     </>
   );
 };
-export default Entrance;
+export default CompLogin;
