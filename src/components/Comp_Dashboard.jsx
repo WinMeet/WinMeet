@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as Yup from "yup";
+import moment from "moment";
 import { Toast } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
@@ -22,7 +23,8 @@ const CompDashboard = () => {
     initialValues: {
       eventName: "",
       eventDescription: "",
-      eventDateTime: new Date(),
+      eventStartDate: new Date(),
+      eventFinishDate: "",
       eventDuration: "",
       participants: [],
     },
@@ -33,7 +35,7 @@ const CompDashboard = () => {
 
       eventDescription: Yup.string().optional(),
 
-      eventDateTime: Yup.date()
+      eventStartDate: Yup.date()
         .min(new Date(), "Please enter valid date-time")
         .required("Please enter valid date-time"),
 
@@ -53,11 +55,15 @@ const CompDashboard = () => {
 
     onSubmit: async (values) => {
       try {
+        // TODO: Remove
         alert(JSON.stringify(values, null, 2));
         const response = await axios.post("localhost:8080/api/createEvent", {
           eventName: values.eventName,
           eventDescription: values.eventDescription,
-          eventDateTime: values.eventDateTime,
+          eventStartDate: values.eventStartDate,
+          eventFinishDate: moment(values.eventStartDate)
+            .add(values.eventDuration, "m")
+            .toDate(),
           eventDuration: values.eventDuration,
           participants: values.participants,
         });
@@ -235,18 +241,18 @@ const CompDashboard = () => {
                           </div>
                           <div className="flex justify-content-start pt-3 align-items-center">
                             <Calendar
-                              name="eventDateTime"
+                              name="eventStartDate"
                               type="text"
                               onChange={formik.handleChange}
-                              value={formik.values.eventDateTime}
+                              value={formik.values.eventStartDate}
                               showTime
                               hourFormat="24"
                             />
                           </div>
                           <div className="card flex justify-content-start pt-2 text-red-500">
-                            {formik.touched.eventDateTime &&
-                            formik.errors.eventDateTime ? (
-                              <div>{formik.errors.eventDateTime}</div>
+                            {formik.touched.eventStartDate &&
+                            formik.errors.eventStartDate ? (
+                              <div>{formik.errors.eventStartDate}</div>
                             ) : null}
                           </div>
                           <div className="card flex justify-content-start pt-3 align-items-center">
