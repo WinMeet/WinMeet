@@ -186,10 +186,7 @@ const CompDashboard = () => {
                   </TabPanel>
                   <TabPanel header="Creat New Event" leftIcon="pi pi-plus mr-2">
                     {/**Inputs Start*/}
-                    <form
-                      onSubmit={formik.handleSubmit}
-                      className="flex flex-column gap-2"
-                    >
+                    <form onSubmit={formik.handleSubmit}>
                       <Card>
                         <div className="flex justify-content-left text-5xl pb-3 text-blue-800">
                           Event Details

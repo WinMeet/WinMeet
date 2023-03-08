@@ -1,13 +1,49 @@
 import React from "react";
-import { useState } from "react";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import chrome from "../assets/chrome.png";
 
+import axios from "axios";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+
 const CompLogin = () => {
-  const [value, setValue] = useState("");
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: Yup.object({
+      email: Yup.string()
+        .email("Please enter a valid email")
+        .required("Email cannot be empty"),
+
+      password: Yup.string()
+        .required("Password cannot be empty")
+        .matches(
+          /^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
+          "Password must contain at least one uppercase letter and number, and be at least 8 characters long"
+        ),
+    }),
+
+    onSubmit: async (values) => {
+      try {
+        // TODO: Remove
+        alert(JSON.stringify(values, null, 2));
+        const response = await axios.post("localhost:8080/api/login", {
+          email: values.email,
+          password: values.password,
+        });
+        const data = await response.json();
+        alert(JSON.stringify(data, null, 2));
+      } catch (error) {
+        console.error(error);
+      }
+    },
+  });
+
   return (
     <>
       <div>
@@ -40,31 +76,50 @@ const CompLogin = () => {
                 Log in to your account to get back to your hub for scheduling
                 meetings.
               </div>
-              <div>
-                {/*input and button */}
-                <div className="p-inputgroup pt-4">
-                  <InputText placeholder="E-mail" />
 
-                  <Password
-                    className="pl-2"
-                    placeholder="Password"
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
+              <form onSubmit={formik.handleSubmit}>
+                <div className="pt-3">
+                  <InputText
+                    placeholder="E-mail"
+                    name="email"
+                    type="text"
+                    onChange={formik.handleChange}
+                    value={formik.values.email}
                   />
+                  <div>
+                    <div className="card flex justify-content-start pt-2 text-red-500 font-normal">
+                      {formik.touched.email && formik.errors.email ? (
+                        <div>{formik.errors.email}</div>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div className="pt-3">
+                    <Password
+                      feedback={false}
+                      placeholder="Password"
+                      name="password"
+                      type="text"
+                      onChange={formik.handleChange}
+                      value={formik.values.password}
+                    />
+                  </div>
+                  <div>
+                    <div className="card flex justify-content-start pt-2 text-red-500 font-normal">
+                      {formik.touched.password && formik.errors.password ? (
+                        <div>{formik.errors.password}</div>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div className="pt-4">
+                    <Button
+                      label="Login"
+                      className="bg-blue-500 ml-2 hover:bg-blue-600"
+                    />
+                  </div>
 
-                  <Button
-                    label="Log in"
-                    className="bg-blue-500 ml-2 hover:bg-blue-600"
-                  />
+                  {/**Line Or Line end*/}
                 </div>
-                <p className="text-xl">
-                  Don’t have an account?{" "}
-                  <a className="text-blue-500 text-xl" href="../SignUp">
-                    {/*Sign up page connected*/}
-                    Sign Up
-                  </a>
-                </p>
-              </div>
+              </form>
             </div>
             <div class="p-4 border-round mx-4 text-left">
               <Card className="max-w-30rem">
