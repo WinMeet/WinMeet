@@ -13,11 +13,6 @@ import { useFormik } from "formik";
 import { Chips } from "primereact/chips";
 import { FileUpload } from "primereact/fileupload";
 
-import "primereact/resources/themes/lara-light-indigo/theme.css"; // theme
-import "primereact/resources/primereact.css"; // core css
-import "primeicons/primeicons.css"; // icons
-import "primeflex/primeflex.css"; // css utility
-
 const CompDashboard = () => {
   const formik = useFormik({
     initialValues: {
