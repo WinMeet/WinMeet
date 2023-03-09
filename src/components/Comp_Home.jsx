@@ -47,7 +47,7 @@ const CompHome = () => {
   return (
     <>
       <div className="col-10 col-offset-1">
-        <Menubar start={start} end={end} />
+        <Menubar className="bg-transparent" start={start} end={end} />
       </div>
 
       {/*Grid Start*/}
