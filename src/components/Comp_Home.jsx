@@ -21,7 +21,14 @@ const CompHome = () => {
     rightDivRef.current.style.height = `${leftDivHeight}px`;
   }, []);
 
-  const start = <p className="text-6xl m-2">WinMeet</p>;
+  const start = (
+    <Button
+      className="text-4xl m-2"
+      label="WinMeet"
+      text
+      onClick={(e) => navigateToRoute("/", e)}
+    />
+  );
   const end = (
     <div>
       <Button
