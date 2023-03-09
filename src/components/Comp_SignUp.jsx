@@ -82,7 +82,7 @@ const CompSignUp = () => {
         <div className="col-1"></div>
         {/*Left Div Starts*/}
         <div className="col-5 mt-6" ref={leftDivRef}>
-          <Card className="flex justify-content-center">
+          <Card className="shadow-6 flex justify-content-center">
             <form onSubmit={formik.handleSubmit}>
               <p className="pt-4 text-4xl">Sign Up</p>
               <div className="pt-4">
