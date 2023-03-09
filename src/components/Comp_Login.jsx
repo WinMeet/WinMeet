@@ -84,18 +84,16 @@ const CompLogin = () => {
         <div className="col-5 mt-6" ref={leftDivRef}>
           <Card className="shadow-6 flex justify-content-center">
             <form onSubmit={formik.handleSubmit}>
-              <p className="pt-4 text-4xl">Log In</p>
-              <div className="pt-4">
-                <span className="p-input-icon-left">
-                  <i className="pi pi-envelope" />
-                  <InputText
-                    placeholder="Email"
-                    name="email"
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                  />
-                </span>
-              </div>
+              <p className="text-4xl">Log In</p>
+              <span className="p-input-icon-left">
+                <i className="pi pi-envelope" />
+                <InputText
+                  placeholder="Email"
+                  name="email"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                />
+              </span>
               <div className="flex justify-content-start pt-2">
                 {formik.touched.email && formik.errors.email ? (
                   <Message severity="error" text={formik.errors.email} />
@@ -139,7 +137,7 @@ const CompLogin = () => {
               src={loginImage}
               imageStyle={{
                 maxWidth: "100%",
-                maxHeight: "100%",
+                maxHeight: "90%",
                 objectFit: "contain",
               }}
             />

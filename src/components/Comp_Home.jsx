@@ -56,8 +56,8 @@ const CompHome = () => {
         {/*Left Div Starts*/}
         <div className="col-5 mt-6">
           <div ref={leftDivRef}>
-            <Card className=" shadow-6">
-              <div className="text-left">
+            <Card className="shadow-6">
+              <div>
                 <p className="text-6xl text-blue-800 m-0">Easy</p>
                 <p className="text-6xl text-blue-800 m-0">scheduling</p>
                 <p className="text-6xl text-blue-400 m-0">ahead</p>
@@ -85,7 +85,7 @@ const CompHome = () => {
               src={calendarImage}
               imageStyle={{
                 maxWidth: "100%",
-                maxHeight: "100%",
+                maxHeight: "90%",
                 objectFit: "contain",
               }}
             />
