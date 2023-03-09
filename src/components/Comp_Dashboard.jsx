@@ -1,7 +1,4 @@
-import axios from "axios";
-import * as Yup from "yup";
 import React from "react";
-import moment from "moment";
 import { Toast } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
@@ -14,6 +11,9 @@ import { Chips } from "primereact/chips";
 import { FileUpload } from "primereact/fileupload";
 import { Menubar } from "primereact/menubar";
 import { Message } from "primereact/message";
+import { CreateMeetingRequestModel } from "../data/models/create_meeting/create_meeting_request_model";
+import { createMeeting } from "../data/api/api";
+import { useRef } from "react";
 
 const CompDashboard = () => {
   function navigateToRoute(route, e) {
@@ -21,18 +21,19 @@ const CompDashboard = () => {
     window.location.href = route;
   }
 
-  const showFailure = () => {
-    Toast.current.show({
+  const toast = useRef(null);
+
+  const showFailure = (message) => {
+    toast.current.show({
       severity: "error",
       summary: "Failed",
-      detail:
-        "An error occured while creating meeting please check your information",
+      detail: message,
       life: 3000,
     });
   };
 
   const showSuccess = () => {
-    Toast.current.show({
+    toast.current.show({
       severity: "success",
       summary: "Success",
       detail: "Event successfully created and send to participants",
@@ -77,60 +78,18 @@ const CompDashboard = () => {
   );
 
   const formik = useFormik({
-    initialValues: {
-      eventName: "",
-      eventDescription: "",
-      eventStartDate: new Date(),
-      eventFinishDate: "",
-      eventDuration: "",
-      participants: [],
-    },
-    validationSchema: Yup.object({
-      eventName: Yup.string()
-        .min(3, "Event name must be at least 3 characters")
-        .required("Event name is required"),
+    initialValues: CreateMeetingRequestModel.empty(),
+    validationSchema: CreateMeetingRequestModel.validationSchema,
 
-      eventDescription: Yup.string().optional(),
-
-      eventStartDate: Yup.date()
-        .min(new Date(), "Invalid Date-Time")
-        .required("Event Date-Time is required"),
-
-      eventDuration: Yup.number()
-        .min(10, "Duration must be at least 10 minutes")
-        .max(300, "Duration must not exceed 300 minutes")
-        .required("Duration is required"),
-
-      participants: Yup.array()
-        .of(
-          Yup.string()
-            .email("Enter a valid email")
-            .required("Participant list cannot be empty")
-        )
-        .min(1, "Include at least one participant."),
-    }),
-
-    onSubmit: async (values) => {
-      try {
-        // TODO: Remove
-        alert(JSON.stringify(values, null, 2));
-        const response = await axios.post("localhost:8080/api/createEvent", {
-          eventName: values.eventName,
-          eventDescription: values.eventDescription,
-          eventStartDate: values.eventStartDate,
-          eventFinishDate: moment(values.eventStartDate)
-            .add(values.eventDuration, "m")
-            .toDate(),
-          eventDuration: values.eventDuration,
-          participants: values.participants,
-        });
+    onSubmit: async (createMeetingRequestModel) => {
+      alert(JSON.stringify(createMeetingRequestModel, null, 2));
+      const response = await createMeeting(createMeetingRequestModel);
+      if (response.success) {
         showSuccess();
-        const data = await response.json();
-        alert(JSON.stringify(data, null, 2));
-      } catch (error) {
-        showFailure();
-        console.error(error);
+      } else {
+        showFailure(response.data);
       }
+      console.log(response);
     },
   });
 
@@ -150,7 +109,7 @@ const CompDashboard = () => {
               >
                 <p className="m-0">2</p>
               </TabPanel>
-              <TabPanel header="Creat New Event" leftIcon="pi pi-plus mr">
+              <TabPanel header="Create New Event" leftIcon="pi pi-plus mr">
                 <form onSubmit={formik.handleSubmit}>
                   <Card className="shadow-6">
                     <div className="text-4xl">Event Details</div>
@@ -229,6 +188,7 @@ const CompDashboard = () => {
                         <InputText
                           name="eventDuration"
                           type="text"
+                          keyfilter="int"
                           onChange={formik.handleChange}
                           value={formik.values.eventDuration}
                         />
@@ -300,8 +260,8 @@ const CompDashboard = () => {
                   <div className="grid justify-content-center pt-4">
                     <div className="flex col-5">
                       <Toast
+                        ref={toast}
                         // TODO : Move to onsubmit
-                        ref={Toast}
                         position="bottom-right"
                       />
                       <Button

@@ -6,11 +6,10 @@ import { Password } from "primereact/password";
 import { Menubar } from "primereact/menubar";
 import { Message } from "primereact/message";
 import { Image } from "primereact/image";
-
+import { SignUpRequestModel } from "../data/models/sign_up/sign_up_request_model";
+import { signup } from "../data/api/api";
 import signUpImage from "../assets/signup.svg";
 
-import axios from "axios";
-import * as Yup from "yup";
 import { useFormik } from "formik";
 
 const CompSignUp = () => {
@@ -46,30 +45,13 @@ const CompSignUp = () => {
   );
 
   const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email").required("Email is required"),
-      password: Yup.string()
-        .required("Password is required")
-        .matches(/^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, "Invalid password"),
-    }),
+    initialValues: SignUpRequestModel.empty(),
+    validationSchema: SignUpRequestModel.validationSchema,
 
-    onSubmit: async (values) => {
-      try {
-        // TODO: Remove
-        alert(JSON.stringify(values, null, 2));
-        const response = await axios.post("localhost:8080/api/signup", {
-          email: values.email,
-          password: values.password,
-        });
-        const data = await response.json();
-        alert(JSON.stringify(data, null, 2));
-      } catch (error) {
-        console.error(error);
-      }
+    onSubmit: async (SignUpRequestModel) => {
+      alert(JSON.stringify(SignUpRequestModel, null, 2));
+      const response = await signup(SignUpRequestModel);
+      console.log(response);
     },
   });
 
@@ -124,7 +106,11 @@ const CompSignUp = () => {
                 />
               </div>
               <div className="flex pt-4">
-                <Button className="flex-1" label="Sign Up"></Button>
+                <Button
+                  type="submit"
+                  className="flex-1"
+                  label="Sign Up"
+                ></Button>
               </div>
             </form>
           </Card>

@@ -6,11 +6,11 @@ import { Password } from "primereact/password";
 import { Menubar } from "primereact/menubar";
 import { Message } from "primereact/message";
 import { Image } from "primereact/image";
+import { LoginRequestModel } from "../data/models/login/login_request_model";
+import { login } from "../data/api/api";
 
 import loginImage from "../assets/login.svg";
 
-import axios from "axios";
-import * as Yup from "yup";
 import { useFormik } from "formik";
 
 const CompLogin = () => {
@@ -46,30 +46,13 @@ const CompLogin = () => {
   );
 
   const formik = useFormik({
-    initialValues: {
-      email: "",
-      password: "",
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().email("Invalid email").required("Email is required"),
-      password: Yup.string()
-        .required("Password is required")
-        .matches(/^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, "Invalid password"),
-    }),
+    initialValues: LoginRequestModel.empty(),
+    validationSchema: LoginRequestModel.validationSchema,
 
-    onSubmit: async (values) => {
-      try {
-        // TODO: Remove
-        alert(JSON.stringify(values, null, 2));
-        const response = await axios.post("localhost:8080/api/login", {
-          email: values.email,
-          password: values.password,
-        });
-        const data = await response.json();
-        alert(JSON.stringify(data, null, 2));
-      } catch (error) {
-        console.error(error);
-      }
+    onSubmit: async (loginRequestModel) => {
+      alert(JSON.stringify(loginRequestModel, null, 2));
+      const response = await login(loginRequestModel);
+      console.log(response);
     },
   });
 
@@ -124,7 +107,11 @@ const CompLogin = () => {
                 />
               </div>
               <div className="flex pt-4">
-                <Button className="flex-1" label="Log In"></Button>
+                <Button
+                  type="sumbit"
+                  className="flex-1"
+                  label="Log In"
+                ></Button>
               </div>
             </form>
           </Card>
