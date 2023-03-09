@@ -1,4 +1,4 @@
-import CompHome from "../components/Comp_Home";
+import CompHome from "components/Comp_Home";
 
 <link rel="stylesheet" href="https://unpkg.com/primeflex@^3/primeflex.css">
   {" "}

@@ -6,9 +6,9 @@ import { Password } from "primereact/password";
 import { Menubar } from "primereact/menubar";
 import { Message } from "primereact/message";
 import { Image } from "primereact/image";
-import { SignUpRequestModel } from "../data/models/sign_up/sign_up_request_model";
-import { signup } from "../data/api/api";
-import signUpImage from "../assets/signup.svg";
+import { SignUpRequestModel } from "data/models/sign_up/sign_up_request_model";
+import { signup } from "data/api/api";
+import signUpImage from "assets/signup.svg";
 
 import { useFormik } from "formik";
 

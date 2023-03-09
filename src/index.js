@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import App from "App";
 
 // Prime React
 import "primereact/resources/themes/bootstrap4-light-blue/theme.css";

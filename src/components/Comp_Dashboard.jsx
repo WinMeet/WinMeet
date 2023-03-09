@@ -11,8 +11,8 @@ import { Chips } from "primereact/chips";
 import { FileUpload } from "primereact/fileupload";
 import { Menubar } from "primereact/menubar";
 import { Message } from "primereact/message";
-import { CreateMeetingRequestModel } from "../data/models/create_meeting/create_meeting_request_model";
-import { createMeeting } from "../data/api/api";
+import { CreateMeetingRequestModel } from "data/models/create_meeting/create_meeting_request_model";
+import { createMeeting } from "data/api/api";
 import { useRef } from "react";
 
 const CompDashboard = () => {

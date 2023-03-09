@@ -6,10 +6,10 @@ import { Password } from "primereact/password";
 import { Menubar } from "primereact/menubar";
 import { Message } from "primereact/message";
 import { Image } from "primereact/image";
-import { LoginRequestModel } from "../data/models/login/login_request_model";
-import { login } from "../data/api/api";
+import { LoginRequestModel } from "data/models/login/login_request_model";
+import { login } from "data/api/api";
 
-import loginImage from "../assets/login.svg";
+import loginImage from "assets/login.svg";
 
 import { useFormik } from "formik";
 

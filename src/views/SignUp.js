@@ -1,4 +1,4 @@
-import CompSignUp from "../components/Comp_SignUp";
+import CompSignUp from "components/Comp_SignUp";
 
 export const SignUp = () => {
   return (

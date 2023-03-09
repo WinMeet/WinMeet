@@ -1,4 +1,4 @@
-import CompDashboard from "../components/Comp_Dashboard";
+import CompDashboard from "components/Comp_Dashboard";
 
 export const Dashboard = () => {
   return (

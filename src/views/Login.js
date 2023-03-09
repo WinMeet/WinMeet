@@ -1,4 +1,4 @@
-import CompLogin from "../components/Comp_Login";
+import CompLogin from "components/Comp_Login";
 
 export const Login = () => {
   return (

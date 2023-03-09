@@ -5,7 +5,7 @@ import { InputText } from "primereact/inputtext";
 import { Menubar } from "primereact/menubar";
 import { Image } from "primereact/image";
 
-import calendarImage from "../assets/calendar.svg";
+import calendarImage from "assets/calendar.svg";
 
 const CompHome = () => {
   function navigateToRoute(route, e) {
