@@ -13,7 +13,8 @@ import recruting from "assets/recruting.svg";
 import marketing from "assets/marketing.svg";
 import it from "assets/it.svg";
 import education from "assets/education.svg";
-
+import team from "assets/team.svg";
+import data from "assets/data.svg";
 const CompHome = () => {
   function navigateToRoute(route, e) {
     e.preventDefault();
@@ -362,6 +363,70 @@ const CompHome = () => {
             </div>
           </div>
           <div className="col-2" />
+        </div>
+      </div>
+      {/**img and message part */}
+      <div>
+        <div className="grid">
+          <div className="col-2 "></div>
+          <div className="col-8">
+            {/**grid system */}
+            <div className="grid">
+              <div className="col-6 ">
+                <Image
+                  className="hidden md:inline-flex pt-5"
+                  src={team}
+                  imageStyle={{
+                    maxWidth: "100%",
+                    maxHeight: "90%",
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
+              <div className="col-6 text-3xl">
+                <p className="font-bold"> Schedule as a group </p>
+                <p className="text-lg">
+                  {" "}
+                  WinMeet will adjust to your and your team's schedule
+                  preferences. Co-host a client call with a colleague, send out
+                  email reminders and follow-ups, and make sure everything is
+                  integrated with your favorite software tools.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="col-2 "></div>
+        </div>
+      </div>
+      <div>
+        <div className="grid">
+          <div className="col-2 "></div>
+          <div className="col-8">
+            {/**grid system */}
+            <div className="grid">
+              <div className="col-6 text-3xl">
+                <p className="font-bold"> Hit your number</p>
+                <p className="text-lg">
+                  {" "}
+                  High-value meetings are the lifeblood of your business.
+                  Increase revenue, retain customers, and land recruits with the
+                  #1 scheduling automation platform.
+                </p>
+              </div>
+              <div className="col-6 ">
+                <Image
+                  className="hidden md:inline-flex pt-5"
+                  src={data}
+                  imageStyle={{
+                    maxWidth: "100%",
+                    maxHeight: "90%",
+                    objectFit: "contain",
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="col-2 "></div>
         </div>
       </div>
     </>
