@@ -1,358 +1,282 @@
-import axios from "axios";
-import * as Yup from "yup";
-import moment from "moment";
+import React from "react";
 import { Toast } from "primereact/toast";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { TabView, TabPanel } from "primereact/tabview";
-import { Divider } from "primereact/divider";
 import { Calendar } from "primereact/calendar";
 import { useFormik } from "formik";
 import { Chips } from "primereact/chips";
 import { FileUpload } from "primereact/fileupload";
-
-import "primereact/resources/themes/lara-light-indigo/theme.css"; // theme
-import "primereact/resources/primereact.css"; // core css
-import "primeicons/primeicons.css"; // icons
-import "primeflex/primeflex.css"; // css utility
+import { Menubar } from "primereact/menubar";
+import { Message } from "primereact/message";
+import { CreateMeetingRequestModel } from "data/models/create_meeting/create_meeting_request_model";
+import { createMeeting } from "data/api/api";
+import { useRef } from "react";
 
 const CompDashboard = () => {
-  const formik = useFormik({
-    initialValues: {
-      eventName: "",
-      eventDescription: "",
-      eventStartDate: new Date(),
-      eventFinishDate: "",
-      eventDuration: "",
-      participants: [],
-    },
-    validationSchema: Yup.object({
-      eventName: Yup.string()
-        .min(3, "Event name cannot be less than 3 characters")
-        .required("Event name is required"),
+  function navigateToRoute(route, e) {
+    e.preventDefault();
+    window.location.href = route;
+  }
 
-      eventDescription: Yup.string().optional(),
+  const toast = useRef(null);
 
-      eventStartDate: Yup.date()
-        .min(new Date(), "Please enter valid date-time")
-        .required("Please enter valid date-time"),
-
-      eventDuration: Yup.number()
-        .min(10, "Duration cannot be less than 10 minutes")
-        .max(300, "Duration cannot be more than 300 minutes")
-        .required("Duration is required"),
-
-      participants: Yup.array()
-        .of(
-          Yup.string()
-            .email("Please enter a valid email")
-            .required("Participant list cannot be empty")
-        )
-        .min(1, "You have to add at least one participant"),
-    }),
-
-    onSubmit: async (values) => {
-      try {
-        // TODO: Remove
-        alert(JSON.stringify(values, null, 2));
-        const response = await axios.post("localhost:8080/api/createEvent", {
-          eventName: values.eventName,
-          eventDescription: values.eventDescription,
-          eventStartDate: values.eventStartDate,
-          eventFinishDate: moment(values.eventStartDate)
-            .add(values.eventDuration, "m")
-            .toDate(),
-          eventDuration: values.eventDuration,
-          participants: values.participants,
-        });
-        const data = await response.json();
-        alert(JSON.stringify(data, null, 2));
-      } catch (error) {
-        console.error(error);
-      }
-    },
-  });
+  const showFailure = (message) => {
+    toast.current.show({
+      severity: "error",
+      summary: "Failed",
+      detail: message,
+      life: 3000,
+    });
+  };
 
   const showSuccess = () => {
-    Toast.current.show({
+    toast.current.show({
       severity: "success",
       summary: "Success",
       detail: "Event successfully created and send to participants",
       life: 3000,
     });
   };
+
+  const start = (
+    <Button
+      className="text-4xl"
+      label="WinMeet"
+      text
+      onClick={(e) => navigateToRoute("/dashboard", e)}
+    />
+  );
+  const end = (
+    <div className="flex gap-3">
+      <Button
+        onClick={(e) => navigateToRoute("/dashboard", e)}
+        label="Home"
+        icon="pi pi-home"
+      />
+      <Button
+        // TODO : Implement help
+        onClick={(e) => navigateToRoute()}
+        label="Help"
+        icon="pi pi-question-circle"
+      />
+      <Button
+        // TODO : Implement account
+        onClick={(e) => navigateToRoute()}
+        label="Account"
+        icon="pi pi-user"
+      />
+      <Button
+        // TODO : Implement help
+        onClick={(e) => navigateToRoute()}
+        label="Log Out"
+        icon="pi pi-sign-out"
+      />
+    </div>
+  );
+
+  const formik = useFormik({
+    initialValues: CreateMeetingRequestModel.empty(),
+    validationSchema: CreateMeetingRequestModel.validationSchema,
+
+    onSubmit: async (createMeetingRequestModel) => {
+      alert(JSON.stringify(createMeetingRequestModel, null, 2));
+      const response = await createMeeting(createMeetingRequestModel);
+      if (response.success) {
+        showSuccess();
+      } else {
+        showFailure(response.data);
+      }
+      console.log(response);
+    },
+  });
+
   return (
     <>
-      <div>
-        {/*menu*/}
-        <div className="p-inputgroup m-0">
-          <Button
-            onClick={(e) => {
-              e.preventDefault();
-              window.location.href = "../Dashboard";
-            }}
-            label="WinMeet"
-            className="text-5xl bg-white border-white text-blue-800 ml-2"
-          />
-          <div>
-            {/**menu Home / Help / Account */}
-            <div className="absolute right-0 mr-5">
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.location.href = "../Dashboard";
-                }}
-                label="Home"
-                icon="pi pi-home blue-800"
-                iconPos="right"
-                className="border-round m-2 hover:bg-blue-800 hover:text-white bg-white text-blue-800 border-white"
-              ></Button>
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.location.href = "";
-                  // TODO: add help
-                }}
-                label="Help"
-                icon="pi pi-question blue-800"
-                iconPos="right"
-                className="border-round m-2 hover:bg-blue-800 hover:text-white bg-white text-blue-800 border-white"
-              />
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.location.href = "";
-                  // TODO: add account
-                }}
-                icon="pi pi-user blue-800"
-                iconPos="right"
-                label="Account"
-                className="border-round m-2 hover:bg-blue-800 hover:text-white bg-white text-blue-800 border-white"
-              />
-              <Button
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.location.href = "";
-                  // TODO: add quit
-                }}
-                label="Quit"
-                icon="pi pi-power-off blue-800"
-                iconPos="right"
-                className="border-round m-2 hover:bg-blue-800 hover:text-white bg-white text-blue-800 border-white"
-              />
-            </div>
-          </div>
-        </div>
-        <div style={{ flex: 1, height: "1px", backgroundColor: "lightgrey" }} />
-        <div className="grid p-3">
-          <div className="col-2 ">{/**first col */}</div>
-          {/**mid col */}
-          <div className="col-8">
-            <div label="username" className="font-semibold text-left text-5xl">
-              User Name
-            </div>
-            {/**tabview*/}
-            <div>
-              <div className="card p-3">
-                <TabView>
-                  <TabPanel header="Events" leftIcon="pi pi-calendar mr-2">
-                    <p className="m-0">
-                      Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                      sed do eiusmod tempor incididunt ut labore et dolore magna
-                      aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                      ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                      Duis aute irure dolor in reprehenderit in voluptate velit
-                      esse cillum dolore eu fugiat nulla pariatur. Excepteur
-                      sint occaecat cupidatat non proident, sunt in culpa qui
-                      officia deserunt mollit anim id est laborum.
-                    </p>
-                  </TabPanel>
-                  <TabPanel
-                    header="Scheduled Events"
-                    leftIcon="pi pi-calendar-times mr-2"
-                  >
-                    <p className="m-0">
-                      Sed ut perspiciatis unde omnis iste natus error sit
-                      voluptatem accusantium doloremque laudantium, totam rem
-                      aperiam, eaque ipsa quae ab illo inventore veritatis et
-                      quasi architecto beatae vitae dicta sunt explicabo. Nemo
-                      enim ipsam voluptatem quia voluptas sit aspernatur aut
-                      odit aut fugit, sed quia consequuntur magni dolores eos
-                      qui ratione voluptatem sequi nesciunt. Consectetur,
-                      adipisci velit, sed quia non numquam eius modi.
-                    </p>
-                  </TabPanel>
-                  <TabPanel header="Creat New Event" leftIcon="pi pi-plus mr-2">
-                    {/**Inputs Start*/}
-                    <form onSubmit={formik.handleSubmit}>
-                      <Card>
-                        <div className="flex justify-content-left text-5xl pb-3 text-blue-800">
-                          Event Details
-                        </div>
-                        <div className="">
-                          <p className="card flex justify-content-start">
-                            Event Name
-                          </p>
-                          <div className="card flex justify-content-start">
-                            <InputText
-                              name="eventName"
-                              type="text"
-                              onChange={formik.handleChange}
-                              value={formik.values.eventName}
-                            />
-                          </div>
-                          <div className="card flex justify-content-start pt-2 text-red-500">
-                            {formik.touched.eventName &&
-                            formik.errors.eventName ? (
-                              <div>{formik.errors.eventName}</div>
-                            ) : null}
-                          </div>
-                        </div>
-                        {/**Inputs Ends*/}
-                        <p className="card flex justify-content-start">
-                          Event Description
-                        </p>
+      <div className="grid">
+        <div className="col-10 col-offset-1">
+          <Menubar className="bg-transparent" start={start} end={end} />
+          <div className="pt-6">
+            <TabView>
+              <TabPanel header="Events" leftIcon="pi pi-calendar mr-2">
+                <p className="m-0">1</p>
+              </TabPanel>
+              <TabPanel
+                header="Scheduled Events"
+                leftIcon="pi pi-calendar-times mr-2"
+              >
+                <p className="m-0">2</p>
+              </TabPanel>
+              <TabPanel header="Create New Event" leftIcon="pi pi-plus mr">
+                <form onSubmit={formik.handleSubmit}>
+                  <Card className="shadow-6">
+                    <div className="text-4xl">Event Details</div>
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventName">Event Name</label>
+                        <InputText
+                          name="eventName"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.eventName}
+                        />
+                      </div>
+                    </div>
+                    <div className="pt-2">
+                      {formik.touched.eventName && formik.errors.eventName ? (
+                        <Message
+                          severity="error"
+                          text={formik.errors.eventName}
+                        />
+                      ) : null}
+                    </div>
 
-                        <div className="card flex justify-content-start">
-                          <InputTextarea
-                            name="eventDescription"
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventName"> Event Description</label>
+                        <InputTextarea
+                          name="eventDescription"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.eventDescription}
+                        />
+                      </div>
+                    </div>
+                    <div className="pt-2">
+                      {formik.touched.eventDescription &&
+                      formik.errors.eventDescription ? (
+                        <Message
+                          severity="error"
+                          text={formik.errors.eventDescription}
+                        />
+                      ) : null}
+                    </div>
+                  </Card>
+
+                  {/**Inputs Start*/}
+
+                  <Card className="mt-4 shadow-6">
+                    <div className="text-4xl">Event Date & Time</div>
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventStartDate">
+                          Event Date & Time
+                        </label>
+                        <Calendar
+                          name="eventStartDate"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.eventStartDate}
+                          showTime
+                        />
+                      </div>
+                    </div>
+                    <div className="card flex justify-content-start pt-2 text-red-500">
+                      {formik.touched.eventStartDate &&
+                      formik.errors.eventStartDate ? (
+                        <Message
+                          severity="error"
+                          text={formik.errors.eventStartDate}
+                        />
+                      ) : null}
+                    </div>
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventDuration"> Event Duration</label>
+                        <InputText
+                          name="eventDuration"
+                          type="text"
+                          keyfilter="int"
+                          onChange={formik.handleChange}
+                          value={formik.values.eventDuration}
+                        />
+                      </div>
+                    </div>
+                    <div className="pt-2">
+                      {formik.touched.eventDuration &&
+                      formik.errors.eventDuration ? (
+                        <Message
+                          severity="error"
+                          text={formik.errors.eventDuration}
+                        />
+                      ) : null}
+                    </div>
+                  </Card>
+                  <Card className="shadow-6 mt-4">
+                    <div className="text-4xl">Participants</div>
+                    <div className="grid">
+                      <div className="col-5">
+                        <div className="mt-2">Event Participant's E-mails:</div>
+                        <div className="card">
+                          <Chips
+                            className="mt-2"
+                            name="participants"
                             type="text"
                             onChange={formik.handleChange}
-                            value={formik.values.eventDescription}
-                          />
-                        </div>
-                      </Card>
-
-                      {/**Inputs Start*/}
-                      <div className="">
-                        <Divider className="w-full" />
-                        <Card>
-                          <div className="flex justify-content-left text-5xl pb-3 text-blue-800">
-                            Event Date & Time
-                          </div>
-
-                          <div className="card flex justify-content-start pt-3 align-items-center">
-                            Event Date & Time
-                          </div>
-                          <div className="flex justify-content-start pt-3 align-items-center">
-                            <Calendar
-                              name="eventStartDate"
-                              type="text"
-                              onChange={formik.handleChange}
-                              value={formik.values.eventStartDate}
-                              showTime
-                              hourFormat="24"
-                            />
-                          </div>
-                          <div className="card flex justify-content-start pt-2 text-red-500">
-                            {formik.touched.eventStartDate &&
-                            formik.errors.eventStartDate ? (
-                              <div>{formik.errors.eventStartDate}</div>
-                            ) : null}
-                          </div>
-                          <div className="card flex justify-content-start pt-3 align-items-center">
-                            Event Duration
-                          </div>
-                          <div className="card flex justify-content-start pt-3">
-                            <InputText
-                              name="eventDuration"
-                              type="number"
-                              onChange={formik.handleChange}
-                              value={formik.values.eventDuration}
-                              placeholder="Minutes"
-                            />
-                          </div>
-                          <div className="card flex justify-content-start pt-2 text-red-500">
-                            {formik.touched.eventDuration &&
-                            formik.errors.eventDuration ? (
-                              <div>{formik.errors.eventDuration}</div>
-                            ) : null}
-                          </div>
-                        </Card>
-                        <Divider className="w-full" />
-                        <Card>
-                          <div className="flex justify-content-left text-5xl pb-3 text-blue-800">
-                            Documents
-                          </div>
-                          <div>
-                            <p className="card flex justify-content-start pt-3">
-                              Upload File
-                            </p>
-                          </div>
-                          <div className="card">
-                            <FileUpload
-                              name="uploadFile"
-                              url={"/api/upload"}
-                              multiple
-                              accept="image,pdf/*"
-                              maxFileSize={1000000}
-                              emptyTemplate={
-                                <p className="m-0">
-                                  Drag and drop files to here to upload.
-                                </p>
-                              }
-                            />
-                          </div>
-                        </Card>
-                        <Divider className="w-full" />
-                        <Card>
-                          <div className="flex justify-content-left text-5xl pb-3 text-blue-800">
-                            Participants
-                          </div>
-                          <div className="grid">
-                            <div className="col-4">
-                              <div className="flex justify-content-left pb-3">
-                                Event Participant's E-mails:
-                              </div>
-                              <div className="card p-fluid justify-content-center">
-                                <Toast ref={Toast} />
-                                <Chips
-                                  name="participants"
-                                  type="text"
-                                  onChange={formik.handleChange}
-                                  value={formik.values.participants}
-                                />
-                              </div>
-                            </div>
-                            <div className="col-8"></div>
-                          </div>
-                          <div className="card flex justify-content-start pt-2 text-red-500">
-                            {formik.touched.participants &&
-                              (formik.errors.participants &&
-                              Array.isArray(formik.errors.participants) &&
-                              formik.errors.participants.length > 0 ? (
-                                <div>{formik.errors.participants[0]}</div>
-                              ) : formik.values.participants.length === 0 ? (
-                                <div>{formik.errors.participants}</div>
-                              ) : null)}
-                          </div>
-                        </Card>
-                      </div>
-
-                      <Divider className="w-full" />
-                      {/**Inputs Ends*/}
-                      <div className="card flex justify-content-center">
-                        <Toast ref={Toast} position="bottom-right" />
-                        <div className="flex flex-wrap gap-2">
-                          <Button
-                            label="Creat Event"
-                            type="submit"
-                            className="border-round m-2 hover:bg-white hover:text-blue-800 bg-blue-800 text-white border-blue-800"
-                            onClick={showSuccess}
+                            value={formik.values.participants}
                           />
                         </div>
                       </div>
-                    </form>
-                  </TabPanel>
-                </TabView>
-              </div>
-            </div>
+                    </div>
+                    <div className="card flex justify-content-start pt-2 text-red-500">
+                      {formik.touched.participants &&
+                        (formik.errors.participants &&
+                        Array.isArray(formik.errors.participants) &&
+                        formik.errors.participants.length > 0 ? (
+                          <Message
+                            severity="error"
+                            text={formik.errors.participants[0]}
+                          />
+                        ) : formik.values.participants.length === 0 ? (
+                          <Message
+                            severity="error"
+                            text={formik.errors.participants}
+                          />
+                        ) : null)}
+                    </div>
+                  </Card>
+                  <Card className="shadow-6 mt-4">
+                    <div className="text-4xl">Documents</div>
+                    <div>
+                      <p>Upload File</p>
+                    </div>
+                    <div className="card">
+                      <FileUpload
+                        name="uploadFile"
+                        url={"/api/upload"}
+                        multiple
+                        accept="image,pdf/*"
+                        maxFileSize={1000000}
+                        emptyTemplate={
+                          <p className="m-0">
+                            Drag and drop files to here to upload.
+                          </p>
+                        }
+                      />
+                    </div>
+                  </Card>
+                  <div className="grid justify-content-center pt-4">
+                    <div className="flex col-5">
+                      <Toast
+                        ref={toast}
+                        // TODO : Move to onsubmit
+                        position="bottom-right"
+                      />
+                      <Button
+                        className="flex-1"
+                        label="Create Event"
+                        type="submit"
+                        severity="success"
+                        size="lg"
+                      />
+                    </div>
+                  </div>
+                </form>
+              </TabPanel>
+            </TabView>
           </div>
-
-          {/**right col */}
-          <div className="col-2 "></div>
         </div>
       </div>
     </>
