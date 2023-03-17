@@ -24,7 +24,7 @@ const CompDashboard = () => {
     e.preventDefault();
     window.location.href = route;
   }
-
+  const [value, setValue] = useState("");
   const [visible, setVisible] = useState(false);
 
   const showDialog = () => {
@@ -166,6 +166,17 @@ const CompDashboard = () => {
                           text={formik.errors.eventDescription}
                         />
                       ) : null}
+                    </div>
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventName"> Event Location</label>
+                        <div className="card flex justify-content-center">
+                          <InputText
+                            value={value}
+                            onChange={(e) => setValue(e.target.value)}
+                          />
+                        </div>
+                      </div>
                     </div>
 
                     {/**Inputs Start*/}
