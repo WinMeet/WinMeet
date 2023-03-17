@@ -14,6 +14,7 @@ import { Message } from "primereact/message";
 import { CreateMeetingRequestModel } from "data/models/create_meeting/create_meeting_request_model";
 import { createMeeting } from "data/api/api";
 import { useRef } from "react";
+import BigCalendar from "components/Comp_Big_Calendar";
 
 const CompDashboard = () => {
   function navigateToRoute(route, e) {
@@ -101,7 +102,9 @@ const CompDashboard = () => {
           <div className="pt-6">
             <TabView>
               <TabPanel header="Events" leftIcon="pi pi-calendar mr-2">
-                <p className="m-0">1</p>
+                <p className="m-0">
+                  <BigCalendar></BigCalendar>
+                </p>
               </TabPanel>
               <TabPanel
                 header="Scheduled Events"
