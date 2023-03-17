@@ -5,12 +5,14 @@ export class CreateMeetingRequestModel {
   constructor(
     eventName,
     eventDescription,
+    location,
     eventStartDate,
     eventFinishDate,
     participants
   ) {
     this.eventName = eventName;
     this.eventDescription = eventDescription;
+    this.location = location;
     this.eventStartDate = eventStartDate;
     this.eventFinishDate = eventFinishDate;
     this.participants = participants;
@@ -22,6 +24,7 @@ export class CreateMeetingRequestModel {
     const endOfNextHour = moment(startOfNextHour).add(1, "hour");
 
     return new CreateMeetingRequestModel(
+      "",
       "",
       "",
       startOfNextHour.toDate(),

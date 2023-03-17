@@ -171,9 +171,11 @@ const CompDashboard = () => {
                       <div className="card flex flex-column gap-2">
                         <label htmlFor="eventName"> Event Location</label>
                         <div className="card flex justify-content-center">
-                          <InputText
-                            value={value}
-                            onChange={(e) => setValue(e.target.value)}
+                          <InputTextarea
+                            name="location"
+                            type="text"
+                            onChange={formik.handleChange}
+                            value={formik.values.location}
                           />
                         </div>
                       </div>
