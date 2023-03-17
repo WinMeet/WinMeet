@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-//import { render } from "react-dom";
+import { render } from "react-dom";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -12,22 +12,11 @@ class Bigcalendar extends Component {
     const now = new Date();
     const events = [
       {
-        id: 15,
-        title: "Point in Time Event",
-        start: now,
-        end: now,
-      },
-      {
-        id: 15,
-        title: "Point in Time Event",
-        start: now,
-        end: now,
-      },
-      {
-        id: 15,
-        title: "Point in Time Event",
-        start: now,
-        end: now,
+        id: 0,
+        title: "All Day Event very long title",
+        allDay: true,
+        start: new Date(2023, 2, 25),
+        end: new Date(2023, 2, 30),
       },
     ];
     this.state = {
@@ -35,6 +24,10 @@ class Bigcalendar extends Component {
       events,
     };
   }
+
+  handleSelectEvent = (event) => {
+    window.alert(`You clicked on event "${event.title}"`);
+  };
 
   render() {
     return (
@@ -46,6 +39,7 @@ class Bigcalendar extends Component {
             endAccessor="end"
             defaultDate={moment().toDate()}
             localizer={localizer}
+            onSelectEvent={this.handleSelectEvent}
           />
         </div>
       </div>
