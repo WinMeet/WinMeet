@@ -117,160 +117,153 @@ const CompDashboard = () => {
             <p className="m-0">
               <div className="mb-4 flex justify-content-end">
                 <Dialog
+                  style={{ width: "40vw" }}
                   header="New Event"
                   visible={visible}
                   onHide={hideDialog}
                 >
                   {/* Dialog content goes here */}
-                  <form onSubmit={formik.handleSubmit}>
-                    <Card className="shadow-none">
-                      <div className="text-4xl">Event Details</div>
-                      <div className="flex mt-2">
-                        <div className="card flex flex-column gap-2">
-                          <label htmlFor="eventName">Event Name</label>
-                          <InputText
-                            name="eventName"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.eventName}
-                          />
-                        </div>
-                      </div>
-                      <div className="pt-2">
-                        {formik.touched.eventName && formik.errors.eventName ? (
-                          <Message
-                            severity="error"
-                            text={formik.errors.eventName}
-                          />
-                        ) : null}
-                      </div>
 
-                      <div className="flex mt-2">
-                        <div className="card flex flex-column gap-2">
-                          <label htmlFor="eventName"> Event Description</label>
-                          <InputTextarea
-                            name="eventDescription"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.eventDescription}
-                          />
-                        </div>
+                  <form onSubmit={formik.handleSubmit}>
+                    <div className="text-4xl mt-2">Event Details</div>
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventName">Event Name</label>
+                        <InputText
+                          name="eventName"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.eventName}
+                        />
                       </div>
-                      <div className="pt-2">
-                        {formik.touched.eventDescription &&
-                        formik.errors.eventDescription ? (
-                          <Message
-                            severity="error"
-                            text={formik.errors.eventDescription}
-                          />
-                        ) : null}
+                    </div>
+                    <div className="pt-2">
+                      {formik.touched.eventName && formik.errors.eventName ? (
+                        <Message
+                          severity="error"
+                          text={formik.errors.eventName}
+                        />
+                      ) : null}
+                    </div>
+
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventName"> Event Description</label>
+                        <InputTextarea
+                          name="eventDescription"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.eventDescription}
+                        />
                       </div>
-                    </Card>
+                    </div>
+                    <div className="pt-2">
+                      {formik.touched.eventDescription &&
+                      formik.errors.eventDescription ? (
+                        <Message
+                          severity="error"
+                          text={formik.errors.eventDescription}
+                        />
+                      ) : null}
+                    </div>
 
                     {/**Inputs Start*/}
 
-                    <Card className="mt-4 shadow-none">
-                      <div className="text-4xl">Event Date & Time</div>
-                      <div className="flex mt-2">
-                        <div className="card flex flex-column gap-2">
-                          <label htmlFor="eventStartDate">
-                            Event Date & Time
-                          </label>
-                          <Calendar
-                            name="eventStartDate"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.eventStartDate}
-                            showTime
-                          />
-                        </div>
-                      </div>
-                      <div className="card flex justify-content-start pt-2 text-red-500">
-                        {formik.touched.eventStartDate &&
-                        formik.errors.eventStartDate ? (
-                          <Message
-                            severity="error"
-                            text={formik.errors.eventStartDate}
-                          />
-                        ) : null}
-                      </div>
-                      <div className="flex mt-2">
-                        <div className="card flex flex-column gap-2">
-                          <label htmlFor="eventDuration"> Event Duration</label>
-                          <InputText
-                            name="eventDuration"
-                            type="text"
-                            keyfilter="int"
-                            onChange={formik.handleChange}
-                            value={formik.values.eventDuration}
-                          />
-                        </div>
-                      </div>
-                      <div className="pt-2">
-                        {formik.touched.eventDuration &&
-                        formik.errors.eventDuration ? (
-                          <Message
-                            severity="error"
-                            text={formik.errors.eventDuration}
-                          />
-                        ) : null}
-                      </div>
-                    </Card>
-                    <Card className="shadow-none mt-4">
-                      <div className="text-4xl">Participants</div>
-                      <div className="grid">
-                        <div className="col-5">
-                          <div className="mt-2">
-                            Event Participant's E-mails:
-                          </div>
-                          <div className="card">
-                            <Chips
-                              className="mt-2"
-                              name="participants"
-                              type="text"
-                              onChange={formik.handleChange}
-                              value={formik.values.participants}
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div className="card flex justify-content-start pt-2 text-red-500">
-                        {formik.touched.participants &&
-                          (formik.errors.participants &&
-                          Array.isArray(formik.errors.participants) &&
-                          formik.errors.participants.length > 0 ? (
-                            <Message
-                              severity="error"
-                              text={formik.errors.participants[0]}
-                            />
-                          ) : formik.values.participants.length === 0 ? (
-                            <Message
-                              severity="error"
-                              text={formik.errors.participants}
-                            />
-                          ) : null)}
-                      </div>
-                    </Card>
-                    <Card className="shadow-none mt-4">
-                      <div className="text-4xl">Documents</div>
-                      <div>
-                        <p>Upload File</p>
-                      </div>
-                      <div className="card">
-                        <FileUpload
-                          name="uploadFile"
-                          url={"/api/upload"}
-                          multiple
-                          accept="image,pdf/*"
-                          maxFileSize={1000000}
-                          emptyTemplate={
-                            <p className="m-0">
-                              Drag and drop files to here to upload.
-                            </p>
-                          }
+                    <div className="text-4xl mt-5">Event Date & Time</div>
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventStartDate">Event Start Time</label>
+                        <Calendar
+                          name="eventStartDate"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.eventStartDate}
+                          showTime
                         />
                       </div>
-                    </Card>
+                    </div>
+                    <div className="card flex justify-content-start pt-2 text-red-500">
+                      {formik.touched.eventStartDate &&
+                      formik.errors.eventStartDate ? (
+                        <Message
+                          severity="error"
+                          text={formik.errors.eventStartDate}
+                        />
+                      ) : null}
+                    </div>
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventFinishDate"> Event End Date</label>
+                        <Calendar
+                          name="eventFinishDate"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.eventFinishDate}
+                          showTime
+                        />
+                      </div>
+                    </div>
+                    <div className="pt-2">
+                      {formik.touched.eventFinishDate &&
+                      formik.errors.eventFinishDate ? (
+                        <Message
+                          severity="error"
+                          text={formik.errors.eventFinishDate}
+                        />
+                      ) : null}
+                    </div>
+
+                    <div className="text-4xl mt-5">Participants</div>
+                    <div className="grid">
+                      <div className="col-8">
+                        <div className="mt-2">Event Participant's E-mails:</div>
+                        <div className="card">
+                          <Chips
+                            className="mt-2"
+                            name="participants"
+                            type="text"
+                            onChange={formik.handleChange}
+                            value={formik.values.participants}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="card flex justify-content-start pt-2 text-red-500">
+                      {formik.touched.participants &&
+                        (formik.errors.participants &&
+                        Array.isArray(formik.errors.participants) &&
+                        formik.errors.participants.length > 0 ? (
+                          <Message
+                            severity="error"
+                            text={formik.errors.participants[0]}
+                          />
+                        ) : formik.values.participants.length === 0 ? (
+                          <Message
+                            severity="error"
+                            text={formik.errors.participants}
+                          />
+                        ) : null)}
+                    </div>
+
+                    <div className="text-4xl mt-5">Documents</div>
+                    <div>
+                      <p>Upload File</p>
+                    </div>
+                    <div className="card">
+                      <FileUpload
+                        name="uploadFile"
+                        url={"/api/upload"}
+                        multiple
+                        accept="image,pdf/*"
+                        maxFileSize={1000000}
+                        emptyTemplate={
+                          <p className="m-0">
+                            Drag and drop files to here to upload.
+                          </p>
+                        }
+                      />
+                    </div>
+
                     <div className="grid justify-content-center pt-4">
                       <div className="flex col-5">
                         <Toast
