@@ -116,7 +116,6 @@ const CompDashboard = () => {
           <div className="pt-6">
             <p className="m-0">
               <div className="mb-4 flex justify-content-end">
-                <Button label="Create Event" onClick={showDialog} />
                 <Dialog
                   header="New Event"
                   visible={visible}
@@ -294,9 +293,12 @@ const CompDashboard = () => {
               <Cal></Cal>
               <div>
                 <Button
-                  size="large"
+                  className="z-5 w-4rem h-4rem border-circle shadow-6"
+                  onClick={showDialog}
+                  size="lg"
+                  // label="Create Event"
                   icon="pi pi-plus"
-                  style={{ position: "fixed", bottom: "20px", right: "20px" }}
+                  style={{ position: "fixed", bottom: "10%", right: "2%" }}
                 />
               </div>
             </p>
