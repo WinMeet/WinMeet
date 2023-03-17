@@ -9,7 +9,7 @@ import { Image } from "primereact/image";
 import { SignUpRequestModel } from "data/models/sign_up/sign_up_request_model";
 import { signup } from "data/api/api";
 import signUpImage from "assets/signup.svg";
-
+import { Divider } from "primereact/divider";
 import { useFormik } from "formik";
 
 const CompSignUp = () => {
@@ -60,10 +60,11 @@ const CompSignUp = () => {
       <div className="col-10 col-offset-1">
         <Menubar className="bg-transparent" start={start} end={end} />
       </div>
+      <Divider />
       <div className="grid">
         <div className="col-1"></div>
         {/*Left Div Starts*/}
-        <div className="col-5 mt-6" ref={leftDivRef}>
+        <div className="col-5" ref={leftDivRef}>
           <Card className="shadow-6 flex justify-content-center">
             <form onSubmit={formik.handleSubmit}>
               <p className="text-4xl">Sign Up</p>

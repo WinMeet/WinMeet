@@ -8,7 +8,7 @@ import { Message } from "primereact/message";
 import { Image } from "primereact/image";
 import { LoginRequestModel } from "data/models/login/login_request_model";
 import { login } from "data/api/api";
-
+import { Divider } from "primereact/divider";
 import loginImage from "assets/login.svg";
 
 import { useFormik } from "formik";
@@ -61,10 +61,11 @@ const CompLogin = () => {
       <div className="col-10 col-offset-1">
         <Menubar className="bg-transparent" start={start} end={end} />
       </div>
+      <Divider />
       <div className="grid">
         <div className="col-1"></div>
         {/*Left Div Starts*/}
-        <div className="col-5 mt-6" ref={leftDivRef}>
+        <div className="col-5" ref={leftDivRef}>
           <Card className="shadow-6 flex justify-content-center">
             <form onSubmit={formik.handleSubmit}>
               <p className="text-4xl">Log In</p>

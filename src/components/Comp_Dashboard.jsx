@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Toast } from "primereact/toast";
 import { Dialog } from "primereact/dialog";
-
+import { Divider } from "primereact/divider";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
 import { Card } from "primereact/card";
@@ -113,9 +113,10 @@ const CompDashboard = () => {
       <div className="grid">
         <div className="col-10 col-offset-1">
           <Menubar className="bg-transparent" start={start} end={end} />
-          <div className="pt-6">
+          <div className="">
             <p className="m-0">
               <div className="mb-4 flex justify-content-end">
+                <Divider />
                 <Dialog
                   style={{ width: "40vw" }}
                   header="New Event"

@@ -15,6 +15,7 @@ import it from "assets/it.svg";
 import education from "assets/education.svg";
 import team from "assets/team.svg";
 import data from "assets/data.svg";
+import { Divider } from "primereact/divider";
 const CompHome = () => {
   function navigateToRoute(route, e) {
     e.preventDefault();
@@ -60,9 +61,10 @@ const CompHome = () => {
 
       {/*Grid Start*/}
       <div className="grid pb-4">
+        <Divider />
         <div className="col-1"></div>
         {/*Left Div Starts*/}
-        <div className="col-5 mt-6">
+        <div className="col-5">
           <div ref={leftDivRef}>
             <Card className="shadow-6">
               <div>
@@ -90,11 +92,11 @@ const CompHome = () => {
         <div className="col-5 mt-6">
           <div ref={rightDivRef}>
             <Image
-              className="hidden md:inline-flex"
+              className="hidden md:inline-flex flex justify-content-center"
               src={calendarImage}
               imageStyle={{
-                maxWidth: "100%",
-                maxHeight: "90%",
+                maxWidth: "80%",
+                maxHeight: "80%",
                 objectFit: "contain",
               }}
             />
@@ -111,11 +113,8 @@ const CompHome = () => {
         <div className="grid pt-5">
           <div className="col-2" />
           <div className="col-8">
-            <div className="font-bold text-7xl flex align-items-center justify-content-center pt-5">
-              Designed for teams who conduct
-            </div>
-            <div className="font-bold text-7xl flex align-items-center justify-content-center pt-5 pb-5">
-              meetings at scale{" "}
+            <div className="font-bold text-7xl md:text-center flex align-items-center justify-content-center pt-5 pb-5">
+              Designed for teams who conduct meetings at scale{" "}
             </div>
             <div className="card  pt-5">
               <TabView className="myp-tabview-nav">
