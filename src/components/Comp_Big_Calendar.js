@@ -3,6 +3,7 @@ import { render } from "react-dom";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import { Dialog } from "primereact/dialog";
 
 const localizer = momentLocalizer(moment);
 
@@ -22,11 +23,20 @@ class Bigcalendar extends Component {
     this.state = {
       name: "React",
       events,
+      visible: false,
     };
   }
 
+  showDialog = () => {
+    this.setState({ visible: true });
+  };
+
+  hideDialog = () => {
+    this.setState({ visible: false });
+  };
+
   handleSelectEvent = (event) => {
-    window.alert(`You clicked on event "${event.title}"`);
+    this.showDialog();
   };
 
   render() {
@@ -41,6 +51,12 @@ class Bigcalendar extends Component {
             localizer={localizer}
             onSelectEvent={this.handleSelectEvent}
           />
+          <Dialog
+            style={{ width: "40vw" }}
+            header="Event Details"
+            visible={this.state.visible}
+            onHide={this.hideDialog}
+          ></Dialog>
         </div>
       </div>
     );
