@@ -7,10 +7,12 @@ import { Dialog } from "primereact/dialog";
 
 const localizer = momentLocalizer(moment);
 var fetchedItems = [];
+
 const Bigcalendar = () => {
   const [event, setEvents] = useState([]);
   const [visible, setVisible] = useState(false);
   const events = [];
+
   const promiseThen = new Promise((resolve, reject) => {
     fetch("http://localhost:3001/createMeeting/all")
       .then((response) => resolve(response.json()))
@@ -24,21 +26,11 @@ const Bigcalendar = () => {
       })
     )
     .catch((rej) => console.log(rej));
-
-  /*useEffect(() => {
-    // Fetch events data from database
-    fetch("http://localhost:3001/createMeeting/all")
-      .then((response) => console.log(response.json()))
-      .then((data) => setEvents(data))
-      .catch((error) => console.error(error));
-  }, []);*/
-
-  const now = new Date();
   if (fetchedItems.length > 0) {
     for (var i = 0; i < fetchedItems.length; i++) {
-      console.log(fetchedItems[0]);
+      //console.log(fetchedItems[0]);
 
-      console.log("events: " + events);
+      //console.log("events: " + events);
       events.push({
         id: fetchedItems[i]._id,
         title: fetchedItems[i].eventDescription,
@@ -49,7 +41,18 @@ const Bigcalendar = () => {
       // console.dir("events: " + setEvents);
     }
   }
-  console.log(events);
+
+  /*useEffect(() => {
+    // Fetch events data from database
+    fetch("http://localhost:3001/createMeeting/all")
+      .then((response) => console.log(response.json()))
+      .then((data) => setEvents(data))
+      .catch((error) => console.error(error));
+  }, []);*/
+
+  const now = new Date();
+
+  //console.log(events);
   const showDialog = () => {
     setVisible(true);
   };
@@ -80,7 +83,7 @@ const Bigcalendar = () => {
         />
         <Dialog
           style={{ width: "40vw" }}
-          header="Event Details"
+          header={eventData && <span>{eventData.title}</span>}
           visible={visible}
           onHide={hideDialog}
         >

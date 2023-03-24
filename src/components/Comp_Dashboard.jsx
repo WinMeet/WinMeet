@@ -18,6 +18,7 @@ import { CreateMeetingRequestModel } from "data/models/create_meeting/create_mee
 import { createMeeting } from "data/api/api";
 import { useRef } from "react";
 import Cal from "components/Comp_Big_Calendar";
+import Bigcalendar from "components/Comp_Big_Calendar";
 
 const CompDashboard = () => {
   function navigateToRoute(route, e) {
