@@ -11,13 +11,13 @@ const Bigcalendar = () => {
   const [events, setEvents] = useState([]);
   const [visible, setVisible] = useState(false);
 
-  useEffect(() => {
-    // Fetch events data from database
-    fetch("http://localhost3001/createMeeting/all")
-      .then((response) => response.json())
-      .then((data) => setEvents(data))
-      .catch((error) => console.error(error));
-  }, []);
+  // useEffect(() => {
+  //   // Fetch events data from database
+  //   fetch("http://localhost:3001/createMeeting/all")
+  //     .then((response) => response.json())
+  //     .then((data) => setEvents(data))
+  //     .catch((error) => console.error(error));
+  // }, []);
 
   const now = new Date();
 
