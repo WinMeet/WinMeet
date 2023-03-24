@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 import { render } from "react-dom";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
@@ -7,60 +7,52 @@ import { Dialog } from "primereact/dialog";
 
 const localizer = momentLocalizer(moment);
 
-class Bigcalendar extends Component {
-  constructor(props) {
-    super(props);
-    const now = new Date();
-    const events = [
-      {
-        id: 0,
-        title: "All Day Event very long title",
-        allDay: true,
-        start: new Date(2023, 2, 25),
-        end: new Date(2023, 2, 30),
-      },
-    ];
-    this.state = {
-      name: "React",
-      events,
-      visible: false,
-    };
-  }
+const Bigcalendar = () => {
+  const [events, setEvents] = useState([]);
+  const [visible, setVisible] = useState(false);
 
-  showDialog = () => {
-    this.setState({ visible: true });
+  useEffect(() => {
+    // Fetch events data from database
+    fetch("http://localhost3001/createMeeting/all")
+      .then((response) => response.json())
+      .then((data) => setEvents(data))
+      .catch((error) => console.error(error));
+  }, []);
+
+  const now = new Date();
+
+  const showDialog = () => {
+    setVisible(true);
   };
 
-  hideDialog = () => {
-    this.setState({ visible: false });
+  const hideDialog = () => {
+    setVisible(false);
   };
 
-  handleSelectEvent = (event) => {
-    this.showDialog();
+  const handleSelectEvent = (event) => {
+    showDialog();
   };
 
-  render() {
-    return (
-      <div>
-        <div style={{ height: "500pt" }}>
-          <Calendar
-            events={this.state.events}
-            startAccessor="start"
-            endAccessor="end"
-            defaultDate={moment().toDate()}
-            localizer={localizer}
-            onSelectEvent={this.handleSelectEvent}
-          />
-          <Dialog
-            style={{ width: "40vw" }}
-            header="Event Details"
-            visible={this.state.visible}
-            onHide={this.hideDialog}
-          ></Dialog>
-        </div>
+  return (
+    <div>
+      <div style={{ height: "500pt" }}>
+        <Calendar
+          events={events}
+          startAccessor="start"
+          endAccessor="end"
+          defaultDate={moment().toDate()}
+          localizer={localizer}
+          onSelectEvent={handleSelectEvent}
+        />
+        <Dialog
+          style={{ width: "40vw" }}
+          header="Event Details"
+          visible={visible}
+          onHide={hideDialog}
+        ></Dialog>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default Bigcalendar;
