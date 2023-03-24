@@ -207,22 +207,22 @@ const CompDashboard = () => {
                     </div>
                     <div className="flex mt-2">
                       <div className="card flex flex-column gap-2">
-                        <label htmlFor="eventFinishDate"> Event End Date</label>
+                        <label htmlFor="eventEndDate"> Event End Date</label>
                         <Calendar
-                          name="eventFinishDate"
+                          name="eventEndDate"
                           type="text"
                           onChange={formik.handleChange}
-                          value={formik.values.eventFinishDate}
+                          value={formik.values.eventEndDate}
                           showTime
                         />
                       </div>
                     </div>
                     <div className="pt-2">
-                      {formik.touched.eventFinishDate &&
-                      formik.errors.eventFinishDate ? (
+                      {formik.touched.eventEndDate &&
+                      formik.errors.eventEndDate ? (
                         <Message
                           severity="error"
-                          text={formik.errors.eventFinishDate}
+                          text={formik.errors.eventEndDate}
                         />
                       ) : null}
                     </div>

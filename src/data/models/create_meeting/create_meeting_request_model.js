@@ -7,15 +7,15 @@ export class CreateMeetingRequestModel {
     eventDescription,
     location,
     eventStartDate,
-    eventFinishDate,
+    eventEndDate,
     participants
   ) {
     this.eventName = eventName;
     this.eventDescription = eventDescription;
     this.location = location;
     this.eventStartDate = eventStartDate;
-    this.eventFinishDate = eventFinishDate;
-    this.participants = participants;
+    this.eventEndDate = eventEndDate;
+    this.participants = participants;    
   }
 
   static empty() {
@@ -44,7 +44,7 @@ export class CreateMeetingRequestModel {
       .min(new Date(), "Event date-time cannot be in the past")
       .required("Event date-time is required"),
 
-    eventFinishDate: Yup.date()
+    eventEndDate: Yup.date()
       .min(
         Yup.ref("eventStartDate"),
         "Event end date-time cannot be earlier than start date-time"
