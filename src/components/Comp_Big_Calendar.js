@@ -58,7 +58,12 @@ const Bigcalendar = () => {
     setVisible(false);
   };
 
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [eventData, setEventData] = useState(null);
+
   const handleSelectEvent = (event) => {
+    setSelectedEvent(event.id);
+    setEventData(event);
     showDialog();
   };
 
@@ -78,7 +83,15 @@ const Bigcalendar = () => {
           header="Event Details"
           visible={visible}
           onHide={hideDialog}
-        ></Dialog>
+        >
+          {eventData && (
+            <div>
+              <p>{eventData.title}</p>
+              <p>{eventData.start.toLocaleString()}</p>
+              <p>{eventData.end.toLocaleString()}</p>
+            </div>
+          )}
+        </Dialog>
       </div>
     </div>
   );
