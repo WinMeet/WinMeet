@@ -1,9 +1,11 @@
 import * as Yup from "yup";
 
 export class SignUpRequestModel {
-  constructor(email, password) {
+  constructor(email, password, name, surname) {
     this.email = email;
     this.password = password;
+    this.name = name;
+    this.surname = surname;
   }
 
   static empty() {
@@ -15,5 +17,7 @@ export class SignUpRequestModel {
     password: Yup.string()
       .required("Password is required")
       .matches(/^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, "Invalid password"),
+    name: Yup.string().required(),
+    surname: Yup.string().required(),
   });
 }

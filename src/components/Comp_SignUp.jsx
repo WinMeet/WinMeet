@@ -69,7 +69,29 @@ const CompSignUp = () => {
             <form onSubmit={formik.handleSubmit}>
               <p className="text-4xl">Sign Up</p>
               <span className="p-input-icon-left">
-                <i className="pi pi-envelope" />
+                <InputText
+                  placeholder="Name"
+                  name="name"
+                  onChange={formik.handleChange}
+                  value={formik.values.name}
+                />
+                <div className="flex justify-content-start pt-2">
+                  {formik.touched.name && formik.errors.name ? (
+                    <Message severity="error" text={formik.errors.name} />
+                  ) : null}
+                </div>
+                <InputText
+                  className="flex"
+                  placeholder="Surname"
+                  name="surname"
+                  onChange={formik.handleChange}
+                  value={formik.values.surname}
+                />
+                <div className="flex justify-content-start pt-2">
+                  {formik.touched.surname && formik.errors.surname ? (
+                    <Message severity="error" text={formik.errors.surname} />
+                  ) : null}
+                </div>
                 <InputText
                   placeholder="Email"
                   name="email"
