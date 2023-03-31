@@ -102,6 +102,7 @@ const CompDashboard = () => {
       const response = await createMeeting(createMeetingRequestModel);
       if (response.success) {
         showSuccess();
+        window.location.reload();
       } else {
         showFailure(response.data);
       }

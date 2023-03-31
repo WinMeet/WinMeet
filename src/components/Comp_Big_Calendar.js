@@ -17,7 +17,7 @@ const Bigcalendar = () => {
       .then((data) => {
         const fetchedEvents = data.eventData.map((item) => ({
           id: item._id,
-          title: item.eventDescription,
+          title: item.eventName,
           allDay: false,
           start: new Date(item.eventStartDate),
           end: new Date(item.eventEndDate),
