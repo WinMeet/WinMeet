@@ -5,12 +5,23 @@ import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Dialog } from "primereact/dialog";
 
+function toTitleCase(str) {
+  const titleCase = str
+    .toLowerCase()
+    .split(" ")
+    .map((word) => {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    })
+    .join(" ");
+
+  return titleCase;
+}
 const localizer = momentLocalizer(moment);
 
 const Bigcalendar = () => {
   const [events, setEvents] = useState([]);
   const [visible, setVisible] = useState(false);
-
+  const [event] = useState([]);
   useEffect(() => {
     fetch("http://localhost:3001/createMeeting/all")
       .then((response) => response.json())
@@ -18,9 +29,12 @@ const Bigcalendar = () => {
         const fetchedEvents = data.eventData.map((item) => ({
           id: item._id,
           title: item.eventName,
+          description: item.eventDescription,
+          location: item.location,
           allDay: false,
           start: new Date(item.eventStartDate),
           end: new Date(item.eventEndDate),
+          participant: item.participants,
         }));
         setEvents(fetchedEvents);
       })
@@ -57,15 +71,22 @@ const Bigcalendar = () => {
         />
         <Dialog
           style={{ width: "40vw" }}
-          header={eventData && <span>{eventData.title}</span>}
+          header={eventData && <span>{toTitleCase(eventData.title)}</span>}
           visible={visible}
           onHide={hideDialog}
         >
           {eventData && (
-            <div>
-              <p>{eventData.title}</p>
+            <div className="pt0">
+              <h3>Meeting Details</h3>
+              <p>{eventData.description}</p>
+              <h3>Meeting Location</h3>
+              <p>{eventData.location.toLocaleString()}</p>
+              <h3>Meeting Start Time</h3>
               <p>{eventData.start.toLocaleString()}</p>
+              <h3>Meeting End Time</h3>
               <p>{eventData.end.toLocaleString()}</p>
+              <h3>Meeting Participants</h3>
+              <p>{eventData.participant.toLocaleString()}</p>
             </div>
           )}
         </Dialog>
