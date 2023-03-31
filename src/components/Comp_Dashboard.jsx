@@ -98,7 +98,7 @@ const CompDashboard = () => {
     validationSchema: CreateMeetingRequestModel.validationSchema,
 
     onSubmit: async (createMeetingRequestModel) => {
-      alert(JSON.stringify(createMeetingRequestModel, null, 2));
+      //alert(JSON.stringify(createMeetingRequestModel, null, 2));
       const response = await createMeeting(createMeetingRequestModel);
       if (response.success) {
         showSuccess();

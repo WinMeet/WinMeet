@@ -4,7 +4,17 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Dialog } from "primereact/dialog";
-
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+import { Message } from "primereact/message";
+import { InputTextarea } from "primereact/inputtextarea";
+import { FileUpload } from "primereact/fileupload";
+import { Chips } from "primereact/chips";
+import { Toast } from "primereact/toast";
+import { useFormik } from "formik";
+import { CreateMeetingRequestModel } from "data/models/create_meeting/create_meeting_request_model";
+import { createMeeting } from "data/api/api";
+import { useRef } from "react";
 function toTitleCase(str) {
   const titleCase = str
     .toLowerCase()
@@ -19,6 +29,7 @@ function toTitleCase(str) {
 const localizer = momentLocalizer(moment);
 
 const Bigcalendar = () => {
+  const toast = useRef(null);
   const [events, setEvents] = useState([]);
   const [visible, setVisible] = useState(false);
   const [event] = useState([]);
@@ -41,6 +52,26 @@ const Bigcalendar = () => {
       .catch((error) => console.error(error));
   }, []);
 
+  function deleteEvent(id) {
+    fetch(`http://localhost:3001/createMeeting/${id}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json(); // If the response has a JSON body, you can parse it here
+      })
+      .then((data) => {
+        console.log("Successfully deleted:", data);
+        hideDialog();
+        window.location.reload(); // refresh the page
+      })
+      .catch((error) => {
+        console.error("Error while deleting:", error);
+      });
+  }
+
   const showDialog = () => {
     setVisible(true);
   };
@@ -57,6 +88,40 @@ const Bigcalendar = () => {
     setEventData(event);
     showDialog();
   };
+  const showFailure = (message) => {
+    toast.current.show({
+      severity: "error",
+      summary: "Failed",
+      detail: message,
+      life: 3000,
+    });
+  };
+
+  const showSuccess = () => {
+    toast.current.show({
+      severity: "success",
+      summary: "Success",
+      detail: "Event successfully created and send to participants",
+      life: 3000,
+    });
+  };
+
+  const formik = useFormik({
+    initialValues: CreateMeetingRequestModel.empty(),
+    validationSchema: CreateMeetingRequestModel.validationSchema,
+
+    onSubmit: async (createMeetingRequestModel) => {
+      //alert(JSON.stringify(createMeetingRequestModel, null, 2));
+      const response = await createMeeting(createMeetingRequestModel);
+      if (response.success) {
+        showSuccess();
+        window.location.reload();
+      } else {
+        showFailure(response.data);
+      }
+      console.log(response);
+    },
+  });
 
   return (
     <div>
@@ -78,17 +143,49 @@ const Bigcalendar = () => {
           {eventData && (
             <div className="pt0">
               <h3>Meeting Details</h3>
+              <p>{eventData.id}</p>
               <p>{eventData.description}</p>
               <h3>Meeting Location</h3>
-              <p>{eventData.location.toLocaleString()}</p>
+              <p>{eventData.location}</p>
               <h3>Meeting Start Time</h3>
               <p>{eventData.start.toLocaleString()}</p>
               <h3>Meeting End Time</h3>
               <p>{eventData.end.toLocaleString()}</p>
               <h3>Meeting Participants</h3>
-              <p>{eventData.participant.toLocaleString()}</p>
+              <p>{eventData.participant}</p>
             </div>
           )}
+          <div className="grid">
+            <div className="col-8"></div>
+            <div className="col-2">
+              <Button
+                className="z-5 w-4rem h-4rem border-circle shadow-6"
+                onClick={showDialog}
+                size="sm"
+                // label="Create Event"
+                icon="pi pi-pencil"
+                style={{
+                  position: "flex",
+                  bottom: "10%",
+                  right: "0%",
+                }}
+              />
+            </div>
+            <div className="col-2">
+              <Button
+                className="z-5 w-4rem h-4rem border-circle shadow-6"
+                severity="danger"
+                onClick={() => deleteEvent(eventData.id)}
+                size="sm"
+                icon="pi pi-trash"
+                style={{
+                  position: "flex",
+                  bottom: "10%",
+                  right: "0%",
+                }}
+              />
+            </div>
+          </div>
         </Dialog>
       </div>
     </div>
