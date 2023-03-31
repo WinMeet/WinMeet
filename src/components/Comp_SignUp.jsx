@@ -72,13 +72,13 @@ const CompSignUp = () => {
               <div className="pt-2">
                 <InputText
                   placeholder="Name"
-                  name="name"
+                  name="userName"
                   onChange={formik.handleChange}
-                  value={formik.values.name}
+                  value={formik.values.userName}
                 />
                 <div className="flex justify-content-start pt-2">
-                  {formik.touched.name && formik.errors.name ? (
-                    <Message severity="error" text={formik.errors.name} />
+                  {formik.touched.userName && formik.errors.userName ? (
+                    <Message severity="error" text={formik.errors.userName} />
                   ) : null}
                 </div>
               </div>
@@ -86,27 +86,30 @@ const CompSignUp = () => {
                 <InputText
                   className="flex"
                   placeholder="Surname"
-                  name="surname"
+                  name="userSurname"
                   onChange={formik.handleChange}
-                  value={formik.values.surname}
+                  value={formik.values.userSurname}
                 />
                 <div className="flex justify-content-start pt-2">
-                  {formik.touched.surname && formik.errors.surname ? (
-                    <Message severity="error" text={formik.errors.surname} />
+                  {formik.touched.userSurname && formik.errors.userSurname ? (
+                    <Message
+                      severity="error"
+                      text={formik.errors.userSurname}
+                    />
                   ) : null}
                 </div>
               </div>
               <div className="pt-2">
                 <InputText
                   placeholder="Email"
-                  name="email"
+                  name="userEmail"
                   onChange={formik.handleChange}
-                  value={formik.values.email}
+                  value={formik.values.userEmail}
                 />
 
                 <div className="flex justify-content-start pt-2">
-                  {formik.touched.email && formik.errors.email ? (
-                    <Message severity="error" text={formik.errors.email} />
+                  {formik.touched.userEmail && formik.errors.userEmail ? (
+                    <Message severity="error" text={formik.errors.userEmail} />
                   ) : null}
                 </div>
               </div>
@@ -114,15 +117,18 @@ const CompSignUp = () => {
                 <Password
                   feedback={false}
                   placeholder="Password"
-                  name="password"
+                  name="userPassword"
                   onChange={formik.handleChange}
-                  value={formik.values.password}
+                  value={formik.values.userPassword}
                   toggleMask
                 />
 
                 <div className="flex justify-content-start pt-2">
-                  {formik.touched.password && formik.errors.password ? (
-                    <Message severity="error" text={formik.errors.password} />
+                  {formik.touched.userPassword && formik.errors.userPassword ? (
+                    <Message
+                      severity="error"
+                      text={formik.errors.userPassword}
+                    />
                   ) : null}
                 </div>
               </div>

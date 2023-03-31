@@ -15,7 +15,7 @@ const login = async (loginRequestModel) => {
 
 const signup = async (signupRequestModel) => {
   try {
-    const response = await instance.post("/signup", signupRequestModel);
+    const response = await instance.post("/registeruser", signupRequestModel);
     return response.data;
   } catch (error) {
     return error.message;
