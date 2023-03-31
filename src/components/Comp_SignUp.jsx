@@ -68,7 +68,8 @@ const CompSignUp = () => {
           <Card className="shadow-6 flex justify-content-center">
             <form onSubmit={formik.handleSubmit}>
               <p className="text-4xl">Sign Up</p>
-              <span className="p-input-icon-left">
+
+              <div className="pt-2">
                 <InputText
                   placeholder="Name"
                   name="name"
@@ -80,6 +81,8 @@ const CompSignUp = () => {
                     <Message severity="error" text={formik.errors.name} />
                   ) : null}
                 </div>
+              </div>
+              <div className="pt-2">
                 <InputText
                   className="flex"
                   placeholder="Surname"
@@ -92,19 +95,22 @@ const CompSignUp = () => {
                     <Message severity="error" text={formik.errors.surname} />
                   ) : null}
                 </div>
+              </div>
+              <div className="pt-2">
                 <InputText
                   placeholder="Email"
                   name="email"
                   onChange={formik.handleChange}
                   value={formik.values.email}
                 />
-              </span>
-              <div className="flex justify-content-start pt-2">
-                {formik.touched.email && formik.errors.email ? (
-                  <Message severity="error" text={formik.errors.email} />
-                ) : null}
+
+                <div className="flex justify-content-start pt-2">
+                  {formik.touched.email && formik.errors.email ? (
+                    <Message severity="error" text={formik.errors.email} />
+                  ) : null}
+                </div>
               </div>
-              <div className="pt-4">
+              <div className="pt-2">
                 <Password
                   feedback={false}
                   placeholder="Password"
@@ -113,11 +119,12 @@ const CompSignUp = () => {
                   value={formik.values.password}
                   toggleMask
                 />
-              </div>
-              <div className="flex justify-content-start pt-2">
-                {formik.touched.password && formik.errors.password ? (
-                  <Message severity="error" text={formik.errors.password} />
-                ) : null}
+
+                <div className="flex justify-content-start pt-2">
+                  {formik.touched.password && formik.errors.password ? (
+                    <Message severity="error" text={formik.errors.password} />
+                  ) : null}
+                </div>
               </div>
               <div className="text-sm flex justify-content-end pt-2 gap-3">
                 <p>Have an account?</p>
