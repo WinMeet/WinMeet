@@ -6,53 +6,27 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Dialog } from "primereact/dialog";
 
 const localizer = momentLocalizer(moment);
-var fetchedItems = [];
 
 const Bigcalendar = () => {
-  const [event, setEvents] = useState([]);
+  const [events, setEvents] = useState([]);
   const [visible, setVisible] = useState(false);
-  const events = [];
 
-  const promiseThen = new Promise((resolve, reject) => {
+  useEffect(() => {
     fetch("http://localhost:3001/createMeeting/all")
-      .then((response) => resolve(response.json()))
-      .then((data) => setEvents(data))
-      .catch((error) => reject(error));
-  })
-    .then((val) =>
-      val.eventData.forEach((element) => {
-        //console.log(element._id);
-        fetchedItems.push(element);
+      .then((response) => response.json())
+      .then((data) => {
+        const fetchedEvents = data.eventData.map((item) => ({
+          id: item._id,
+          title: item.eventDescription,
+          allDay: false,
+          start: new Date(item.eventStartDate),
+          end: new Date(item.eventEndDate),
+        }));
+        setEvents(fetchedEvents);
       })
-    )
-    .catch((rej) => console.log(rej));
-  if (fetchedItems.length > 0) {
-    for (var i = 0; i < fetchedItems.length; i++) {
-      //console.log(fetchedItems[0]);
-
-      //console.log("events: " + events);
-      events.push({
-        id: fetchedItems[i]._id,
-        title: fetchedItems[i].eventDescription,
-        allDay: false,
-        start: fetchedItems[i].eventStartDate,
-        end: fetchedItems[i].eventEndDate,
-      });
-      // console.dir("events: " + setEvents);
-    }
-  }
-
-  /*useEffect(() => {
-    // Fetch events data from database
-    fetch("http://localhost:3001/createMeeting/all")
-      .then((response) => console.log(response.json()))
-      .then((data) => setEvents(data))
       .catch((error) => console.error(error));
-  }, []);*/
+  }, []);
 
-  const now = new Date();
-
-  //console.log(events);
   const showDialog = () => {
     setVisible(true);
   };
