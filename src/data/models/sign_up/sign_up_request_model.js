@@ -2,10 +2,10 @@ import * as Yup from "yup";
 
 export class SignUpRequestModel {
   constructor(email, password, name, surname) {
-    this.email = email;
-    this.password = password;
-    this.name = name;
-    this.surname = surname;
+    this.userEmail = email;
+    this.userPassword = password;
+    this.userName = name;
+    this.userSurname = surname;
   }
 
   static empty() {
