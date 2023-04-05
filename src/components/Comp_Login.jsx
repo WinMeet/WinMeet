@@ -30,7 +30,7 @@ const CompLogin = () => {
 
   const start = (
     <Button
-      className="text-4xl m-2"
+      className="text-4xl m-2 font-bold"
       label="WinMeet"
       text
       onClick={(e) => navigateToRoute("/", e)}
@@ -41,7 +41,7 @@ const CompLogin = () => {
       <Button
         onClick={(e) => navigateToRoute("/signup", e)}
         label="Sign Up"
-        className="m-2"
+        className="m-2 font-bold"
       />
     </div>
   );
@@ -112,7 +112,7 @@ const CompLogin = () => {
               <div className="flex pt-4">
                 <Button
                   type="sumbit"
-                  className="flex-1"
+                  className="flex-1 font-bold"
                   label="Log In"
                 ></Button>
               </div>

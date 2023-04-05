@@ -35,7 +35,7 @@ const CompHome = () => {
 
   const start = (
     <Button
-      className="text-4xl m-2"
+      className="text-4xl m-2 font-bold"
       label="WinMeet"
       text
       onClick={(e) => navigateToRoute("/", e)}
@@ -44,14 +44,14 @@ const CompHome = () => {
   const end = (
     <div>
       <Button
-        className="m-2"
+        className="m-2 font-bold"
         label="Log In"
         onClick={(e) => navigateToRoute("/login", e)}
       />
       <Button
         onClick={(e) => navigateToRoute("/signup", e)}
         label="Sign Up"
-        className="m-2"
+        className="m-2 font-bold"
       />
     </div>
   );

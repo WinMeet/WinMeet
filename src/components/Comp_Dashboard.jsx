@@ -58,7 +58,7 @@ const CompDashboard = () => {
 
   const start = (
     <Button
-      className="text-4xl"
+      className="text-4xl font-bold hover:bg-white"
       label="WinMeet"
       text
       onClick={(e) => navigateToRoute("/dashboard", e)}
@@ -68,24 +68,28 @@ const CompDashboard = () => {
   const end = (
     <div className="flex gap-3">
       <Button
+        className="font-bold"
         onClick={(e) => navigateToRoute("/dashboard", e)}
         label="Home"
         icon="pi pi-home"
       />
       <Button
         // TODO : Implement help
+        className="font-bold"
         onClick={(e) => navigateToRoute()}
         label="Help"
         icon="pi pi-question-circle"
       />
       <Button
         // TODO : Implement account
-        onClick={(e) => navigateToRoute()}
+        className="font-bold"
+        onClick={(e) => navigateToRoute("/account", e)}
         label="Account"
         icon="pi pi-user"
       />
       <Button
         // TODO : Implement help
+        className="font-bold"
         onClick={(e) => navigateToRoute()}
         label="Log Out"
         icon="pi pi-sign-out"
@@ -288,7 +292,7 @@ const CompDashboard = () => {
                           position="bottom-right"
                         />
                         <Button
-                          className="flex-1"
+                          className="flex-1 font-bold"
                           label="Create Event"
                           type="submit"
                           severity="success"

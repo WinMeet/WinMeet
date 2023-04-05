@@ -29,7 +29,7 @@ const CompSignUp = () => {
 
   const start = (
     <Button
-      className="text-4xl m-2"
+      className="text-4xl m-2 font-bold"
       label="WinMeet"
       text
       onClick={(e) => navigateToRoute("/", e)}
@@ -40,7 +40,7 @@ const CompSignUp = () => {
       <Button
         onClick={(e) => navigateToRoute("/login", e)}
         label="Log In"
-        className="m-2"
+        className="m-2 font-bold"
       />
     </div>
   );
@@ -146,7 +146,7 @@ const CompSignUp = () => {
               <div className="flex pt-4">
                 <Button
                   type="submit"
-                  className="flex-1"
+                  className="flex-1 font-bold"
                   label="Sign Up"
                 ></Button>
               </div>
