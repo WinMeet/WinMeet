@@ -1,5 +1,8 @@
-.myp-tabview-nav .p-tabview-nav{
-    align-content: center;
-    color: red;
-    justify-content: center;
+.myp-tabview-nav .p-tabview-nav {
+  align-content: center;
+  color: red;
+  justify-content: center;
+}
+body {
+  overflow-x: hidden;
 }

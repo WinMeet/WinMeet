@@ -19,7 +19,7 @@ import { createMeeting } from "data/api/api";
 import { useRef } from "react";
 import Cal from "components/Comp_Big_Calendar";
 import Bigcalendar from "components/Comp_Big_Calendar";
-
+import "my.css";
 const CompDashboard = () => {
   function navigateToRoute(route, e) {
     e.preventDefault();

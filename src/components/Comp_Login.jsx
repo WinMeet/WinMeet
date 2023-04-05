@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import "my.css";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -66,7 +67,8 @@ const CompLogin = () => {
         <div className="col-1"></div>
         {/*Left Div Starts*/}
         <div className="col-5" ref={leftDivRef}>
-          <Card className="shadow-6 flex justify-content-center">
+          <div style={{ height: "90px" }}></div>
+          <Card className="shadow-6 flex justify-content-center ">
             <form onSubmit={formik.handleSubmit}>
               <p className="text-4xl">Log In</p>
               <span className="p-input-icon-left">

@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import "my.css";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
@@ -65,6 +66,7 @@ const CompSignUp = () => {
         <div className="col-1"></div>
         {/*Left Div Starts*/}
         <div className="col-5" ref={leftDivRef}>
+          <div style={{ height: "50px" }}></div>
           <Card className="shadow-6 flex justify-content-center">
             <form onSubmit={formik.handleSubmit}>
               <p className="text-4xl">Sign Up</p>
@@ -132,7 +134,7 @@ const CompSignUp = () => {
                   ) : null}
                 </div>
               </div>
-              <div className="text-sm flex justify-content-end pt-2 gap-3">
+              <div className="text-sm flex  pt-2 gap-3">
                 <p>Have an account?</p>
                 <Button
                   label="Log In"
@@ -154,15 +156,18 @@ const CompSignUp = () => {
         {/*Left Div Ends*/}
         {/*Right Div Starts*/}
         <div className="col-5 mt-6">
+          <div style={{ height: "50px" }}></div>
           <div ref={rightDivRef}>
-            <Image
-              src={signUpImage}
-              imageStyle={{
-                maxWidth: "100%",
-                maxHeight: "90%",
-                objectFit: "contain",
-              }}
-            />
+            <div style={{ display: "flex", justifyContent: "flex-end" }}>
+              <Image
+                src={signUpImage}
+                imageStyle={{
+                  width: "95%",
+                  height: "95%",
+                  objectFit: "contain",
+                }}
+              />
+            </div>
           </div>
         </div>
         {/*Right Div Ends*/}

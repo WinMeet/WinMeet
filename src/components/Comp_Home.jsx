@@ -68,6 +68,7 @@ const CompHome = () => {
         <div className="col-1"></div>
         {/*Left Div Starts*/}
         <div className="col-5">
+          <div style={{ height: "70px" }}></div>
           <div ref={leftDivRef}>
             <Card className="shadow-6">
               <div>
@@ -430,6 +431,7 @@ const CompHome = () => {
           </div>
           <div className="col-2 "></div>
         </div>
+        <div style={{ height: "70px" }}></div>
       </div>
     </>
   );
