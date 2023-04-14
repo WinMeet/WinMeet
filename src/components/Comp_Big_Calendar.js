@@ -1,38 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { render } from "react-dom";
+import React, { useState, useEffect, useRef } from "react";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
-import { Message } from "primereact/message";
-import { InputTextarea } from "primereact/inputtextarea";
-import { FileUpload } from "primereact/fileupload";
-import { Chips } from "primereact/chips";
 import { Toast } from "primereact/toast";
 import { useFormik } from "formik";
 import { CreateMeetingRequestModel } from "data/models/create_meeting/create_meeting_request_model";
 import { createMeeting } from "data/api/api";
-import { useRef } from "react";
-function toTitleCase(str) {
-  const titleCase = str
+
+const toTitleCase = (str) => {
+  return str
     .toLowerCase()
     .split(" ")
-    .map((word) => {
-      return word.charAt(0).toUpperCase() + word.slice(1);
-    })
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(" ");
+};
 
-  return titleCase;
-}
 const localizer = momentLocalizer(moment);
 
 const Bigcalendar = () => {
   const toast = useRef(null);
   const [events, setEvents] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [event] = useState([]);
+  const [secondDialogVisible, setSecondDialogVisible] = useState(false);
+  const [selectedEventData, setSelectedEventData] = useState(null);
+
   useEffect(() => {
     fetch("http://localhost:3001/createMeeting/all")
       .then((response) => response.json())
@@ -52,7 +45,7 @@ const Bigcalendar = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  function deleteEvent(id) {
+  const deleteEvent = (id) => {
     fetch(`http://localhost:3001/createMeeting/${id}`, {
       method: "DELETE",
     })
@@ -60,17 +53,17 @@ const Bigcalendar = () => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
-        return response.json(); // If the response has a JSON body, you can parse it here
+        return response.json();
       })
       .then((data) => {
         console.log("Successfully deleted:", data);
         hideDialog();
-        window.location.reload(); // refresh the page
+        window.location.reload();
       })
       .catch((error) => {
         console.error("Error while deleting:", error);
       });
-  }
+  };
 
   const showDialog = () => {
     setVisible(true);
@@ -80,14 +73,19 @@ const Bigcalendar = () => {
     setVisible(false);
   };
 
-  const [selectedEvent, setSelectedEvent] = useState(null);
-  const [eventData, setEventData] = useState(null);
+  const showSecondDialog = () => {
+    setSecondDialogVisible(true);
+  };
+
+  const hideSecondDialog = () => {
+    setSecondDialogVisible(false);
+  };
 
   const handleSelectEvent = (event) => {
-    setSelectedEvent(event.id);
-    setEventData(event);
+    setSelectedEventData(event);
     showDialog();
   };
+
   const showFailure = (message) => {
     toast.current.show({
       severity: "error",
@@ -101,7 +99,7 @@ const Bigcalendar = () => {
     toast.current.show({
       severity: "success",
       summary: "Success",
-      detail: "Event successfully created and send to participants",
+      detail: "Event successfully created and sent to participants",
       life: 3000,
     });
   };
@@ -109,9 +107,7 @@ const Bigcalendar = () => {
   const formik = useFormik({
     initialValues: CreateMeetingRequestModel.empty(),
     validationSchema: CreateMeetingRequestModel.validationSchema,
-
     onSubmit: async (createMeetingRequestModel) => {
-      //alert(JSON.stringify(createMeetingRequestModel, null, 2));
       const response = await createMeeting(createMeetingRequestModel);
       if (response.success) {
         showSuccess();
@@ -136,23 +132,27 @@ const Bigcalendar = () => {
         />
         <Dialog
           style={{ width: "40vw" }}
-          header={eventData && <span>{toTitleCase(eventData.title)}</span>}
+          header={
+            selectedEventData && (
+              <span>{toTitleCase(selectedEventData.title)}</span>
+            )
+          }
           visible={visible}
           onHide={hideDialog}
         >
-          {eventData && (
+          {selectedEventData && (
             <div className="pt0">
               <h3>Meeting Details</h3>
-              <p>{eventData.id}</p>
-              <p>{eventData.description}</p>
+              <p>{selectedEventData.id}</p>
+              <p>{selectedEventData.description}</p>
               <h3>Meeting Location</h3>
-              <p>{eventData.location}</p>
+              <p>{selectedEventData.location}</p>
               <h3>Meeting Start Time</h3>
-              <p>{eventData.start.toLocaleString()}</p>
+              <p>{selectedEventData.start.toLocaleString()}</p>
               <h3>Meeting End Time</h3>
-              <p>{eventData.end.toLocaleString()}</p>
+              <p>{selectedEventData.end.toLocaleString()}</p>
               <h3>Meeting Participants</h3>
-              <p>{eventData.participant}</p>
+              <p>{selectedEventData.participant}</p>
             </div>
           )}
           <div className="grid">
@@ -160,9 +160,8 @@ const Bigcalendar = () => {
             <div className="col-2">
               <Button
                 className="z-5 w-4rem h-4rem border-circle shadow-6"
-                onClick={showDialog}
+                onClick={showSecondDialog}
                 size="sm"
-                // label="Create Event"
                 icon="pi pi-pencil"
                 style={{
                   position: "flex",
@@ -175,7 +174,7 @@ const Bigcalendar = () => {
               <Button
                 className="z-5 w-4rem h-4rem border-circle shadow-6"
                 severity="danger"
-                onClick={() => deleteEvent(eventData.id)}
+                onClick={() => deleteEvent(selectedEventData.id)}
                 size="sm"
                 icon="pi pi-trash"
                 style={{
@@ -186,8 +185,17 @@ const Bigcalendar = () => {
               />
             </div>
           </div>
+        </Dialog>{" "}
+        <Dialog
+          header="Second Dialog"
+          visible={secondDialogVisible}
+          onHide={hideSecondDialog}
+          style={{ width: "40vw" }}
+        >
+          <p>Content for the second dialog goes here</p>
         </Dialog>
       </div>
+      <Toast ref={toast} />
     </div>
   );
 };
