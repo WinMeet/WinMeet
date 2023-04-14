@@ -187,7 +187,11 @@ const Bigcalendar = () => {
           </div>
         </Dialog>{" "}
         <Dialog
-          header="Second Dialog"
+          header={
+            selectedEventData && (
+              <span>{"Edit " + toTitleCase(selectedEventData.title)}</span>
+            )
+          }
           visible={secondDialogVisible}
           onHide={hideSecondDialog}
           style={{ width: "40vw" }}
