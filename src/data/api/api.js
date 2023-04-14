@@ -6,7 +6,10 @@ const instance = axios.create({
 
 const login = async (loginRequestModel) => {
   try {
-    const response = await instance.post("/login", loginRequestModel);
+    const response = await instance.post(
+      "/registeruser/verify_user",
+      loginRequestModel
+    );
     return response.data;
   } catch (error) {
     return error.message;
