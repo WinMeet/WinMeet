@@ -67,7 +67,7 @@ const CompLogin = () => {
         <div className="col-1"></div>
         {/*Left Div Starts*/}
         <div className="col-5" ref={leftDivRef}>
-          <div style={{ height: "90px" }}></div>
+          <div style={{ height: "50px" }}></div>
           <Card className="shadow-6 flex justify-content-center ">
             <form onSubmit={formik.handleSubmit}>
               <p className="text-4xl">Log In</p>
