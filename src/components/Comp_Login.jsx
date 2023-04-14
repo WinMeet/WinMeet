@@ -53,7 +53,12 @@ const CompLogin = () => {
     onSubmit: async (loginRequestModel) => {
       alert(JSON.stringify(loginRequestModel, null, 2));
       const response = await login(loginRequestModel);
-      console.log(response);
+      console.log(response.token);
+      if (response.token != undefined) {
+        window.location.href = "http://localhost:3000/dashboard";
+      } else {
+        window.location.href = "http://localhost:3000/login";
+      }
     },
   });
 
