@@ -3,7 +3,6 @@ import "my.css";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import { Menubar } from "primereact/menubar";
 import { Image } from "primereact/image";
 import { TabView, TabPanel } from "primereact/tabview";
 import calendarImage from "assets/calendar.svg";
@@ -15,12 +14,14 @@ import it from "assets/it.svg";
 import education from "assets/education.svg";
 import team from "assets/team.svg";
 import data from "assets/data.svg";
-import { Divider } from "primereact/divider";
+import { useNavigate } from "react-router-dom";
+import UnauthenticatedNavbar from "components/UnauthenticatedNavbar";
 const CompHome = () => {
-  function navigateToRoute(route, e) {
-    e.preventDefault();
-    window.location.href = route;
-  }
+  const navigate = useNavigate();
+
+  const navigateToRoute = (routeName) => {
+    navigate(routeName);
+  };
   useEffect(() => {
     // 👇️ scroll to top on page load
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
@@ -33,38 +34,14 @@ const CompHome = () => {
     rightDivRef.current.style.height = `${leftDivHeight}px`;
   }, []);
 
-  const start = (
-    <Button
-      className="text-4xl m-2 font-bold"
-      label="WinMeet"
-      text
-      onClick={(e) => navigateToRoute("/", e)}
-    />
-  );
-  const end = (
-    <div>
-      <Button
-        className="m-2 font-bold"
-        label="Log In"
-        onClick={(e) => navigateToRoute("/login", e)}
-      />
-      <Button
-        onClick={(e) => navigateToRoute("/signup", e)}
-        label="Sign Up"
-        className="m-2 font-bold"
-      />
-    </div>
-  );
-
   return (
     <>
       <div className="col-10 col-offset-1">
-        <Menubar className="bg-transparent" start={start} end={end} />
+        <UnauthenticatedNavbar></UnauthenticatedNavbar>
       </div>
 
       {/*Grid Start*/}
       <div className="grid pb-4">
-        <Divider />
         <div className="col-1"></div>
         {/*Left Div Starts*/}
         <div className="col-5">
@@ -84,7 +61,7 @@ const CompHome = () => {
               <div className="p-inputgroup mt-6">
                 <InputText placeholder="E-mail" />
                 <Button
-                  onClick={(e) => navigateToRoute("/signup", e)}
+                  onClick={() => navigateToRoute("/signup")}
                   label="Sign Up"
                 />
               </div>

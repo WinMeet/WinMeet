@@ -2,30 +2,22 @@ import React from "react";
 import { useState } from "react";
 import { Toast } from "primereact/toast";
 import { Dialog } from "primereact/dialog";
-import { Divider } from "primereact/divider";
 import { InputText } from "primereact/inputtext";
 import { InputTextarea } from "primereact/inputtextarea";
-//import { Card } from "primereact/card";
 import { Button } from "primereact/button";
-//import { TabView, TabPanel } from "primereact/tabview";
 import { Calendar } from "primereact/calendar";
 import { useFormik } from "formik";
 import { Chips } from "primereact/chips";
 import { FileUpload } from "primereact/fileupload";
-import { Menubar } from "primereact/menubar";
 import { Message } from "primereact/message";
 import { CreateMeetingRequestModel } from "data/models/create_meeting/create_meeting_request_model";
 import { createMeeting } from "data/api/api";
 import { useRef } from "react";
 import Cal from "components/Comp_Big_Calendar";
-import Bigcalendar from "components/Comp_Big_Calendar";
+import AuthenticatedNavbar from "components/AuthenticatedNavbar";
 import "my.css";
+
 const CompDashboard = () => {
-  function navigateToRoute(route, e) {
-    e.preventDefault();
-    window.location.href = route;
-  }
-  const [value, setValue] = useState("");
   const [visible, setVisible] = useState(false);
 
   const showDialog = () => {
@@ -56,47 +48,6 @@ const CompDashboard = () => {
     });
   };
 
-  const start = (
-    <Button
-      className="text-4xl font-bold hover:bg-white"
-      label="WinMeet"
-      text
-      onClick={(e) => navigateToRoute("/dashboard", e)}
-    />
-  );
-
-  const end = (
-    <div className="flex gap-3">
-      <Button
-        className="font-bold"
-        onClick={(e) => navigateToRoute("/dashboard", e)}
-        label="Home"
-        icon="pi pi-home"
-      />
-      <Button
-        // TODO : Implement help
-        className="font-bold"
-        onClick={(e) => navigateToRoute()}
-        label="Help"
-        icon="pi pi-question-circle"
-      />
-      <Button
-        // TODO : Implement account
-        className="font-bold"
-        onClick={(e) => navigateToRoute("/account", e)}
-        label="Account"
-        icon="pi pi-user"
-      />
-      <Button
-        // TODO : Implement help
-        className="font-bold"
-        onClick={(e) => navigateToRoute()}
-        label="Log Out"
-        icon="pi pi-sign-out"
-      />
-    </div>
-  );
-
   const formik = useFormik({
     initialValues: CreateMeetingRequestModel.empty(),
     validationSchema: CreateMeetingRequestModel.validationSchema,
@@ -118,11 +69,10 @@ const CompDashboard = () => {
     <>
       <div className="grid">
         <div className="col-10 col-offset-1">
-          <Menubar className="bg-transparent" start={start} end={end} />
+          <AuthenticatedNavbar></AuthenticatedNavbar>
           <div className="">
             <p className="m-0">
               <div className="mb-4 flex justify-content-end">
-                <Divider />
                 <Dialog
                   style={{ width: "40vw" }}
                   header="New Event"

@@ -4,21 +4,22 @@ import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
-import { Menubar } from "primereact/menubar";
 import { Message } from "primereact/message";
 import { Image } from "primereact/image";
 import { SignUpRequestModel } from "data/models/sign_up/sign_up_request_model";
 import { signup } from "data/api/api";
 import signUpImage from "assets/signup.svg";
-import { Divider } from "primereact/divider";
 import { useFormik } from "formik";
 import { Toast } from "primereact/toast";
+import UnauthenticatedNavbar from "components/UnauthenticatedNavbar";
+import { useNavigate } from "react-router-dom";
 
 const CompSignUp = () => {
-  function navigateToRoute(route, e) {
-    e.preventDefault();
-    window.location.href = route;
-  }
+  const navigate = useNavigate();
+
+  const navigateToRoute = (routeName) => {
+    navigate(routeName);
+  };
 
   const leftDivRef = useRef(null);
   const rightDivRef = useRef(null);
@@ -33,24 +34,6 @@ const CompSignUp = () => {
     rightDivRef.current.style.height = `${leftDivHeight}px`;
   }, []);
 
-  const start = (
-    <Button
-      className="text-4xl m-2 font-bold"
-      label="WinMeet"
-      text
-      onClick={(e) => navigateToRoute("/", e)}
-    />
-  );
-  const end = (
-    <div>
-      <Button
-        onClick={(e) => navigateToRoute("/login", e)}
-        label="Log In"
-        className="m-2 font-bold"
-      />
-    </div>
-  );
-
   const formik = useFormik({
     initialValues: SignUpRequestModel.empty(),
     validationSchema: SignUpRequestModel.validationSchema,
@@ -60,11 +43,11 @@ const CompSignUp = () => {
       const response = await signup(SignUpRequestModel);
       console.log(response);
 
-      if (!response.error) {
-        window.location.href = "/login";
-      } else {
+      if (response.error) {
         console.error(response.error);
         showToast("error", "Sign Up Error", response.error);
+      } else {
+        navigateToRoute("/login");
       }
     },
   });
@@ -73,9 +56,8 @@ const CompSignUp = () => {
     <>
       <Toast ref={toast} position="bottom-right" />
       <div className="col-10 col-offset-1">
-        <Menubar className="bg-transparent" start={start} end={end} />
+        <UnauthenticatedNavbar></UnauthenticatedNavbar>
       </div>
-      <Divider />
       <div className="grid">
         <div className="col-1"></div>
         {/*Left Div Starts*/}
@@ -153,7 +135,7 @@ const CompSignUp = () => {
                 <Button
                   label="Log In"
                   size="sm"
-                  onClick={(e) => navigateToRoute("/login", e)}
+                  onClick={() => navigateToRoute("/login")}
                   link
                 />
               </div>

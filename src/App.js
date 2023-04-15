@@ -6,20 +6,23 @@ import { Login } from "views/Login";
 import { SignUp } from "views/SignUp";
 import { Dashboard } from "views/Dashboard";
 import { Account } from "views/Account";
+import ProtectedRoutes from "./utils/ProtectedRoutes";
 
 function App() {
   return (
     <div className="App">
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />{" "}
-          <Route path="/login" element={<Login />} />{" "}
-          <Route path="/signup" element={<SignUp />} />{" "}
-          <Route path="/dashboard" element={<Dashboard />} />{" "}
-          <Route path="/Account" element={<Account />} />{" "}
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/account" element={<Account />} />
+          </Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="*" element={<h1> Page not found </h1>} />
-        </Routes>{" "}
-      </Router>{" "}
+        </Routes>
+      </Router>
     </div>
   );
 }
