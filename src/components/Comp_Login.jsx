@@ -11,6 +11,7 @@ import { LoginRequestModel } from "data/models/login/login_request_model";
 import { login } from "data/api/api";
 import { Divider } from "primereact/divider";
 import loginImage from "assets/login.svg";
+import { Toast } from "primereact/toast";
 
 import { useFormik } from "formik";
 
@@ -22,6 +23,11 @@ const CompLogin = () => {
 
   const leftDivRef = useRef(null);
   const rightDivRef = useRef(null);
+  const toast = useRef(null);
+
+  const showToast = (severity, summary, detail) => {
+    toast.current.show({ severity, summary, detail, life: 5000 });
+  };
 
   useEffect(() => {
     const leftDivHeight = leftDivRef.current.clientHeight;
@@ -51,19 +57,22 @@ const CompLogin = () => {
     validationSchema: LoginRequestModel.validationSchema,
 
     onSubmit: async (loginRequestModel) => {
-      alert(JSON.stringify(loginRequestModel, null, 2));
+      console.log(JSON.stringify(loginRequestModel, null, 2));
       const response = await login(loginRequestModel);
-      console.log(response.token);
-      if (response.token != undefined) {
-        window.location.href = "http://localhost:3000/dashboard";
+
+      if (response.token) {
+        console.log(response.token);
+        window.location.href = "/dashboard";
       } else {
-        window.location.href = "http://localhost:3000/login";
+        console.error(response.error);
+        showToast("error", "Login Error", response.error);
       }
     },
   });
 
   return (
     <>
+      <Toast ref={toast} position="bottom-right" />
       <div className="col-10 col-offset-1">
         <Menubar className="bg-transparent" start={start} end={end} />
       </div>

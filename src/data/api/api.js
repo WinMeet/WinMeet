@@ -6,22 +6,19 @@ const instance = axios.create({
 
 const login = async (loginRequestModel) => {
   try {
-    const response = await instance.post(
-      "/registeruser/verify_user",
-      loginRequestModel
-    );
-    return response.data;
+    const response = await instance.post("/login", loginRequestModel);
+    return { token: response.data.token };
   } catch (error) {
-    return error.message;
+    return { error: error.message };
   }
 };
 
 const signup = async (signupRequestModel) => {
   try {
-    const response = await instance.post("/registeruser", signupRequestModel);
-    return response.data;
+    const response = await instance.post("/register", signupRequestModel);
+    return { message: response.data.message };
   } catch (error) {
-    return error.message;
+    return { error: error.message };
   }
 };
 

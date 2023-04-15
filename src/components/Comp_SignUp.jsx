@@ -12,6 +12,7 @@ import { signup } from "data/api/api";
 import signUpImage from "assets/signup.svg";
 import { Divider } from "primereact/divider";
 import { useFormik } from "formik";
+import { Toast } from "primereact/toast";
 
 const CompSignUp = () => {
   function navigateToRoute(route, e) {
@@ -21,6 +22,11 @@ const CompSignUp = () => {
 
   const leftDivRef = useRef(null);
   const rightDivRef = useRef(null);
+  const toast = useRef(null);
+
+  const showToast = (severity, summary, detail) => {
+    toast.current.show({ severity, summary, detail, life: 5000 });
+  };
 
   useEffect(() => {
     const leftDivHeight = leftDivRef.current.clientHeight;
@@ -53,11 +59,19 @@ const CompSignUp = () => {
       alert(JSON.stringify(SignUpRequestModel, null, 2));
       const response = await signup(SignUpRequestModel);
       console.log(response);
+
+      if (!response.error) {
+        window.location.href = "/login";
+      } else {
+        console.error(response.error);
+        showToast("error", "Sign Up Error", response.error);
+      }
     },
   });
 
   return (
     <>
+      <Toast ref={toast} position="bottom-right" />
       <div className="col-10 col-offset-1">
         <Menubar className="bg-transparent" start={start} end={end} />
       </div>
