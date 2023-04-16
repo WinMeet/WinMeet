@@ -3,12 +3,18 @@ import { Menubar } from "primereact/menubar";
 import { Button } from "primereact/button";
 import { useNavigate } from "react-router-dom";
 import { Divider } from "primereact/divider";
+import { removeToken } from "utils/token_manager";
 
 const AuthenticatedNavbar = () => {
   const navigate = useNavigate();
 
   const navigateToRoute = (routeName) => {
     navigate(routeName);
+  };
+
+  const handleLogout = () => {
+    removeToken();
+    navigateToRoute("/");
   };
 
   const start = (
@@ -31,7 +37,7 @@ const AuthenticatedNavbar = () => {
       <Button
         // TODO : Implement help
         className="font-bold"
-        onClick={(e) => navigateToRoute()}
+        onClick={() => navigateToRoute()}
         label="Help"
         icon="pi pi-question-circle"
       />
@@ -43,9 +49,8 @@ const AuthenticatedNavbar = () => {
         icon="pi pi-user"
       />
       <Button
-        // TODO : Implement help
         className="font-bold"
-        onClick={(e) => navigateToRoute()}
+        onClick={handleLogout}
         label="Log Out"
         icon="pi pi-sign-out"
       />

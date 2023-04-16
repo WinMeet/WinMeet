@@ -13,6 +13,7 @@ import { Toast } from "primereact/toast";
 import { useFormik } from "formik";
 import UnauthenticatedNavbar from "components/UnauthenticatedNavbar";
 import { useNavigate } from "react-router-dom";
+import { setToken } from "utils/token_manager";
 
 const CompLogin = () => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const CompLogin = () => {
       const response = await login(loginRequestModel);
 
       if (response.token) {
-        console.log(response.token);
+        setToken(response.token);
         navigateToRoute("/dashboard");
       } else {
         console.error(response.error);

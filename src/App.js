@@ -6,7 +6,7 @@ import { Login } from "views/Login";
 import { SignUp } from "views/SignUp";
 import { Dashboard } from "views/Dashboard";
 import { Account } from "views/Account";
-import ProtectedRoutes from "./utils/ProtectedRoutes";
+import ProtectedRoutes from "./utils/protected_routes";
 
 function App() {
   return (
@@ -17,6 +17,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/account" element={<Account />} />
           </Route>
+
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
