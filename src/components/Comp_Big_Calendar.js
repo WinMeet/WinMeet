@@ -8,6 +8,8 @@ import { Toast } from "primereact/toast";
 import { useFormik } from "formik";
 import { CreateMeetingRequestModel } from "data/models/create_meeting/create_meeting_request_model";
 import { createMeeting } from "data/api/api";
+import { getToken } from "utils/token_manager";
+import jwt_decode from "jwt-decode";
 
 const toTitleCase = (str) => {
   return str
@@ -27,10 +29,21 @@ const Bigcalendar = () => {
   const [selectedEventData, setSelectedEventData] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:3001/createMeeting/all")
+    const token = getToken();
+    const decoded = jwt_decode(token);
+    const data = { eventOwner: decoded.email };
+
+    fetch("http://localhost:3001/createMeeting/all", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((response) => response.json())
       .then((data) => {
-        const fetchedEvents = data.eventData.map((item) => ({
+        console.log(data.combined);
+        const fetchedEvents = data.combined.map((item) => ({
           id: item._id,
           title: item.eventName,
           description: item.eventDescription,
