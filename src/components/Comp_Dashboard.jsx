@@ -16,6 +16,8 @@ import { useRef } from "react";
 import Cal from "components/Comp_Big_Calendar";
 import AuthenticatedNavbar from "components/AuthenticatedNavbar";
 import "my.css";
+import { getToken } from "utils/token_manager";
+import jwt_decode from "jwt-decode";
 
 const CompDashboard = () => {
   const [visible, setVisible] = useState(false);
@@ -53,7 +55,10 @@ const CompDashboard = () => {
     validationSchema: CreateMeetingRequestModel.validationSchema,
 
     onSubmit: async (createMeetingRequestModel) => {
-      //alert(JSON.stringify(createMeetingRequestModel, null, 2));
+      const token = getToken();
+      const decoded = jwt_decode(token);
+      createMeetingRequestModel.eventOwner = decoded.email;
+      console.log(createMeetingRequestModel);
       const response = await createMeeting(createMeetingRequestModel);
       if (response.success) {
         showSuccess();

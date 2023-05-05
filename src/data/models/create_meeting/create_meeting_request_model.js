@@ -13,7 +13,7 @@ export class CreateMeetingRequestModel {
     eventStartDate3,
     eventEndDate3,
     participants,
-    owner
+    eventOwner
   ) {
     this.eventName = eventName;
     this.eventDescription = eventDescription;
@@ -25,7 +25,7 @@ export class CreateMeetingRequestModel {
     this.eventStartDate3 = eventStartDate3;
     this.eventEndDate3 = eventEndDate3;
     this.participants = participants;
-    this.owner = owner;
+    this.eventOwner = eventOwner;
   }
 
   static empty() {
@@ -43,7 +43,7 @@ export class CreateMeetingRequestModel {
       "",
       "",
       "",
-      []
+      ""
     );
   }
   static validationSchema = Yup.object({
