@@ -182,7 +182,100 @@ const CompDashboard = () => {
                         />
                       ) : null}
                     </div>
-
+                    <div className="text-4xl mt-5">
+                      Event Date & Time Optional-1{" "}
+                    </div>
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventStartDate2">
+                          Event Start Time
+                        </label>
+                        <Calendar
+                          name="eventStartDate2"
+                          type="text"
+                          onChange={formik.handleChange}
+                          //value={formik.values.eventStartDate}
+                          showTime
+                        />
+                      </div>
+                    </div>
+                    <div className="card flex justify-content-start pt-2 text-red-500">
+                      {formik.touched.eventStartDate2 &&
+                      formik.errors.eventStartDate2 ? (
+                        <Message
+                          severity="error"
+                          text={formik.errors.eventStartDate2}
+                        />
+                      ) : null}
+                    </div>
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventEndDate2"> Event End Date</label>
+                        <Calendar
+                          name="eventEndDate2"
+                          type="text"
+                          onChange={formik.handleChange}
+                          //value={formik.values.eventEndDate}
+                          showTime
+                        />
+                      </div>
+                    </div>
+                    <div className="pt-2">
+                      {formik.touched.eventEndDate2 &&
+                      formik.errors.eventEndDate2 ? (
+                        <Message
+                          severity="error"
+                          text={formik.errors.eventEndDate2}
+                        />
+                      ) : null}
+                    </div>
+                    <div className="text-4xl mt-5">
+                      Event Date & Time Optional-2{" "}
+                    </div>
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventStartDate3">
+                          Event Start Time
+                        </label>
+                        <Calendar
+                          name="eventStartDate3"
+                          type="text"
+                          onChange={formik.handleChange}
+                          //value={formik.values.eventStartDate}
+                          showTime
+                        />
+                      </div>
+                    </div>
+                    <div className="card flex justify-content-start pt-2 text-red-500">
+                      {formik.touched.eventStartDate3 &&
+                      formik.errors.eventStartDate3 ? (
+                        <Message
+                          severity="error"
+                          text={formik.errors.eventStartDate3}
+                        />
+                      ) : null}
+                    </div>
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventEndDate3"> Event End Date</label>
+                        <Calendar
+                          name="eventEndDate3"
+                          type="text"
+                          onChange={formik.handleChange}
+                          //value={formik.values.eventEndDate}
+                          showTime
+                        />
+                      </div>
+                    </div>
+                    <div className="pt-2">
+                      {formik.touched.eventEndDate3 &&
+                      formik.errors.eventEndDate3 ? (
+                        <Message
+                          severity="error"
+                          text={formik.errors.eventEndDate3}
+                        />
+                      ) : null}
+                    </div>
                     <div className="text-4xl mt-5">Participants</div>
                     <div className="grid">
                       <div className="col-8">

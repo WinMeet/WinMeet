@@ -8,6 +8,10 @@ export class CreateMeetingRequestModel {
     location,
     eventStartDate,
     eventEndDate,
+    eventStartDate2,
+    eventEndDate2,
+    eventStartDate3,
+    eventEndDate3,
     participants,
     owner
   ) {
@@ -16,6 +20,10 @@ export class CreateMeetingRequestModel {
     this.location = location;
     this.eventStartDate = eventStartDate;
     this.eventEndDate = eventEndDate;
+    this.eventStartDate2 = eventStartDate2;
+    this.eventEndDate2 = eventEndDate2;
+    this.eventStartDate3 = eventStartDate3;
+    this.eventEndDate3 = eventEndDate3;
     this.participants = participants;
     this.owner = owner;
   }
@@ -31,10 +39,13 @@ export class CreateMeetingRequestModel {
       "",
       startOfNextHour.toDate(),
       endOfNextHour.toDate(),
+      "",
+      "",
+      "",
+      "",
       []
     );
   }
-
   static validationSchema = Yup.object({
     eventName: Yup.string()
       .min(3, "Event name must be at least 3 characters")
@@ -63,6 +74,54 @@ export class CreateMeetingRequestModel {
         }
       )
       .required("Event duration is required"),
+
+    eventStartDate2: Yup.date().nullable(),
+
+    eventEndDate2: Yup.date()
+      .nullable()
+      .when("eventStartDate2", {
+        is: (val) => val != null,
+        then: Yup.date()
+          .min(
+            Yup.ref("eventStartDate2"),
+            "Event end date-time cannot be earlier than start date-time"
+          )
+          .test(
+            "duration",
+            "Event duration must be at least 10 minutes",
+            function (value) {
+              const { eventStartDate2 } = this.parent;
+              const diffInMinutes = moment
+                .duration(moment(value).diff(moment(eventStartDate2)))
+                .asMinutes();
+              return diffInMinutes >= 10;
+            }
+          ),
+      }),
+
+    eventStartDate3: Yup.date().nullable(),
+
+    eventEndDate3: Yup.date()
+      .nullable()
+      .when("eventStartDate3", {
+        is: (val) => val != null,
+        then: Yup.date()
+          .min(
+            Yup.ref("eventStartDate3"),
+            "Event end date-time cannot be earlier than start date-time"
+          )
+          .test(
+            "duration",
+            "Event duration must be at least 10 minutes",
+            function (value) {
+              const { eventStartDate3 } = this.parent;
+              const diffInMinutes = moment
+                .duration(moment(value).diff(moment(eventStartDate3)))
+                .asMinutes();
+              return diffInMinutes >= 10;
+            }
+          ),
+      }),
 
     participants: Yup.array()
       .of(
