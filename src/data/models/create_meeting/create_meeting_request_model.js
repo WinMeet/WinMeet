@@ -8,14 +8,16 @@ export class CreateMeetingRequestModel {
     location,
     eventStartDate,
     eventEndDate,
-    participants
+    participants,
+    owner
   ) {
     this.eventName = eventName;
     this.eventDescription = eventDescription;
     this.location = location;
     this.eventStartDate = eventStartDate;
     this.eventEndDate = eventEndDate;
-    this.participants = participants;    
+    this.participants = participants;
+    this.owner = owner;
   }
 
   static empty() {

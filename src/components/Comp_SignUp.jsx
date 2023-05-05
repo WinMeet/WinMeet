@@ -39,7 +39,7 @@ const CompSignUp = () => {
     validationSchema: SignUpRequestModel.validationSchema,
 
     onSubmit: async (SignUpRequestModel) => {
-      alert(JSON.stringify(SignUpRequestModel, null, 2));
+      //alert(JSON.stringify(SignUpRequestModel, null, 2));
       const response = await signup(SignUpRequestModel);
       console.log(response);
 
@@ -129,6 +129,10 @@ const CompSignUp = () => {
                     />
                   ) : null}
                 </div>
+              </div>
+              <div className="text-xs   pt-2 gap-3">
+                <p>Password must contain;</p>
+                <p>* Min 8 char. * Uppercase * Lowercase * Number</p>
               </div>
               <div className="text-sm flex  pt-2 gap-3">
                 <p>Have an account?</p>
