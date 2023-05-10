@@ -15,14 +15,8 @@ import UnauthenticatedNavbar from "components/UnauthenticatedNavbar";
 import { useNavigate } from "react-router-dom";
 import { setToken } from "utils/token_manager";
 import AuthenticatedNavbar from "components/AuthenticatedNavbar";
-
+import { Accordion, AccordionTab } from "primereact/accordion";
 const CompPending = () => {
-  const header = (
-    <img
-      alt="Card"
-      src="https://primefaces.org/cdn/primereact/images/usercard.png"
-    />
-  );
   const footer = (
     <div className="flex flex-wrap justify-content-end gap-2">
       <Button label="Vote" icon="pi pi-check" />
@@ -33,43 +27,58 @@ const CompPending = () => {
       <div className="grid">
         <div className="col-10 col-offset-1">
           <AuthenticatedNavbar></AuthenticatedNavbar>
-        </div>
-      </div>
-      {/* Event vote starts */}
-      <div className="card">
-        {/* Event vote starts first*/}
-        <div className="card flex ">
-          <Card
-            title="Title"
-            subTitle="Subtitle"
-            footer={footer}
-            header={header}
-            className="md:w-25rem"
-          >
-            <p className="m-0">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Inventore sed consequuntur error repudiandae numquam deserunt
-              quisquam repellat libero asperiores earum nam nobis, culpa ratione
-              quam perferendis esse, cupiditate neque quas!
-            </p>
-          </Card>
-        </div>
-        {/* Event vote starts second*/}
-        <div className="card flex ">
-          <Card
-            title="Title"
-            subTitle="Subtitle"
-            footer={footer}
-            header={header}
-            className="md:w-25rem"
-          >
-            <p className="m-0">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Inventore sed consequuntur error repudiandae numquam deserunt
-              quisquam repellat libero asperiores earum nam nobis, culpa ratione
-              quam perferendis esse, cupiditate neque quas!
-            </p>
-          </Card>
+          {/* accordion starts */}
+          <div className="card">
+            <Accordion multiple activeIndex={[0]}>
+              <AccordionTab header="Header I">
+                {/* Event vote starts */}
+                <div className="grid ">
+                  {/* Event vote starts first*/}
+                  <div className="card flex col-4 col_offset-1 justify-content-center">
+                    <Card
+                      title="Title"
+                      subTitle="Subtitle"
+                      footer={footer}
+                      className="md:w-25rem"
+                    >
+                      <p className="m-0">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit. s
+                      </p>
+                    </Card>
+                  </div>
+                  {/* Event vote starts second*/}
+                  <div className="card flex col-4 col_offset-1 justify-content-center">
+                    <Card
+                      title="Title"
+                      subTitle="Subtitle"
+                      footer={footer}
+                      className="md:w-25rem"
+                    >
+                      <p className="m-0">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit.
+                      </p>
+                    </Card>
+                  </div>
+                  {/* Event vote starts third*/}
+                  <div className="card flex col-4 col_offset-1 justify-content-center">
+                    <Card
+                      title="Title"
+                      subTitle="Subtitle"
+                      footer={footer}
+                      className="md:w-25rem"
+                    >
+                      <p className="m-0">
+                        Lorem ipsum dolor sit amet, consectetur adipisicing
+                        elit.
+                      </p>
+                    </Card>
+                  </div>
+                </div>
+              </AccordionTab>
+            </Accordion>
+          </div>
         </div>
       </div>
     </>
