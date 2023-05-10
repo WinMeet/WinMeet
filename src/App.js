@@ -7,6 +7,7 @@ import { SignUp } from "views/SignUp";
 import { Dashboard } from "views/Dashboard";
 import { Account } from "views/Account";
 import ProtectedRoutes from "./utils/protected_routes";
+import { Pending } from "./views/Pending";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route element={<ProtectedRoutes />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/account" element={<Account />} />
+            <Route path="/pending" element={<Pending />} />
           </Route>
 
           <Route path="/" element={<Home />} />

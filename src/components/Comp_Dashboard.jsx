@@ -18,6 +18,7 @@ import AuthenticatedNavbar from "components/AuthenticatedNavbar";
 import "my.css";
 import { getToken } from "utils/token_manager";
 import jwt_decode from "jwt-decode";
+import { InputNumber } from "primereact/inputnumber";
 
 const CompDashboard = () => {
   const [visible, setVisible] = useState(false);
@@ -281,6 +282,15 @@ const CompDashboard = () => {
                         />
                       ) : null}
                     </div>
+                    <div className="text-4xl mt-5">Meeting Duration</div>
+                    <div className="m-2">Event Due Date to Vote in Min.:</div>
+                    <Calendar
+                      name="eventStartDate3"
+                      type="text"
+                      onChange={formik.handleChange}
+                      //value={formik.values.eventStartDate}
+                      showTime
+                    />
                     <div className="text-4xl mt-5">Participants</div>
                     <div className="grid">
                       <div className="col-8">
