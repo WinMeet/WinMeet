@@ -35,6 +35,12 @@ const AuthenticatedNavbar = () => {
         icon="pi pi-home"
       />
       <Button
+        className="font-bold"
+        onClick={() => navigateToRoute("/pending")}
+        label="Pending"
+        icon="pi pi-ticket"
+      />
+      <Button
         // TODO : Implement help
         className="font-bold"
         onClick={() => navigateToRoute()}

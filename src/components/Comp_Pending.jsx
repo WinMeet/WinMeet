@@ -17,10 +17,61 @@ import { setToken } from "utils/token_manager";
 import AuthenticatedNavbar from "components/AuthenticatedNavbar";
 
 const CompPending = () => {
+  const header = (
+    <img
+      alt="Card"
+      src="https://primefaces.org/cdn/primereact/images/usercard.png"
+    />
+  );
+  const footer = (
+    <div className="flex flex-wrap justify-content-end gap-2">
+      <Button label="Vote" icon="pi pi-check" />
+    </div>
+  );
   return (
     <>
-      <AuthenticatedNavbar></AuthenticatedNavbar>
-      <div>test ajdbajaadh</div>
+      <div className="grid">
+        <div className="col-10 col-offset-1">
+          <AuthenticatedNavbar></AuthenticatedNavbar>
+        </div>
+      </div>
+      {/* Event vote starts */}
+      <div className="card">
+        {/* Event vote starts first*/}
+        <div className="card flex ">
+          <Card
+            title="Title"
+            subTitle="Subtitle"
+            footer={footer}
+            header={header}
+            className="md:w-25rem"
+          >
+            <p className="m-0">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Inventore sed consequuntur error repudiandae numquam deserunt
+              quisquam repellat libero asperiores earum nam nobis, culpa ratione
+              quam perferendis esse, cupiditate neque quas!
+            </p>
+          </Card>
+        </div>
+        {/* Event vote starts second*/}
+        <div className="card flex ">
+          <Card
+            title="Title"
+            subTitle="Subtitle"
+            footer={footer}
+            header={header}
+            className="md:w-25rem"
+          >
+            <p className="m-0">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+              Inventore sed consequuntur error repudiandae numquam deserunt
+              quisquam repellat libero asperiores earum nam nobis, culpa ratione
+              quam perferendis esse, cupiditate neque quas!
+            </p>
+          </Card>
+        </div>
+      </div>
     </>
   );
 };
