@@ -43,7 +43,7 @@ const AuthenticatedNavbar = () => {
       <Button
         // TODO : Implement help
         className="font-bold"
-        onClick={() => navigateToRoute()}
+        onClick={() => navigateToRoute("/help")}
         label="Help"
         icon="pi pi-question-circle"
       />
