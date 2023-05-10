@@ -8,6 +8,7 @@ import { Dashboard } from "views/Dashboard";
 import { Account } from "views/Account";
 import ProtectedRoutes from "./utils/protected_routes";
 import { Pending } from "./views/Pending";
+import { Help } from "./views/Help";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/account" element={<Account />} />
             <Route path="/pending" element={<Pending />} />
+            <Route path="/help" element={<Help />} />
           </Route>
 
           <Route path="/" element={<Home />} />
