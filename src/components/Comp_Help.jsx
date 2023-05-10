@@ -158,35 +158,16 @@ const CompHelp = () => {
             <div className="grid ">
               <div className="grid col-6 ">
                 <div className="text-3xl ">
-                  <p className="text-xl font-bold"> Event Date & Time</p>
+                  <p className=" font-bold"> Pending</p>
                   <p className="text-lg">
                     {" "}
-                    In the date and time field, the user decides when the
-                    meeting will be.
-                  </p>
-                  <p className="text-lg">- Start Date & Time</p>
-                  <p className="text-lg">
-                    {" "}
-                    In this field, the user enters the date & time they want the
-                    meeting to start. The date & time entered cannot be earlier
-                    than now. It is a required field.
-                  </p>
-                  <p className="text-lg">- End Date & Time</p>
-                  <p className="text-lg">
-                    {" "}
-                    In this field, the user enters the date & time they want the
-                    meeting to end. The entered date & time cannot be earlier
-                    than the meeting start date & time . It is a required field.
-                  </p>
-
-                  <p className="text-lg">- Optional Dates & Times</p>
-                  <p className="text-lg">
-                    {" "}
-                    In this field, the user enters the date and time options,
-                    which can be backup or possible time. entries in this field
-                    will be directed to the participants for voting. The result
-                    of the voting will determine what date it is. is a required
-                    field.
+                    In this area, the user will be able to choose the optional
+                    dates and times of the incoming meeting invitations. From
+                    the invitations in the "Pending" page, the user will choose
+                    the most appropriate time at his own request and will use
+                    the game. For this, it will be enough to find the most
+                    suitable time for himself and click on the "Vote" button
+                    under it.
                   </p>
                 </div>
               </div>
