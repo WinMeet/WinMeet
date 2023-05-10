@@ -13,6 +13,7 @@ export class CreateMeetingRequestModel {
     eventStartDate3,
     eventEndDate3,
     participants,
+    eventVoteDuration,
     eventOwner
   ) {
     this.eventName = eventName;
@@ -25,6 +26,7 @@ export class CreateMeetingRequestModel {
     this.eventStartDate3 = eventStartDate3;
     this.eventEndDate3 = eventEndDate3;
     this.participants = participants;
+    this.eventVoteDuration = eventVoteDuration;
     this.eventOwner = eventOwner;
   }
 
@@ -43,9 +45,12 @@ export class CreateMeetingRequestModel {
       "",
       "",
       "",
+      [],
+      startOfNextHour.toDate(),
       ""
     );
   }
+
   static validationSchema = Yup.object({
     eventName: Yup.string()
       .min(3, "Event name must be at least 3 characters")
@@ -122,6 +127,17 @@ export class CreateMeetingRequestModel {
             }
           ),
       }),
+
+    eventVoteDuration: Yup.date()
+      .required("Event vote duration is required")
+      .test(
+        "vote-duration",
+        "Voting cannot end after start date",
+        function (value) {
+          const { eventStartDate } = this.parent;
+          return moment(value).isSameOrBefore(moment(eventStartDate));
+        }
+      ),
 
     participants: Yup.array()
       .of(

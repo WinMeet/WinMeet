@@ -282,15 +282,30 @@ const CompDashboard = () => {
                         />
                       ) : null}
                     </div>
-                    <div className="text-4xl mt-5">Meeting Duration</div>
-                    <div className="m-2">Event Due Date to Vote in Min.:</div>
-                    <Calendar
-                      name="eventStartDate3"
-                      type="text"
-                      onChange={formik.handleChange}
-                      //value={formik.values.eventStartDate}
-                      showTime
-                    />
+                    <div className="text-4xl mt-5">Vote Due Date</div>
+                    <div className="flex mt-2">
+                      <div className="card flex flex-column gap-2">
+                        <label htmlFor="eventVoteDuration">
+                          Voting ends at:
+                        </label>
+                        <Calendar
+                          name="eventVoteDuration"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.eventVoteDuration}
+                          showTime
+                        />
+                      </div>
+                    </div>
+                    <div className="card flex justify-content-start pt-2 text-red-500">
+                      {formik.touched.eventVoteDuration &&
+                      formik.errors.eventVoteDuration ? (
+                        <Message
+                          severity="error"
+                          text={formik.errors.eventVoteDuration}
+                        />
+                      ) : null}
+                    </div>
                     <div className="text-4xl mt-5">Participants</div>
                     <div className="grid">
                       <div className="col-8">
