@@ -56,6 +56,7 @@ const CompDashboard = () => {
     validationSchema: CreateMeetingRequestModel.validationSchema,
 
     onSubmit: async (createMeetingRequestModel) => {
+      console.log(createMeetingRequestModel);
       const token = getToken();
       const decoded = jwt_decode(token);
       createMeetingRequestModel.eventOwner = decoded.email;
@@ -189,7 +190,7 @@ const CompDashboard = () => {
                       ) : null}
                     </div>
                     <div className="text-4xl mt-5">
-                      Event Date & Time Optional-1{" "}
+                      Event Date & Time Optional-1
                     </div>
                     <div className="flex mt-2">
                       <div className="card flex flex-column gap-2">
@@ -200,7 +201,7 @@ const CompDashboard = () => {
                           name="eventStartDate2"
                           type="text"
                           onChange={formik.handleChange}
-                          //value={formik.values.eventStartDate}
+                          value={formik.values.eventStartDate2}
                           showTime
                         />
                       </div>
@@ -221,7 +222,7 @@ const CompDashboard = () => {
                           name="eventEndDate2"
                           type="text"
                           onChange={formik.handleChange}
-                          //value={formik.values.eventEndDate}
+                          value={formik.values.eventEndDate2}
                           showTime
                         />
                       </div>
@@ -247,7 +248,7 @@ const CompDashboard = () => {
                           name="eventStartDate3"
                           type="text"
                           onChange={formik.handleChange}
-                          //value={formik.values.eventStartDate}
+                          value={formik.values.eventStartDate3}
                           showTime
                         />
                       </div>
@@ -268,7 +269,7 @@ const CompDashboard = () => {
                           name="eventEndDate3"
                           type="text"
                           onChange={formik.handleChange}
-                          //value={formik.values.eventEndDate}
+                          value={formik.values.eventEndDate3}
                           showTime
                         />
                       </div>

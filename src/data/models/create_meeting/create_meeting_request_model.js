@@ -41,10 +41,10 @@ export class CreateMeetingRequestModel {
       "",
       startOfNextHour.toDate(),
       endOfNextHour.toDate(),
-      "",
-      "",
-      "",
-      "",
+      null, // eventStartDate2
+      null, // eventEndDate2
+      null, // eventStartDate3
+      null, // eventEndDate3
       [],
       startOfNextHour.toDate(),
       ""
@@ -80,7 +80,9 @@ export class CreateMeetingRequestModel {
       )
       .required("Event duration is required"),
 
-    eventStartDate2: Yup.date().nullable(),
+    eventStartDate2: Yup.date()
+      .nullable()
+      .min(new Date(), "Event date-time cannot be in the past"),
 
     eventEndDate2: Yup.date()
       .nullable()
@@ -96,6 +98,9 @@ export class CreateMeetingRequestModel {
             "Event duration must be at least 10 minutes",
             function (value) {
               const { eventStartDate2 } = this.parent;
+              if (eventStartDate2 === null) {
+                return true;
+              }
               const diffInMinutes = moment
                 .duration(moment(value).diff(moment(eventStartDate2)))
                 .asMinutes();
@@ -104,7 +109,9 @@ export class CreateMeetingRequestModel {
           ),
       }),
 
-    eventStartDate3: Yup.date().nullable(),
+    eventStartDate3: Yup.date()
+      .nullable()
+      .min(new Date(), "Event date-time cannot be in the past"),
 
     eventEndDate3: Yup.date()
       .nullable()
@@ -120,6 +127,9 @@ export class CreateMeetingRequestModel {
             "Event duration must be at least 10 minutes",
             function (value) {
               const { eventStartDate3 } = this.parent;
+              if (eventStartDate3 === null) {
+                return true;
+              }
               const diffInMinutes = moment
                 .duration(moment(value).diff(moment(eventStartDate3)))
                 .asMinutes();
