@@ -33,7 +33,7 @@ const Bigcalendar = () => {
     const decoded = jwt_decode(token);
     const data = { eventOwner: decoded.email };
 
-    fetch("http://localhost:3002/createMeeting/all", {
+    fetch("http://localhost:3001/createMeeting/all", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -44,7 +44,7 @@ const Bigcalendar = () => {
       .then((data) => {
         console.log(data.combined);
         const fetchedEvents = data.combined.map((item) => {
-          if (item.pending === 0) {
+          if (item.pending === false) {
             return {
               id: item._id,
               title: item.eventName,
@@ -64,7 +64,7 @@ const Bigcalendar = () => {
   }, []);
 
   const deleteEvent = (id) => {
-    fetch(`http://localhost:3002/createMeeting/${id}`, {
+    fetch(`http://localhost:3001/createMeeting/${id}`, {
       method: "DELETE",
     })
       .then((response) => {
