@@ -43,17 +43,22 @@ const Bigcalendar = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log(data.combined);
-        const fetchedEvents = data.combined.map((item) => ({
-          id: item._id,
-          title: item.eventName,
-          description: item.eventDescription,
-          location: item.location,
-          allDay: false,
-          start: new Date(item.eventStartDate),
-          end: new Date(item.eventEndDate),
-          participant: item.participants,
-        }));
-        setEvents(fetchedEvents);
+        const fetchedEvents = data.combined.map((item) => {
+          if (item.pending === 0) {
+            return {
+              id: item._id,
+              title: item.eventName,
+              description: item.eventDescription,
+              location: item.location,
+              allDay: false,
+              start: new Date(item.eventStartDate),
+              end: new Date(item.eventEndDate),
+              participant: item.participants,
+            };
+          }
+          return null; // Exclude the event if pending is 1
+        });
+        setEvents(fetchedEvents.filter((event) => event !== null));
       })
       .catch((error) => console.error(error));
   }, []);
