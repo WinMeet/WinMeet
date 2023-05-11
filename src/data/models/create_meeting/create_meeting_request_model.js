@@ -36,18 +36,18 @@ export class CreateMeetingRequestModel {
     const endOfNextHour = moment(startOfNextHour).add(1, "hour");
 
     return new CreateMeetingRequestModel(
-      "",
-      "",
-      "",
+      "", // eventname
+      "", // eventDescription
+      "", // location
       startOfNextHour.toDate(),
       endOfNextHour.toDate(),
       null, // eventStartDate2
       null, // eventEndDate2
       null, // eventStartDate3
       null, // eventEndDate3
-      [],
+      [], // participants
       startOfNextHour.toDate(),
-      ""
+      "" // eventOwner
     );
   }
 
@@ -82,61 +82,59 @@ export class CreateMeetingRequestModel {
 
     eventStartDate2: Yup.date()
       .nullable()
-      .min(new Date(), "Event date-time cannot be in the past"),
+      .test("date", "Event date-time cannot be in the past", function (value) {
+        if (!value) return true; // if value is null, do not validate
+        return moment(value).isSameOrAfter(moment());
+      }),
 
     eventEndDate2: Yup.date()
       .nullable()
-      .when("eventStartDate2", {
-        is: (val) => val != null,
-        then: Yup.date()
-          .min(
-            Yup.ref("eventStartDate2"),
-            "Event end date-time cannot be earlier than start date-time"
-          )
-          .test(
-            "duration",
-            "Event duration must be at least 10 minutes",
-            function (value) {
-              const { eventStartDate2 } = this.parent;
-              if (eventStartDate2 === null) {
-                return true;
-              }
-              const diffInMinutes = moment
-                .duration(moment(value).diff(moment(eventStartDate2)))
-                .asMinutes();
-              return diffInMinutes >= 10;
-            }
-          ),
-      }),
+      .min(
+        Yup.ref("eventStartDate2"),
+        "Event end date-time cannot be earlier than start date-time"
+      )
+      .test(
+        "duration",
+        "Event duration must be at least 10 minutes",
+        function (value) {
+          const { eventStartDate2 } = this.parent;
+          if (eventStartDate2 === null) {
+            return true;
+          }
+          const diffInMinutes = moment
+            .duration(moment(value).diff(moment(eventStartDate2)))
+            .asMinutes();
+          return diffInMinutes >= 10;
+        }
+      ),
 
     eventStartDate3: Yup.date()
       .nullable()
-      .min(new Date(), "Event date-time cannot be in the past"),
+      .test("date", "Event date-time cannot be in the past", function (value) {
+        if (!value) return true; // if value is null, do not validate
+        return moment(value).isSameOrAfter(moment());
+      }),
 
     eventEndDate3: Yup.date()
       .nullable()
-      .when("eventStartDate3", {
-        is: (val) => val != null,
-        then: Yup.date()
-          .min(
-            Yup.ref("eventStartDate3"),
-            "Event end date-time cannot be earlier than start date-time"
-          )
-          .test(
-            "duration",
-            "Event duration must be at least 10 minutes",
-            function (value) {
-              const { eventStartDate3 } = this.parent;
-              if (eventStartDate3 === null) {
-                return true;
-              }
-              const diffInMinutes = moment
-                .duration(moment(value).diff(moment(eventStartDate3)))
-                .asMinutes();
-              return diffInMinutes >= 10;
-            }
-          ),
-      }),
+      .min(
+        Yup.ref("eventStartDate3"),
+        "Event end date-time cannot be earlier than start date-time"
+      )
+      .test(
+        "duration",
+        "Event duration must be at least 10 minutes",
+        function (value) {
+          const { eventStartDate3 } = this.parent;
+          if (eventStartDate3 === null) {
+            return true;
+          }
+          const diffInMinutes = moment
+            .duration(moment(value).diff(moment(eventStartDate3)))
+            .asMinutes();
+          return diffInMinutes >= 10;
+        }
+      ),
 
     eventVoteDuration: Yup.date()
       .required("Event vote duration is required")
