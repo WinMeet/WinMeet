@@ -33,7 +33,7 @@ const CompPending = () => {
               title: item.eventName,
               description: item.eventDescription,
               location: item.location,
-              allDay: false,
+              eventVoteDuration: new Date(item.eventVoteDuration),
               start: new Date(item.eventStartDate),
               end: new Date(item.eventEndDate),
               participant: item.participants,
@@ -81,36 +81,88 @@ const CompPending = () => {
                     {event.start && event.end && (
                       <div className="card flex col-4 col_offset-1 justify-content-center">
                         <Card
-                          title={`${event.title} - Date 1`}
-                          subTitle={event.description}
+                          title={`Date 1`}
                           footer={footer}
                           className="md:w-25rem"
                         >
-                          <p className="m-0">{event.location}</p>
+                          <p className="mt-3">
+                            {"Start Date: " + event.start.toLocaleString()}
+                          </p>
+                          <p className="mt-3">
+                            {"End Date: " + event.end.toLocaleString()}
+                          </p>
+                          <p className="mt-3">
+                            {"Vote Due Date: " +
+                              event.eventVoteDuration.toLocaleString()}
+                          </p>
+                          <p className="mt-3">
+                            {"Location: " + event.location}
+                          </p>
+                          {event.eventDescription && (
+                            <p className="mt-3">
+                              {"Event Description: " + event.eventDescription}
+                            </p>
+                          )}
                         </Card>
                       </div>
                     )}
                     {event.eventStartDate2 && event.eventEndDate2 && (
                       <div className="card flex col-4 col_offset-1 justify-content-center">
                         <Card
-                          title={`${event.title} - Date 2`}
-                          subTitle={event.description}
+                          title={`Date 2`}
                           footer={footer}
                           className="md:w-25rem"
                         >
-                          <p className="m-0">{event.location}</p>
+                          <p className="mt-3">
+                            {"Start Date: " +
+                              event.eventStartDate2.toLocaleString()}
+                          </p>
+                          <p className="mt-3">
+                            {"End Date: " +
+                              event.eventEndDate2.toLocaleString()}
+                          </p>
+                          <p className="mt-3">
+                            {"Vote Due Date: " +
+                              event.eventVoteDuration.toLocaleString()}
+                          </p>
+                          <p className="mt-3">
+                            {"Location: " + event.location}
+                          </p>
+                          {event.eventDescription && (
+                            <p className="mt-3">
+                              {"Event Description: " + event.eventDescription}
+                            </p>
+                          )}
                         </Card>
                       </div>
                     )}
                     {event.eventStartDate3 && event.eventEndDate3 && (
                       <div className="card flex col-4 col_offset-1 justify-content-center">
                         <Card
-                          title={`${event.title} - Date 3`}
-                          subTitle={event.description}
+                          title={`Date 3`}
                           footer={footer}
                           className="md:w-25rem"
                         >
-                          <p className="m-0">{event.location}</p>
+                          <p className="mt-3">
+                            {"Start Date: " +
+                              event.eventStartDate3.toLocaleString()}
+                          </p>
+                          <p className="mt-3">
+                            {"End Date: " +
+                              event.eventEndDate3.toLocaleString()}
+                          </p>
+                          <p className="mt-3">
+                            {"Vote Due Date: " +
+                              event.eventVoteDuration.toLocaleString()}
+                          </p>
+                          <p className="mt-3">
+                            {"Location: " + event.location}
+                          </p>
+                          {event.eventDescription && (
+                            <p className="mt-3">
+                              {"Event Description: " + event.eventDescription}
+                            </p>
+                          )}
                         </Card>
                       </div>
                     )}
