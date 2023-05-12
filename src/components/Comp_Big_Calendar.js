@@ -65,7 +65,7 @@ const Bigcalendar = () => {
   }, []);
 
   const deleteEvent = (id) => {
-    fetch(`http://localhost:3001/createMeeting/${id}`, {
+    fetch(`http://localhost:3002/createMeeting/${id}`, {
       method: "DELETE",
     })
       .then((response) => {

@@ -44,11 +44,9 @@ const CompPending = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("buarada oalcak yarral");
-        console.log(data);
-        console.log(data.combined);
         const fetchedEvents = data.combined.map((item) => {
-          if (item.isPending === true) {
+          if (item.isPending) {
+            // Change this line
             return {
               id: item._id,
               title: item.eventName,
@@ -58,9 +56,21 @@ const CompPending = () => {
               start: new Date(item.eventStartDate),
               end: new Date(item.eventEndDate),
               participant: item.participants,
+              eventStartDate2: item.eventStartDate2
+                ? new Date(item.eventStartDate2)
+                : null,
+              eventEndDate2: item.eventEndDate2
+                ? new Date(item.eventEndDate2)
+                : null,
+              eventStartDate3: item.eventStartDate3
+                ? new Date(item.eventStartDate3)
+                : null,
+              eventEndDate3: item.eventEndDate3
+                ? new Date(item.eventEndDate3)
+                : null,
             };
           }
-          return null; // Exclude the event if pending is 1
+          return null;
         });
         setEvents(fetchedEvents.filter((event) => event !== null));
       })
@@ -81,27 +91,51 @@ const CompPending = () => {
           {/* accordion starts */}
           <div className="card">
             <Accordion multiple activeIndex={[0]}>
-              <AccordionTab header="Header I">
-                {/* Event vote starts */}
-                <div className="grid">
-                  {/* Map over the events and render Card components */}
-                  {events.map((event) => (
-                    <div
-                      key={event.id}
-                      className="card flex col-4 col_offset-1 justify-content-center"
-                    >
-                      <Card
-                        title={event.title}
-                        subTitle={event.description}
-                        footer={footer}
-                        className="md:w-25rem"
-                      >
-                        <p className="m-0">{event.location}</p>
-                      </Card>
-                    </div>
-                  ))}
-                </div>
-              </AccordionTab>
+              {/* Map over the events and render AccordionTab components */}
+              {events.map((event) => (
+                <AccordionTab key={event.id} header={event.title}>
+                  {/* Event vote starts */}
+                  <div className="grid">
+                    {/* Check for each date range and render a card if not null */}
+                    {event.start && event.end && (
+                      <div className="card flex col-4 col_offset-1 justify-content-center">
+                        <Card
+                          title={`${event.title} - Date 1`}
+                          subTitle={event.description}
+                          footer={footer}
+                          className="md:w-25rem"
+                        >
+                          <p className="m-0">{event.location}</p>
+                        </Card>
+                      </div>
+                    )}
+                    {event.eventStartDate2 && event.eventEndDate2 && (
+                      <div className="card flex col-4 col_offset-1 justify-content-center">
+                        <Card
+                          title={`${event.title} - Date 2`}
+                          subTitle={event.description}
+                          footer={footer}
+                          className="md:w-25rem"
+                        >
+                          <p className="m-0">{event.location}</p>
+                        </Card>
+                      </div>
+                    )}
+                    {event.eventStartDate3 && event.eventEndDate3 && (
+                      <div className="card flex col-4 col_offset-1 justify-content-center">
+                        <Card
+                          title={`${event.title} - Date 3`}
+                          subTitle={event.description}
+                          footer={footer}
+                          className="md:w-25rem"
+                        >
+                          <p className="m-0">{event.location}</p>
+                        </Card>
+                      </div>
+                    )}
+                  </div>
+                </AccordionTab>
+              ))}
             </Accordion>
           </div>
         </div>
