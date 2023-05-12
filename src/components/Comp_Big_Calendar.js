@@ -28,6 +28,18 @@ const Bigcalendar = () => {
   const [secondDialogVisible, setSecondDialogVisible] = useState(false);
   const [selectedEventData, setSelectedEventData] = useState(null);
 
+  const getEventClassName = (event) => {
+    const today = new Date();
+
+    if (event.isPending) {
+      return "event-pending";
+    } else if (event.end < today) {
+      return "event-past";
+    }
+
+    return "";
+  };
+
   useEffect(() => {
     const token = getToken();
     const decoded = jwt_decode(token);
@@ -44,21 +56,23 @@ const Bigcalendar = () => {
       .then((data) => {
         console.log(data.combined);
         const fetchedEvents = data.combined.map((item) => {
-          if (item.isPending === false) {
-            console.log("içerdeyim");
-            return {
-              id: item._id,
-              title: item.eventName,
-              description: item.eventDescription,
-              location: item.location,
-              allDay: false,
-              start: new Date(item.eventStartDate),
-              end: new Date(item.eventEndDate),
-              participant: item.participants,
-            };
-          }
-          return null; // Exclude the event if pending is 1
+          const event = {
+            id: item._id,
+            title: item.eventName,
+            description: item.eventDescription,
+            location: item.location,
+            allDay: false,
+            start: new Date(item.eventStartDate),
+            end: new Date(item.eventEndDate),
+            participant: item.participants,
+            isPending: item.isPending,
+          };
+
+          event.className = getEventClassName(event); // Assign className based on event status
+
+          return event;
         });
+
         setEvents(fetchedEvents.filter((event) => event !== null));
       })
       .catch((error) => console.error(error));
@@ -138,6 +152,18 @@ const Bigcalendar = () => {
     },
   });
 
+  const eventStyleGetter = (event) => {
+    const style = {
+      backgroundColor: event.isPending ? "yellow" : "green", // Set background color based on event status
+      color: "black",
+      borderRadius: "0px",
+      border: "none",
+    };
+    return {
+      style,
+    };
+  };
+
   return (
     <div>
       <div style={{ height: "500pt" }}>
@@ -148,6 +174,7 @@ const Bigcalendar = () => {
           defaultDate={moment().toDate()}
           localizer={localizer}
           onSelectEvent={handleSelectEvent}
+          eventPropGetter={eventStyleGetter} // Use eventStyleGetter to assign styles to events
         />
         <Dialog
           style={{ width: "40vw" }}
@@ -215,7 +242,7 @@ const Bigcalendar = () => {
           onHide={hideSecondDialog}
           style={{ width: "40vw" }}
         >
-          <p>Content for the second dialog goes here</p>
+          {/* Remaining code for the second dialog */}
         </Dialog>
       </div>
       <Toast ref={toast} />

@@ -1,0 +1,8 @@
+.colorcalendar .event-pending {
+    background-color: yellow;
+  }
+  
+  .colorcalendar .event-past {
+    background-color: gray;
+  }
+  
