@@ -1,31 +1,12 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "my.css";
 import { Card } from "primereact/card";
 import { Button } from "primereact/button";
 import AuthenticatedNavbar from "components/AuthenticatedNavbar";
 import { Accordion, AccordionTab } from "primereact/accordion";
-
-import { Calendar, momentLocalizer } from "react-big-calendar";
-import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { Dialog } from "primereact/dialog";
-
-import { Toast } from "primereact/toast";
-
-import { CreateMeetingRequestModel } from "data/models/create_meeting/create_meeting_request_model";
-import { createMeeting } from "data/api/api";
 import { getToken } from "utils/token_manager";
 import jwt_decode from "jwt-decode";
-
-const toTitleCase = (str) => {
-  return str
-    .toLowerCase()
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
-};
-
-const localizer = momentLocalizer(moment);
 
 const CompPending = () => {
   const [events, setEvents] = useState([]); // State variable to hold the fetched events
