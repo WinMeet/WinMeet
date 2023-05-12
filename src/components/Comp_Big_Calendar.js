@@ -154,7 +154,11 @@ const Bigcalendar = () => {
 
   const eventStyleGetter = (event) => {
     const style = {
-      backgroundColor: event.isPending ? "yellow" : "green", // Set background color based on event status
+      backgroundColor: event.isPending
+        ? "lightyellow" // Set background color for pending events
+        : event.end < new Date()
+        ? "lightgray"
+        : "#007bff", // Set background color for past events
       color: "black",
       borderRadius: "0px",
       border: "none",
