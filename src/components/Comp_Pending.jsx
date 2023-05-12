@@ -11,6 +11,30 @@ import jwt_decode from "jwt-decode";
 const CompPending = () => {
   const [events, setEvents] = useState([]); // State variable to hold the fetched events
 
+  const handleButtonClick = (id, index) => {
+    console.log(`Button was clicked! ID: ${id}, Index: ${index}`);
+
+    const token = getToken();
+    const decoded = jwt_decode(token);
+    fetch(
+      `http://localhost:3002/createMeeting/pending/${id}/${decoded.email}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          fieldToIncrement: index,
+        }),
+      }
+    )
+      .then((response) => window.location.reload())
+      .catch((error) => {
+        console.error("Error:", error);
+        // Handle the error
+      });
+  };
+
   useEffect(() => {
     const token = getToken();
     const decoded = jwt_decode(token);
@@ -58,12 +82,6 @@ const CompPending = () => {
       .catch((error) => console.error(error));
   }, []);
 
-  const footer = (
-    <div className="flex flex-wrap justify-content-end gap-2">
-      <Button label="Vote" icon="pi pi-check" />
-    </div>
-  );
-
   return (
     <>
       <div className="grid">
@@ -73,7 +91,7 @@ const CompPending = () => {
           <div className="card">
             <Accordion multiple activeIndex={[0]}>
               {/* Map over the events and render AccordionTab components */}
-              {events.map((event) => (
+              {events.map((event, index) => (
                 <AccordionTab key={event.id} header={event.title}>
                   {/* Event vote starts */}
                   <div className="grid">
@@ -82,7 +100,15 @@ const CompPending = () => {
                       <div className="card flex col-4 col_offset-1 justify-content-center">
                         <Card
                           title={`Date 1`}
-                          footer={footer}
+                          footer={
+                            <div className="flex flex-wrap justify-content-end gap-2">
+                              <Button
+                                label="Vote"
+                                icon="pi pi-check"
+                                onClick={() => handleButtonClick(event.id, 0)}
+                              />
+                            </div>
+                          }
                           className="md:w-25rem"
                         >
                           <p className="mt-3">
@@ -110,7 +136,15 @@ const CompPending = () => {
                       <div className="card flex col-4 col_offset-1 justify-content-center">
                         <Card
                           title={`Date 2`}
-                          footer={footer}
+                          footer={
+                            <div className="flex flex-wrap justify-content-end gap-2">
+                              <Button
+                                label="Vote"
+                                icon="pi pi-check"
+                                onClick={() => handleButtonClick(event.id, 1)}
+                              />
+                            </div>
+                          }
                           className="md:w-25rem"
                         >
                           <p className="mt-3">
@@ -140,7 +174,15 @@ const CompPending = () => {
                       <div className="card flex col-4 col_offset-1 justify-content-center">
                         <Card
                           title={`Date 3`}
-                          footer={footer}
+                          footer={
+                            <div className="flex flex-wrap justify-content-end gap-2">
+                              <Button
+                                label="Vote"
+                                icon="pi pi-check"
+                                onClick={() => handleButtonClick(event.id, 2)}
+                              />
+                            </div>
+                          }
                           className="md:w-25rem"
                         >
                           <p className="mt-3">
