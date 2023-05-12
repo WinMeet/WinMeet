@@ -206,7 +206,22 @@ const Bigcalendar = () => {
             </div>
           )}
           <div className="grid">
-            <div className="col-8"></div>
+            <div className="col-8">
+              <div>
+                <Button
+                  className=" shadow-6"
+                  // onClick={showSecondDialog}
+                  severity="danger"
+                  label="I Could Not Attend"
+                  size="sm"
+                  style={{
+                    position: "flex",
+
+                    right: "0%",
+                  }}
+                />
+              </div>
+            </div>
             <div className="col-2">
               <Button
                 className="z-5 w-4rem h-4rem border-circle shadow-6"
