@@ -16,6 +16,7 @@ const CompPending = () => {
 
     const token = getToken();
     const decoded = jwt_decode(token);
+    console.log(id);
     fetch(
       `http://localhost:3002/createMeeting/pending/${id}/${decoded.email}`,
       {
@@ -28,7 +29,7 @@ const CompPending = () => {
         }),
       }
     )
-      .then((response) => window.location.reload())
+      .then((response) => {})
       .catch((error) => {
         console.error("Error:", error);
         // Handle the error
@@ -50,7 +51,11 @@ const CompPending = () => {
       .then((response) => response.json())
       .then((data) => {
         const fetchedEvents = data.combined.map((item) => {
-          if (item.isPending) {
+          const token = getToken();
+          const decoded = jwt_decode(token);
+          console.log(item.voters);
+          console.log(!item.voters.includes(decoded.email));
+          if (item.isPending && !item.voters.includes(decoded.email)) {
             // Change this line
             return {
               id: item._id,
