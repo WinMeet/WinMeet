@@ -53,12 +53,20 @@ const Bigcalendar = () => {
       body: JSON.stringify(data),
     })
       .then((response) => response.json())
-      .then((data) => {
-        console.log(data.combined);
-        const fetchedEvents = data.combined.map((item) => {
+      .then((remoteData) => {
+        console.log(remoteData.combined);
+        const fetchedEvents = remoteData.combined.map((item) => {
+          let isOwner;
+          if (item.eventOwner === data.eventOwner) {
+            isOwner = true;
+          } else {
+            isOwner = false;
+          }
+          console.log("fdsafafafafafa" + isOwner);
           const event = {
             id: item._id,
             title: item.eventName,
+            eventOwner: item.eventOwner,
             description: item.eventDescription,
             location: item.location,
             allDay: false,
@@ -66,6 +74,7 @@ const Bigcalendar = () => {
             end: new Date(item.eventEndDate),
             participant: item.participants,
             isPending: item.isPending,
+            isOwner: isOwner,
           };
 
           event.className = getEventClassName(event); // Assign className based on event status
@@ -208,46 +217,53 @@ const Bigcalendar = () => {
           <div className="grid">
             <div className="col-8">
               <div>
-                <Button
-                  className=" shadow-6"
-                  // onClick={showSecondDialog}
-                  severity="danger"
-                  label="I Could Not Attend"
-                  size="sm"
-                  style={{
-                    position: "flex",
-
-                    right: "0%",
-                  }}
-                />
+                {selectedEventData && !selectedEventData.isOwner && (
+                  <Button
+                    className="shadow-6"
+                    // onClick={showSecondDialog}
+                    severity="danger"
+                    label="I Could Not Attend"
+                    size="sm"
+                    style={{
+                      position: "flex",
+                      right: "0%",
+                    }}
+                  />
+                )}
               </div>
             </div>
             <div className="col-2">
-              <Button
-                className="z-5 w-4rem h-4rem border-circle shadow-6"
-                onClick={showSecondDialog}
-                size="sm"
-                icon="pi pi-pencil"
-                style={{
-                  position: "flex",
-                  bottom: "10%",
-                  right: "0%",
-                }}
-              />
+              {selectedEventData && selectedEventData.isOwner && (
+                <Button
+                  className="z-5 w-4rem h-4rem border-circle shadow-6"
+                  onClick={showSecondDialog}
+                  size="sm"
+                  icon="pi pi-pencil"
+                  style={{
+                    position: "flex",
+                    bottom: "10%",
+                    right: "0%",
+                  }}
+                />
+              )}
             </div>
             <div className="col-2">
-              <Button
-                className="z-5 w-4rem h-4rem border-circle shadow-6"
-                severity="danger"
-                onClick={() => deleteEvent(selectedEventData.id)}
-                size="sm"
-                icon="pi pi-trash"
-                style={{
-                  position: "flex",
-                  bottom: "10%",
-                  right: "0%",
-                }}
-              />
+              {selectedEventData && selectedEventData.isOwner && (
+                <Button
+                  className="z-5 w-4rem h-4rem border-circle shadow-6"
+                  severity="danger"
+                  onClick={() =>
+                    selectedEventData && deleteEvent(selectedEventData.id)
+                  }
+                  size="sm"
+                  icon="pi pi-trash"
+                  style={{
+                    position: "flex",
+                    bottom: "10%",
+                    right: "0%",
+                  }}
+                />
+              )}
             </div>
           </div>
         </Dialog>{" "}
