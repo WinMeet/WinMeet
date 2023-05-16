@@ -47,13 +47,13 @@ const AuthenticatedNavbar = () => {
         label="Help"
         icon="pi pi-question-circle"
       />
-      <Button
+      {/* <Button
         // TODO : Implement account
         className="font-bold"
         onClick={() => navigateToRoute("/account")}
         label="Account"
         icon="pi pi-user"
-      />
+      /> */}
       <Button
         className="font-bold"
         onClick={handleLogout}

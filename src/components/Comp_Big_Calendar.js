@@ -6,10 +6,12 @@ import { Dialog } from "primereact/dialog";
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
 import { useFormik } from "formik";
+import { Message } from "primereact/message";
 import { CreateMeetingRequestModel } from "data/models/create_meeting/create_meeting_request_model";
 import { createMeeting } from "data/api/api";
 import { getToken } from "utils/token_manager";
 import jwt_decode from "jwt-decode";
+import { Chips } from "primereact/chips";
 
 const toTitleCase = (str) => {
   return str
@@ -283,6 +285,48 @@ const Bigcalendar = () => {
           style={{ width: "40vw" }}
         >
           {/* Remaining code for the second dialog */}
+          <div className="text-4xl mt-1">Participants</div>
+          <div className="grid">
+            <div className="col-8">
+              <div className="mt-2">Event Participant's E-mails:</div>
+              <div className="card">
+                <Chips
+                  className="mt-2"
+                  name="participants"
+                  type="text"
+                  onChange={formik.handleChange}
+                  value={formik.values.participants}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="card flex justify-content-start pt-2 text-red-500">
+            {formik.touched.participants &&
+              (formik.errors.participants &&
+              Array.isArray(formik.errors.participants) &&
+              formik.errors.participants.length > 0 ? (
+                <Message
+                  severity="error"
+                  text={formik.errors.participants[0]}
+                />
+              ) : formik.values.participants.length === 0 ? (
+                <Message severity="error" text={formik.errors.participants} />
+              ) : null)}
+          </div>
+          <div>
+            <Button
+              className="shadow-6"
+              onClick={showSecondDialog}
+              size="sm"
+              label="Add Participent"
+              icon="pi pi-pencil"
+              style={{
+                position: "flex",
+                bottom: "10%",
+                right: "0%",
+              }}
+            />
+          </div>
         </Dialog>
       </div>
       <Toast ref={toast} />
