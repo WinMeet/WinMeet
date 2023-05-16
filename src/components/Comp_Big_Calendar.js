@@ -211,7 +211,9 @@ const Bigcalendar = () => {
               <h3>Meeting End Time</h3>
               <p>{selectedEventData.end.toLocaleString()}</p>
               <h3>Meeting Participants</h3>
-              <p>{selectedEventData.participant}</p>
+              {selectedEventData.participant.map((participant, index) => (
+                <p key={index}>{participant}</p>
+              ))}
             </div>
           )}
           <div className="grid">
@@ -232,12 +234,13 @@ const Bigcalendar = () => {
                 )}
               </div>
             </div>
-            <div className="col-2">
+            <div className="col-4">
               {selectedEventData && selectedEventData.isOwner && (
                 <Button
-                  className="z-5 w-4rem h-4rem border-circle shadow-6"
+                  className="shadow-6"
                   onClick={showSecondDialog}
                   size="sm"
+                  label="Add Participent"
                   icon="pi pi-pencil"
                   style={{
                     position: "flex",
@@ -247,15 +250,17 @@ const Bigcalendar = () => {
                 />
               )}
             </div>
-            <div className="col-2">
+            <div className="col-8"></div>
+            <div className="col-4">
               {selectedEventData && selectedEventData.isOwner && (
                 <Button
-                  className="z-5 w-4rem h-4rem border-circle shadow-6"
+                  className=" shadow-6"
                   severity="danger"
                   onClick={() =>
                     selectedEventData && deleteEvent(selectedEventData.id)
                   }
                   size="sm"
+                  label="Delete Event"
                   icon="pi pi-trash"
                   style={{
                     position: "flex",
