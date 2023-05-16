@@ -16,9 +16,9 @@ import { useRef } from "react";
 import Cal from "components/Comp_Big_Calendar";
 import AuthenticatedNavbar from "components/AuthenticatedNavbar";
 import "my.css";
+//import "circle.css";
 import { getToken } from "utils/token_manager";
 import jwt_decode from "jwt-decode";
-import { InputNumber } from "primereact/inputnumber";
 
 const CompDashboard = () => {
   const [visible, setVisible] = useState(false);
@@ -77,6 +77,30 @@ const CompDashboard = () => {
       <div className="grid">
         <div className="col-10 col-offset-1">
           <AuthenticatedNavbar></AuthenticatedNavbar>
+          <div>
+            <br />
+            <span>
+              * Past Meetings:{" "}
+              <span
+                className="circle"
+                style={{ backgroundColor: "lightgrey" }}
+              ></span>
+            </span>{" "}
+            <span>
+              &nbsp;&nbsp;Pending Meetings:{" "}
+              <span
+                className="circle"
+                style={{ backgroundColor: "#FFD700" }}
+              ></span>
+            </span>
+            <span>
+              &nbsp;&nbsp;Active Meetings:{" "}
+              <span
+                className="circle"
+                style={{ backgroundColor: "#007bff" }}
+              ></span>
+            </span>
+          </div>
           <div className="">
             <p className="m-0">
               <div className="mb-4 flex justify-content-end">
