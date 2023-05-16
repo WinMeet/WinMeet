@@ -193,7 +193,7 @@ const Bigcalendar = () => {
           {selectedEventData && (
             <div className="pt0">
               <h3>Meeting Details</h3>
-              <p>{selectedEventData.id}</p>
+
               <p>{selectedEventData.description}</p>
               <h3>Meeting Location</h3>
               <p>{selectedEventData.location}</p>

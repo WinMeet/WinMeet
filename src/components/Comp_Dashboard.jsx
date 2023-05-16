@@ -94,7 +94,7 @@ const CompDashboard = () => {
               ></span>
             </span>
             <span>
-              &nbsp;&nbsp;Active Meeting:{" "}
+              &nbsp;&nbsp;Active Meetings:{" "}
               <span
                 className="circle"
                 style={{ backgroundColor: "#007bff" }}
