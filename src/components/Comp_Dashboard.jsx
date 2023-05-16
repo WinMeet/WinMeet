@@ -368,19 +368,43 @@ const CompDashboard = () => {
                       <p>Upload File</p>
                     </div>
                     <div className="card">
-                      <FileUpload
-                        name="uploadFile"
-                        url={"/api/upload"}
-                        multiple
-                        accept="image,pdf/*"
-                        maxFileSize={1000000}
-                        emptyTemplate={
-                          <p className="m-0">
-                            Drag and drop files to here to upload.
-                          </p>
-                        }
-                      />
-                    </div>
+                    <FileUpload
+  name="uploadFile"
+  url={"http://localhost:3002/api/upload"}
+  multiple
+  accept=".zip"
+  maxFileSize={1000000}
+  emptyTemplate={
+    <p className="m-0">Drag and drop .zip files here to upload.</p>
+  }
+  uploadHandler={(event) => {
+    // handle the file upload logic here
+    const formData = new FormData();
+    for (let file of event.files) {
+      formData.append("file", file, file.name);
+    }
+    // make the API call to upload the file
+    fetch("http://localhost:3002/api/upload", {
+      method: "POST",
+      body: formData,
+    })
+      .then((response) => {
+        // handle the response here
+        if (response.ok) {
+          // File uploaded successfully
+          console.log("File uploaded successfully");
+        } else {
+          // File upload failed
+          console.error("File upload failed");
+        }
+      })
+      .catch((error) => {
+        // handle the error here
+        console.error("An error occurred while uploading the file:", error);
+      });
+  }}
+/>
+</div>
 
                     <div className="grid justify-content-center pt-4">
                       <div className="flex col-5">
