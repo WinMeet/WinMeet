@@ -109,6 +109,67 @@ const Bigcalendar = () => {
       });
   };
 
+  const iCannotAttend = (event) => {
+    const token = getToken();
+    const decoded = jwt_decode(token);
+
+    const data = {
+      eventOwner: event.eventOwner,
+      eventName: event.title,
+      participants: [decoded.email],
+    };
+    console.log(data);
+    fetch(`http://localhost:3002/createMeeting/removeParticipant/${event.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Successfully deleted:", data);
+        hideDialog();
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error while deleting:", error);
+      });
+  };
+
+  const editMeeting = (event) => {
+    const data = {
+      participants: event.participant,
+    };
+    console.log(data);
+    fetch(`http://localhost:3002/createMeeting/${event.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Successfully deleted:", data);
+        hideDialog();
+        window.location.reload();
+      })
+      .catch((error) => {
+        console.error("Error while deleting:", error);
+      });
+  };
+
   const showDialog = () => {
     setVisible(true);
   };
@@ -224,9 +285,11 @@ const Bigcalendar = () => {
                 {selectedEventData && !selectedEventData.isOwner && (
                   <Button
                     className="shadow-6"
-                    // onClick={showSecondDialog}
+                    onClick={() =>
+                      selectedEventData && iCannotAttend(selectedEventData)
+                    }
                     severity="danger"
-                    label="I Could Not Attend"
+                    label="I Cannot Attend"
                     size="sm"
                     style={{
                       position: "flex",
@@ -242,7 +305,7 @@ const Bigcalendar = () => {
                   className="shadow-6"
                   onClick={showSecondDialog}
                   size="sm"
-                  label="Add Participent"
+                  label="Add Participant"
                   icon="pi pi-pencil"
                   style={{
                     position: "flex",
@@ -316,9 +379,11 @@ const Bigcalendar = () => {
           <div>
             <Button
               className="shadow-6"
-              onClick={showSecondDialog}
+              onClick={() =>
+                selectedEventData && editMeeting(selectedEventData)
+              }
               size="sm"
-              label="Add Participent"
+              label="Add Participant"
               icon="pi pi-pencil"
               style={{
                 position: "flex",
