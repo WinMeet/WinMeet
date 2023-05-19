@@ -282,21 +282,23 @@ const Bigcalendar = () => {
           <div className="grid">
             <div className="col-8">
               <div>
-                {selectedEventData && !selectedEventData.isOwner && (
-                  <Button
-                    className="shadow-6"
-                    onClick={() =>
-                      selectedEventData && iCannotAttend(selectedEventData)
-                    }
-                    severity="danger"
-                    label="I Cannot Attend"
-                    size="sm"
-                    style={{
-                      position: "flex",
-                      right: "0%",
-                    }}
-                  />
-                )}
+                {selectedEventData &&
+                  !selectedEventData.isOwner &&
+                  selectedEventData.isPending && (
+                    <Button
+                      className="shadow-6"
+                      onClick={() =>
+                        selectedEventData && iCannotAttend(selectedEventData)
+                      }
+                      severity="danger"
+                      label="I Cannot Attend"
+                      size="sm"
+                      style={{
+                        position: "flex",
+                        right: "0%",
+                      }}
+                    />
+                  )}
               </div>
             </div>
             <div className="col-4">
