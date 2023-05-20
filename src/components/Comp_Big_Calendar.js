@@ -29,6 +29,7 @@ const Bigcalendar = () => {
   const [visible, setVisible] = useState(false);
   const [secondDialogVisible, setSecondDialogVisible] = useState(false);
   const [selectedEventData, setSelectedEventData] = useState(null);
+  const [participants, setParticipants] = useState([]);
 
   const getEventClassName = (event) => {
     const today = new Date();
@@ -143,8 +144,12 @@ const Bigcalendar = () => {
   };
 
   const editMeeting = (event) => {
+    const updatedParticipants = [
+      ...participants,
+      ...formik.values.participants,
+    ];
     const data = {
-      participants: event.participant,
+      participants: updatedParticipants,
     };
     console.log(data);
     fetch(`http://localhost:3002/createMeeting/${event.id}`, {
@@ -161,12 +166,13 @@ const Bigcalendar = () => {
         return response.json();
       })
       .then((data) => {
-        console.log("Successfully deleted:", data);
-        hideDialog();
+        console.log("Successfully updated:", data);
+        hideSecondDialog();
+        setParticipants(updatedParticipants); // Update the participants state
         window.location.reload();
       })
       .catch((error) => {
-        console.error("Error while deleting:", error);
+        console.error("Error while updating:", error);
       });
   };
 
@@ -380,7 +386,7 @@ const Bigcalendar = () => {
           </div>
           <div>
             <Button
-              className="shadow-6"
+              className=" shadow-6"
               onClick={() =>
                 selectedEventData && editMeeting(selectedEventData)
               }
