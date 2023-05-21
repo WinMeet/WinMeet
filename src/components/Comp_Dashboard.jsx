@@ -116,7 +116,10 @@ const CompDashboard = () => {
                     <div className="text-4xl mt-2">Event Details</div>
                     <div className="flex mt-2">
                       <div className="card flex flex-column gap-2">
-                        <label htmlFor="eventName">Event Name</label>
+                        <label htmlFor="eventName">
+                          Event Name
+                          <span style={{ color: "red" }}>*</span>
+                        </label>
                         <InputText
                           name="eventName"
                           type="text"
@@ -173,7 +176,10 @@ const CompDashboard = () => {
                     <div className="text-4xl mt-5">Event Date & Time</div>
                     <div className="flex mt-2">
                       <div className="card flex flex-column gap-2">
-                        <label htmlFor="eventStartDate">Event Start Time</label>
+                        <label htmlFor="eventStartDate">
+                          Event Start Time
+                          <span style={{ color: "red" }}>*</span>
+                        </label>
                         <Calendar
                           name="eventStartDate"
                           type="text"
@@ -194,7 +200,10 @@ const CompDashboard = () => {
                     </div>
                     <div className="flex mt-2">
                       <div className="card flex flex-column gap-2">
-                        <label htmlFor="eventEndDate"> Event End Date</label>
+                        <label htmlFor="eventEndDate">
+                          {" "}
+                          Event End Date <span style={{ color: "red" }}>*</span>
+                        </label>
                         <Calendar
                           name="eventEndDate"
                           type="text"
@@ -307,11 +316,12 @@ const CompDashboard = () => {
                         />
                       ) : null}
                     </div>
-                    <div className="text-4xl mt-5">Vote Due Date</div>
+                    <div className="text-4xl mt-5">Vote Due Date </div>
                     <div className="flex mt-2">
                       <div className="card flex flex-column gap-2">
                         <label htmlFor="eventVoteDuration">
-                          Voting ends at:
+                          Voting ends at:{" "}
+                          <span style={{ color: "red" }}>*</span>
                         </label>
                         <Calendar
                           name="eventVoteDuration"
@@ -334,7 +344,10 @@ const CompDashboard = () => {
                     <div className="text-4xl mt-5">Participants</div>
                     <div className="grid">
                       <div className="col-8">
-                        <div className="mt-2">Event Participant's E-mails:</div>
+                        <div className="mt-2">
+                          Event Participant's E-mails:{" "}
+                          <span style={{ color: "red" }}>*</span>
+                        </div>
                         <div className="card">
                           <Chips
                             className="mt-2"
@@ -368,43 +381,48 @@ const CompDashboard = () => {
                       <p>Upload File</p>
                     </div>
                     <div className="card">
-                    <FileUpload
-  name="uploadFile"
-  url={"http://localhost:3002/api/upload"}
-  multiple
-  accept=".zip"
-  maxFileSize={1000000}
-  emptyTemplate={
-    <p className="m-0">Drag and drop .zip files here to upload.</p>
-  }
-  uploadHandler={(event) => {
-    // handle the file upload logic here
-    const formData = new FormData();
-    for (let file of event.files) {
-      formData.append("file", file, file.name);
-    }
-    // make the API call to upload the file
-    fetch("http://localhost:3002/api/upload", {
-      method: "POST",
-      body: formData,
-    })
-      .then((response) => {
-        // handle the response here
-        if (response.ok) {
-          // File uploaded successfully
-          console.log("File uploaded successfully");
-        } else {
-          // File upload failed
-          console.error("File upload failed");
-        }
-      })
-      .catch((error) => {
-        // handle the error here
-        console.error("An error occurred while uploading the file:", error);
-      });
-  }}
-/>
-</div>
+                      <FileUpload
+                        name="uploadFile"
+                        url={"http://localhost:3002/api/upload"}
+                        multiple
+                        accept=".zip"
+                        maxFileSize={1000000}
+                        emptyTemplate={
+                          <p className="m-0">
+                            Drag and drop .zip files here to upload.
+                          </p>
+                        }
+                        uploadHandler={(event) => {
+                          // handle the file upload logic here
+                          const formData = new FormData();
+                          for (let file of event.files) {
+                            formData.append("file", file, file.name);
+                          }
+                          // make the API call to upload the file
+                          fetch("http://localhost:3002/api/upload", {
+                            method: "POST",
+                            body: formData,
+                          })
+                            .then((response) => {
+                              // handle the response here
+                              if (response.ok) {
+                                // File uploaded successfully
+                                console.log("File uploaded successfully");
+                              } else {
+                                // File upload failed
+                                console.error("File upload failed");
+                              }
+                            })
+                            .catch((error) => {
+                              // handle the error here
+                              console.error(
+                                "An error occurred while uploading the file:",
+                                error
+                              );
+                            });
+                        }}
+                      />
+                    </div>
 
                     <div className="grid justify-content-center pt-4">
                       <div className="flex col-5">
