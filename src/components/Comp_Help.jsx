@@ -1,9 +1,12 @@
 import React, { useRef, useEffect } from "react";
 import "my.css";
-import { Card } from "primereact/card";
-import { Button } from "primereact/button";
+import { Image } from "primereact/image";
 import AuthenticatedNavbar from "components/AuthenticatedNavbar";
-import { Accordion, AccordionTab } from "primereact/accordion";
+import plusicon from "assets/plus-icon.png";
+import create1 from "assets/create1.png";
+import create2 from "assets/create2.png";
+import create3 from "assets/create3.png";
+import pending from "assets/pending.png";
 
 const CompHelp = () => {
   return (
@@ -36,14 +39,28 @@ const CompHelp = () => {
               </div>
             </div>
             <div className="grid col-6 ">
-              <p>İmage of the plus and Creat event screen</p>
+              <Image
+                src={plusicon}
+                imageStyle={{
+                  maxWidth: "100%",
+                  maxHeight: "90%",
+                  objectFit: "contain",
+                }}
+              />
             </div>
           </div>
           {/* second row */}
 
           <div className="grid col-offset-1">
             <div className="grid col-6 ">
-              <p>İmage of Creat event screen</p>
+              <Image
+                src={create1}
+                imageStyle={{
+                  maxWidth: "100%",
+                  maxHeight: "90%",
+                  objectFit: "contain",
+                }}
+              />
             </div>
             <div className="grid col-6 ">
               <div className="text-3xl ">
@@ -116,13 +133,27 @@ const CompHelp = () => {
                   </p>
                 </div>
               </div>
-              <div className="grid col-6 ">
-                <p>İmage of the plus and Creat event screen</p>
+              <div className="grid col-6 ml-3">
+                <Image
+                  src={create2}
+                  imageStyle={{
+                    maxWidth: "100%",
+                    maxHeight: "90%",
+                    objectFit: "contain",
+                  }}
+                />
               </div>
             </div>
             <div className="grid col-offset-1">
-              <div className="grid col-6 ">
-                <p>İmage of Creat event screen</p>
+              <div className="grid col-6 mr-2 ">
+                <Image
+                  src={create3}
+                  imageStyle={{
+                    maxWidth: "100%",
+                    maxHeight: "90%",
+                    objectFit: "contain",
+                  }}
+                />
               </div>
               <div className="grid col-6 ">
                 <div className="text-3xl ">
@@ -172,7 +203,14 @@ const CompHelp = () => {
                 </div>
               </div>
               <div className="grid col-6 ">
-                <p>İmage of the plus and Creat event screen</p>
+                <Image
+                  src={pending}
+                  imageStyle={{
+                    maxWidth: "100%",
+                    maxHeight: "90%",
+                    objectFit: "contain",
+                  }}
+                />
               </div>
             </div>
           </div>
