@@ -376,7 +376,7 @@ const CompDashboard = () => {
                         ) : null)}
                     </div>
 
-                    <div className="text-4xl mt-5">Documents</div>
+                    {/* <div className="text-4xl mt-5">Documents</div>
                     <div>
                       <p>Upload File</p>
                     </div>
@@ -422,7 +422,7 @@ const CompDashboard = () => {
                             });
                         }}
                       />
-                    </div>
+                    </div> */}
 
                     <div className="grid justify-content-center pt-4">
                       <div className="flex col-5">
