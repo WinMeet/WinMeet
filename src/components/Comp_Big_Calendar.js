@@ -120,7 +120,7 @@ const Bigcalendar = () => {
       participants: [decoded.email],
     };
     console.log(data);
-    fetch(`http://localhost:3002/createMeeting/removeParticipant/${event.id}`, {
+    fetch(`${BASE_URL}/createMeeting/removeParticipant/${event.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -152,7 +152,7 @@ const Bigcalendar = () => {
       participants: updatedParticipants,
     };
     console.log(data);
-    fetch(`http://localhost:3002/createMeeting/${event.id}`, {
+    fetch(`${BASE_URL}/createMeeting/${event.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
