@@ -7,7 +7,7 @@ import { Accordion, AccordionTab } from "primereact/accordion";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { getToken } from "utils/token_manager";
 import jwt_decode from "jwt-decode";
-import {BASE_URL} from "common";
+import { BASE_URL } from "common";
 const CompPending = () => {
   const [events, setEvents] = useState([]); // State variable to hold the fetched events
 
@@ -17,18 +17,15 @@ const CompPending = () => {
     const token = getToken();
     const decoded = jwt_decode(token);
     console.log(id);
-    fetch(
-      `http://localhost:3002/createMeeting/pending/${id}/${decoded.email}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          fieldToIncrement: index,
-        }),
-      }
-    )
+    fetch(`${BASE_URL}/createMeeting/pending/${id}/${decoded.email}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fieldToIncrement: index,
+      }),
+    })
       .then((response) => {
         window.location.reload();
       })
