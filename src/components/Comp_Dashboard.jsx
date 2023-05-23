@@ -383,7 +383,7 @@ const CompDashboard = () => {
                     <div className="card">
                       <FileUpload
                         name="uploadFile"
-                        url={"http://localhost:3002/api/upload"}
+                        url={BASE_URL+"/api/upload"}
                         multiple
                         accept=".zip"
                         maxFileSize={1000000}
@@ -399,7 +399,7 @@ const CompDashboard = () => {
                             formData.append("file", file, file.name);
                           }
                           // make the API call to upload the file
-                          fetch("http://localhost:3002/api/upload", {
+                          fetch(BASE_URL+"/api/upload", {
                             method: "POST",
                             body: formData,
                           })

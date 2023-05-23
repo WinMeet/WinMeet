@@ -43,7 +43,7 @@ const CompPending = () => {
     const decoded = jwt_decode(token);
     const data = { eventOwner: decoded.email };
 
-    fetch("http://localhost:3002/createMeeting/all", {
+    fetch(BASE_URL + "/createMeeting/all", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
