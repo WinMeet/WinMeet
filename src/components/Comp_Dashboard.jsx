@@ -51,6 +51,13 @@ const CompDashboard = () => {
     });
   };
 
+  const getCurrentUser = () => {
+    const token = getToken();
+    const decoded = jwt_decode(token);
+
+    return decoded.email;
+  };
+
   const formik = useFormik({
     initialValues: CreateMeetingRequestModel.empty(),
     validationSchema: CreateMeetingRequestModel.validationSchema,
@@ -78,7 +85,6 @@ const CompDashboard = () => {
         <div className="col-10 col-offset-1">
           <AuthenticatedNavbar></AuthenticatedNavbar>
           <div>
-            <br />
             <span>
               * Past Meetings:{" "}
               <span
@@ -100,7 +106,18 @@ const CompDashboard = () => {
                 style={{ backgroundColor: "#007bff" }}
               ></span>
             </span>
+            <span
+              className="col-2"
+              style={{
+                whiteSpace: "nowrap",
+                float: "right",
+              }}
+            >
+              &nbsp;&nbsp;Current User:{" "}
+              <span title={getCurrentUser()}>{getCurrentUser()}</span>
+            </span>
           </div>
+
           <div className="">
             <p className="m-0">
               <div className="mb-4 flex justify-content-end">

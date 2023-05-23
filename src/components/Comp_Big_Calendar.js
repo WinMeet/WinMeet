@@ -271,9 +271,18 @@ const Bigcalendar = () => {
           {selectedEventData && (
             <div className="pt0">
               <h3>Meeting Details</h3>
+              <p>
+                {selectedEventData.description
+                  ? selectedEventData.description
+                  : "Not specified"}
+              </p>
 
-              <p>{selectedEventData.description}</p>
               <h3>Meeting Location</h3>
+              <p>
+                {selectedEventData.location
+                  ? selectedEventData.location
+                  : "Not specified"}
+              </p>
               <p>{selectedEventData.location}</p>
               <h3>Meeting Start Time</h3>
               <p>{selectedEventData.start.toLocaleString()}</p>
