@@ -7,7 +7,7 @@ import { Accordion, AccordionTab } from "primereact/accordion";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import { getToken } from "utils/token_manager";
 import jwt_decode from "jwt-decode";
-
+import {BASE_URL} from "common";
 const CompPending = () => {
   const [events, setEvents] = useState([]); // State variable to hold the fetched events
 

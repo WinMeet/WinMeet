@@ -12,7 +12,7 @@ import { createMeeting } from "data/api/api";
 import { getToken } from "utils/token_manager";
 import jwt_decode from "jwt-decode";
 import { Chips } from "primereact/chips";
-
+import {BASE_URL} from "common";
 const toTitleCase = (str) => {
   return str
     .toLowerCase()
