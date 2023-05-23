@@ -194,6 +194,7 @@ const Bigcalendar = () => {
 
   const handleSelectEvent = (event) => {
     setSelectedEventData(event);
+    console.log(event);
     showDialog();
   };
 
@@ -283,7 +284,7 @@ const Bigcalendar = () => {
                   ? selectedEventData.location
                   : "Not specified"}
               </p>
-              <p>{selectedEventData.location}</p>
+
               <h3>Meeting Start Time</h3>
               <p>{selectedEventData.start.toLocaleString()}</p>
               <h3>Meeting End Time</h3>
@@ -300,7 +301,7 @@ const Bigcalendar = () => {
                 {selectedEventData &&
                   !selectedEventData.isOwner &&
                   !selectedEventData.isPending &&
-                  selectedEventData.eventEndDate > new Date() && (
+                  selectedEventData.end > new Date() && (
                     <Button
                       className="shadow-6"
                       onClick={() =>
@@ -320,7 +321,7 @@ const Bigcalendar = () => {
             <div className="col-4">
               {selectedEventData &&
                 selectedEventData.isOwner &&
-                selectedEventData.eventEndDate > new Date() && (
+                selectedEventData.end > new Date() && (
                   <Button
                     className="shadow-6"
                     onClick={showSecondDialog}
@@ -339,7 +340,7 @@ const Bigcalendar = () => {
             <div className="col-4">
               {selectedEventData &&
                 selectedEventData.isOwner &&
-                selectedEventData.eventEndDate > new Date() && (
+                selectedEventData.end > new Date() && (
                   <Button
                     className=" shadow-6"
                     severity="danger"
