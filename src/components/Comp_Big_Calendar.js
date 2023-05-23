@@ -299,7 +299,8 @@ const Bigcalendar = () => {
               <div>
                 {selectedEventData &&
                   !selectedEventData.isOwner &&
-                  !selectedEventData.isPending && (
+                  !selectedEventData.isPending &&
+                  selectedEventData.eventEndDate > new Date() && (
                     <Button
                       className="shadow-6"
                       onClick={() =>
@@ -317,40 +318,44 @@ const Bigcalendar = () => {
               </div>
             </div>
             <div className="col-4">
-              {selectedEventData && selectedEventData.isOwner && (
-                <Button
-                  className="shadow-6"
-                  onClick={showSecondDialog}
-                  size="sm"
-                  label="Add Participant"
-                  icon="pi pi-pencil"
-                  style={{
-                    position: "flex",
-                    bottom: "10%",
-                    right: "0%",
-                  }}
-                />
-              )}
+              {selectedEventData &&
+                selectedEventData.isOwner &&
+                selectedEventData.eventEndDate > new Date() && (
+                  <Button
+                    className="shadow-6"
+                    onClick={showSecondDialog}
+                    size="sm"
+                    label="Add Participant"
+                    icon="pi pi-pencil"
+                    style={{
+                      position: "flex",
+                      bottom: "10%",
+                      right: "0%",
+                    }}
+                  />
+                )}
             </div>
             <div className="col-8"></div>
             <div className="col-4">
-              {selectedEventData && selectedEventData.isOwner && (
-                <Button
-                  className=" shadow-6"
-                  severity="danger"
-                  onClick={() =>
-                    selectedEventData && deleteEvent(selectedEventData.id)
-                  }
-                  size="sm"
-                  label="Delete Event"
-                  icon="pi pi-trash"
-                  style={{
-                    position: "flex",
-                    bottom: "10%",
-                    right: "0%",
-                  }}
-                />
-              )}
+              {selectedEventData &&
+                selectedEventData.isOwner &&
+                selectedEventData.eventEndDate > new Date() && (
+                  <Button
+                    className=" shadow-6"
+                    severity="danger"
+                    onClick={() =>
+                      selectedEventData && deleteEvent(selectedEventData.id)
+                    }
+                    size="sm"
+                    label="Delete Event"
+                    icon="pi pi-trash"
+                    style={{
+                      position: "flex",
+                      bottom: "10%",
+                      right: "0%",
+                    }}
+                  />
+                )}
             </div>
           </div>
         </Dialog>{" "}
